@@ -42,7 +42,7 @@ extern "C" {
 #include "jpeglib.h"
 #else
 #include <cstdio>
-#include <jpeglib.h>
+#include "jpeglib.h"
 #endif
 }
 

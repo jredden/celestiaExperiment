@@ -20,7 +20,7 @@ extern "C" {
 #ifdef MACOSX
 #include "../celestia/Celestia.app.skel/Contents/Frameworks/Headers/jpeglib.h"
 #else
-#include <jpeglib.h>
+#include "../celengine/jpeglib.h"
 #endif
 #endif
 }
