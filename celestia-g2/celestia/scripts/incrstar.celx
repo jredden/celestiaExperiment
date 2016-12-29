@@ -1,0 +1,12 @@
+-- Title: Travel to Randomly Picked Stars
+
+obs = celestia:getobserver()
+nstars = celestia:getstarcount()
+repeat
+    nstars = nstars - 1
+    index = nstars
+    star = celestia:getstar(index)
+    celestia:select(star)
+    obs:goto(star, 10)
+    wait(10)
+until nstars <= 0
