@@ -13,7 +13,7 @@ CXX           = g++
 DEFINES       = -DGLEW_STATIC -DUSE_SPICE -DEIGEN_NO_DEBUG -DEIGEN_NO_DEBUG -DNDEBUG -DNO_DEBUG -DTHEORA -DCELX -DLUA_VER=0x050100 -DCONFIG_DATA_DIR=\"/usr/local/share/celestia\" -DQT_NO_DEBUG -DQT_XML_LIB -DQT_OPENGL_LIB -DQT_GUI_LIB -DQT_CORE_LIB
 CFLAGS        = -m64 -pipe -O2 -Wall -W -D_REENTRANT $(DEFINES)
 CXXFLAGS      = -m64 -pipe -O2 -Wall -W -D_REENTRANT $(DEFINES)
-INCPATH       = -I/usr/share/qt4/mkspecs/linux-g++-64 -I. -I/usr/include/qt4/QtCore -I/usr/include/qt4/QtGui -I/usr/include/qt4/QtOpenGL -I/usr/include/qt4/QtXml -I/usr/include/qt4 -I. -Isrc -Ithirdparty/glew/include -Ithirdparty/Eigen -Ithirdparty/curveplot/include -I/opt/cspice/include -I/usr/include/libdrm -I/usr/include/lua5.1 -I/usr/include/libpng12 -I/usr/X11R6/include -Imoc -Isrc/celestia/qt/ui
+INCPATH       = -I/usr/share/qt4/mkspecs/linux-g++-64 -I. -I/usr/include/qt4/QtCore -I/usr/include/qt4/QtGui -I/usr/include/qt4/QtOpenGL -I/usr/include/qt4/QtXml -I/usr/include/qt4 -I. -Isrc -Ithirdparty/glew/include -Ithirdparty/Eigen -Ithirdparty/curveplot/include -I/opt/cspice/include -I/usr/include/libdrm -I/usr/include/lua5.1 -I/usr/include/libpng12 -I/usr/X11R6/include -Imoc -Isrc/celestia/qt/ui -Iplog/include
 LINK          = g++
 LFLAGS        = -m64 -Wl,-O1
 LIBS          = $(SUBLIBS)  -L/usr/lib/x86_64-linux-gnu -L/usr/X11R6/lib64 -ljpeg /opt/cspice/lib/cspice.a -lGLU -llua5.1 -lpng12 -ltheora -logg -lQtXml -lQtOpenGL -lQtGui -lQtCore -lGL -lpthread 

@@ -48,6 +48,8 @@
 #include <cassert>
 #include <ctime>
 
+#include "plog/Log.h"
+
 #ifdef CELX
 #include <celephem/scriptobject.h>
 #endif
@@ -4009,7 +4011,8 @@ class SolarSystemLoader : public EnumFilesHandler
         if (DetermineFileType(filename) == Content_CelestiaCatalog)
         {
             string fullname = getPath() + '/' + filename;
-            clog << _("Loading solar system catalog: ") << fullname << '\n';
+            // clog << _("Loading solar system catalog: ") << fullname << '\n';
+	    LOG(plog::debug) <<  _("Loading solar system catalog: ") << fullname << '\n';
             if (notifier)
                 notifier->update(filename);
 
@@ -4019,6 +4022,8 @@ class SolarSystemLoader : public EnumFilesHandler
                 LoadSolarSystemObjects(solarSysFile,
                                        *universe,
                                        getPath());
+		LOG(plog::debug) <<  _("Loaded solar system catalog: ") << fullname << '\n';
+
             }
         }
 
@@ -4051,6 +4056,7 @@ public:
         {
             string fullname = getPath() + '/' + filename;
             clog << _("Loading ") << typeDesc << " catalog: " << fullname << '\n';
+            LOG(plog::debug) << _("Loading ") << typeDesc << " catalog: " << fullname << '\n';
             if (notifier)
                 notifier->update(filename);
 
@@ -4062,6 +4068,7 @@ public:
                 {
                     //DPRINTF(0, _("Error reading star file: %s\n"), fullname.c_str());
                     DPRINTF(0, "Error reading %s catalog file: %s\n", typeDesc.c_str(), fullname.c_str());
+		    LOG(plog::error) << _("Error reading ") << typeDesc.c_str() << _("catalog file") << fullname.c_str() << '\n';
                 }
             }
         }
@@ -4439,7 +4446,7 @@ static void loadCrossIndex(StarDatabase* starDB,
             if (!starDB->loadCrossIndex(catalog, xrefFile))
                 cerr << _("Error reading cross index ") << filename << '\n';
             else
-                clog << _("Loaded cross index ") << filename << '\n';
+	      LOG(plog::debug) << _("Loaded cross index ") << filename << '\n';
         }
     }
 }

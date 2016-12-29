@@ -22,7 +22,8 @@
 #include <QBitmap>
 #include <vector>
 #include "qtappwin.h"
-#include <qtextcodec.h> 
+#include <qtextcodec.h>
+#include "plog/Log.h"
 
 using namespace std;
 
@@ -44,7 +45,9 @@ static bool ParseCommandLine();
 
 
 int main(int argc, char *argv[])
-{  
+{
+  plog::init(plog::debug, "Hello.txt");
+  LOGD << "Hello log!";
     QApplication app(argc, argv);
 
     Q_INIT_RESOURCE(icons);
