@@ -3188,6 +3188,10 @@ static void displayStarInfo(Overlay& overlay,
     if (detail > 1)
     {
         SolarSystem* sys = universe.getSolarSystem(&star);
+	if(sys != NULL){
+	  LOG(plog::debug) <<  sys->getPlanets()->getSystemSize() << " number planets";
+	}
+	
         if (sys != NULL && sys->getPlanets()->getSystemSize() != 0)
             overlay << _("Planetary companions present\n");
     }
@@ -3623,6 +3627,12 @@ void CelestiaCore::renderOverlay()
 
     // Selection info
     Selection sel = sim->getSelection();
+    if(!sel.empty()){
+      LOG(plog::debug) << _("Selection:") << sel.getType();
+    }
+    else{
+      LOG(plog::debug) << _("Selection:is empty");
+    }
     if (!sel.empty() && hudDetail > 0 && (overlayElements & ShowSelection))
     {
         glPushMatrix();
