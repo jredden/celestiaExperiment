@@ -37,6 +37,8 @@
 #include "timelinephase.h"
 #include "atmosphere.h"
 
+#include "plog/Log.h"
+
 using namespace Eigen;
 using namespace std;
 
@@ -94,6 +96,7 @@ enum BodyType
 static void errorMessagePrelude(const Tokenizer& tok)
 {
     cerr << _("Error in .ssc file (line ") << tok.getLineNumber() << "): ";
+    LOG(plog::error) << _("Error in .ssc file (line ") << tok.getLineNumber() << "): ";
 }
 
 static void sscError(const Tokenizer& tok,
@@ -101,6 +104,7 @@ static void sscError(const Tokenizer& tok,
 {
     errorMessagePrelude(tok);
     cerr << msg << '\n';
+    LOG(plog::error) << msg;
 }
 
 
@@ -320,6 +324,7 @@ TimelinePhase* CreateTimelinePhase(Body* body,
     if (!isFirstPhase && hasBeginning)
     {
         clog << "Error: Beginning can only be specified for initial phase of timeline.\n";
+	LOG(plog::error) << "Error: Beginning can only be specified for initial phase of timeline.";
         return NULL;
     }
 
@@ -328,6 +333,7 @@ TimelinePhase* CreateTimelinePhase(Body* body,
     if (!isLastPhase && !hasEnding)
     {
         clog << "Error: Ending is required for all timeline phases other than the final one.\n";
+        LOG(plog::error) << "Error: Ending is required for all timeline phases other than the final one.\n";
         return NULL;
     }
 
@@ -377,6 +383,7 @@ TimelinePhase* CreateTimelinePhase(Body* body,
     if (!orbit)
     {
         clog << "Error: missing orbit in timeline phase.\n";
+        LOG(plog::error) << "Error: missing orbit in timeline phase.\n";
         bodyFrame->release();
         orbitFrame->release();
         return NULL;
@@ -426,7 +433,8 @@ Timeline* CreateTimelineFromArray(Body* body,
         if (phaseData == NULL)
         {
             clog << "Error in timeline of '" << body->getName() << "': phase " << iter - timelineArray->begin() + 1 << " is not a property group.\n";
-            delete timeline;
+            LOG(plog::error) << "Error in timeline of '" << body->getName() << "': phase " << iter - timelineArray->begin() + 1 << " is not a property group.\n";
+           delete timeline;
             return NULL;
         }
 
@@ -506,6 +514,7 @@ static bool CreateTimeline(Body* body,
         if (value->getType() != Value::ArrayType)
         {
             clog << "Error: Timeline must be an array\n";
+            LOG(plog::error) << "Error: Timeline must be an array\n";
             return false;
         }
 
@@ -612,6 +621,7 @@ static bool CreateTimeline(Body* body,
         else
         {
             clog << "No valid orbit specified for object '" << body->getName() << "'. Skipping.\n";
+            LOG(plog::error) << "No valid orbit specified for object '" << body->getName() << "'. Skipping.\n";
             return false;
         }
     }
@@ -658,6 +668,7 @@ static bool CreateTimeline(Body* body,
         if (beginning >= ending)
         {
             clog << "Beginning time must be before Ending time.\n";
+            LOG(plog::error) << "Beginning time must be before Ending time.\n";
             return false;
         }
 
@@ -677,6 +688,7 @@ static bool CreateTimeline(Body* body,
         if (phase == NULL)
         {
             clog << "Internal error creating TimelinePhase.\n";
+            LOG(plog::error) << "Internal error creating TimelinePhase.\n";
             return false;
         }
 
@@ -692,12 +704,14 @@ static bool CreateTimeline(Body* body,
         if (newOrbitFrame && isFrameCircular(*body->getOrbitFrame(0.0), ReferenceFrame::PositionFrame))
         {
             clog << "Orbit frame for " << body->getName() << " is nested too deep (probably circular)\n";
+            LOG(plog::error)  << "Orbit frame for " << body->getName() << " is nested too deep (probably circular)\n";
             return false;
         }
 
         if (newBodyFrame && isFrameCircular(*body->getBodyFrame(0.0), ReferenceFrame::OrientationFrame))
         {
             clog << "Body frame for " << body->getName() << " is nested too deep (probably circular)\n";
+            LOG(plog::error) << "Body frame for " << body->getName() << " is nested too deep (probably circular)\n";
             return false;
         }
     }
@@ -1225,6 +1239,7 @@ bool LoadSolarSystemObjects(istream& in,
             {
                 errorMessagePrelude(tokenizer);
                 cerr << _("parent body '") << parentName << _("' of '") << primaryName << _("' not found.") << endl;
+		LOG(plog::error)  << _("parent body '") << parentName << _("' of '") << primaryName << _("' not found.") << endl;
             }
 
             if (parentSystem != NULL)
@@ -1236,6 +1251,8 @@ bool LoadSolarSystemObjects(istream& in,
                     {
                         errorMessagePrelude(tokenizer);
                         cerr << _("warning duplicate definition of ") <<
+                            parentName << " " <<  primaryName << '\n';
+                        LOG(plog::warning) << _("warning duplicate definition of ") <<
                             parentName << " " <<  primaryName << '\n';
                     }
                     else if (disposition == ReplaceObject)
@@ -1292,6 +1309,7 @@ bool LoadSolarSystemObjects(istream& in,
             {
                 errorMessagePrelude(tokenizer);
                 cerr << _("parent body '") << parentName << _("' of '") << primaryName << _("' not found.\n");
+                LOG(plog::error) << _("parent body '") << parentName << _("' of '") << primaryName << _("' not found.\n");
             }
         }
         delete objectDataValue;
