@@ -1,0 +1,287 @@
+    1  df
+    2  ls Downloads/
+    3  chrome
+    4  sudo apt-get install synaptic
+    5  exit
+    6  git --help
+    7  ls
+    8  mkdir src
+    9  cd src
+   10  git clone https://github.com/jredden/celestiaExperiment
+   11  ls
+   12  ls celestiaExperiment/
+   13  ls celestiaExperiment/celestia-g2/
+   14  ls celestiaExperiment/cspice/
+   15  pwd
+   16  git clone https://github.com/jredden/libnoiseforjava
+   17  git clone https://github.com/jredden/johnrredden
+   18  ls
+   19  ls libnoiseforjava/
+   20  ps -ax|grep [m]ysql
+   21  mysql 
+   22  mysql --user=root --password
+   23  ls
+   24  pushd ~
+   25  pushd /usr/local
+   26  ls
+   27  ls lib
+   28  ls share
+   29  ls ~/Downloads/
+   30  tar tvfz jdk-8u111-linux-arm64-vfp-hflt.tar.gz
+   31  tar tvfz ~/Downloads/jdk-8u111-linux-arm64-vfp-hflt.tar.gz |head
+   32  tar xvfz ~/Downloads/jdk-8u111-linux-arm64-vfp-hflt.tar.gz
+   33  sudo tar xvfz ~/Downloads/jdk-8u111-linux-arm64-vfp-hflt.tar.gz
+   34  ls
+   35  ls bin
+   36  ls sbin
+   37  ls jdk1.8.0_111/
+   38  ls share
+   39  cd jdk1.8.0_111/
+   40  ls
+   41  ls bin
+   42  bin/java --help
+   43  cd ,,
+   44  cd ..
+   45  sudo rm -rf jdk1.8.0_111
+   46  dirs
+   47  pushd
+   48  cd Downloads/
+   49  ls
+   50  rm jdk-8u111-linux-arm64-vfp-hflt.tar.gz 
+   51  ls
+   52  pushd
+   53  sudo tar xvfz ~/Downloads/jdk-8u111-linux-x64.tar.gz 
+   54  ls
+   55  cd jdk1.8.0_111/
+   56  ls
+   57  ls bin
+   58  bin/java--help
+   59  bin/java --help
+   60  bin/java -h
+   61  pushd
+   62  cd 
+   63  ls -a
+   64  cat .bashrc 
+   65  emacs .bashrc 
+   66  dirs
+   67  pushd
+   68  cd ..
+   69  sudo ln -s jdk1.8.0_111 jdk
+   70  cd jdk
+   71  ls
+   72  pushd
+   73  emacs .bashrc 
+   74  , .bashrc 
+   75  . .bashrc 
+   76  java -h
+   77  echo $PATH
+   78  emacs .bashrc 
+   79  ng
+   80  bg
+   81  ls-a
+   82  ls =a
+   83  ls -a
+   84  . .bashrc 
+   85  java -h
+   86  dirs
+   87  pushd
+   88  cd ..
+   89  ls ~/Downloads/
+   90  tar tvfz ~/Downloads/spring-tool-suite-3.8.3.RELEASE-e4.6.2-linux-gtk-x86_64.tar.gz |head
+   91  sudo tar xvfz ~/Downloads/spring-tool-suite-3.8.3.RELEASE-e4.6.2-linux-gtk-x86_64.tar.gz
+   92  ls
+   93  sudo ln -s sts-bundle sts
+   94  cd sts
+   95  ls
+   96  cd sts-3.8.3.RELEASE/
+   97  ls
+   98  STS
+   99  ./STS
+  100  pwd
+  101  pushd
+  102  emacs .bashrc 
+  103  . .bashrc 
+  104  STS
+  105  exit
+  106  cd src
+  107  ls
+  108  cd celestiaExperiment/
+  109  ls
+  110  cd cspice/
+  111  ls
+  112  tcsh
+  113  sudo apt install tcsh
+  114  tcsh
+  115  ls
+  116  pushd
+  117  cd ../celestia-g2/
+  118  ls
+  119  cd celestia/
+  120  ls
+  121  sudo apt-get purge runit
+  122  sudo apt-get autoremove
+  123  sudo dpkg -r runit
+  124  sudo apt-get remove --purge git-daemon-run
+  125  sudo apt-get install upstart-sysv
+  126  sudo apt-get remove --purge git-daemon-run
+  127  sudo apt autoremove
+  128  dir
+  129  autoconf
+  130  sudo apt install autoconf
+  131  autoconf
+  132  configure
+  133  man autoconf
+  134  ls
+  135  ./configure 
+  136  less README 
+  137  ./configure --with-gtk
+  138  ls
+  139  ls -lt
+  140  ls -lt |head
+  141  less config.log 
+  142  less configure
+  143  less README 
+  144  ./configure --with-qt
+  145  ls
+  146  less configure.in
+  147  less README 
+  148  less INSTALL 
+  149  ./configure --with-gnome
+  150  ls -lt |head
+  151  less config.log 
+  152  ls
+  153  less README 
+  154  make
+  155  cd ../../
+  156  ls
+  157  mv celestia-g2 BACKcelG2
+  158  git clone https://github.com/bgodard/celestia-g2
+  159  ls
+  160  cd celestia-g2/
+  161  ls
+  162  cd celestia/
+  163  ls
+  164  cd ..
+  165  ls
+  166  less README.md 
+  167  pushd ../BACKcelG2/
+  168  ls
+  169  cd celestia/
+  170  qmake
+  171  pushd ../
+  172  pwd
+  173  ls
+  174  ls ..
+  175  dirs
+  176  pushd
+  177  ls
+  178  pushd
+  179  ls
+  180  pushd +2
+  181  ls
+  182  ls celestia/
+  183  pushd
+  184  ls
+  185  less README.md 
+  186  dirs
+  187  pushd +2
+  188  ls
+  189  ls -l
+  190  ls -lt |head
+  191  mv configure ~/tmp/
+  192  mkdir ~/tmp/
+  193  mv configure ~/tmp/
+  194  dirs
+  195  pushd +2
+  196  ls
+  197  jobs
+  198  celestia/
+  199  cd celestia/
+  200  ls
+  201  cd  ../..
+  202  ls
+  203  mv celestia-g2 NEWcelestia-g2
+  204  mv BACKcelG2 celestia-g2
+  205  ls
+  206  cd celestia-g2/
+  207  dirs
+  208  popd +1
+  209  ls
+  210  cd celestia/
+  211  ls
+  212  which qmake
+  213  less ../README.md 
+  214  qmake
+  215  ls ..
+  216  ls ../..
+  217  ls ../../..
+  218  locate lua
+  219  make clean
+  220  qmake
+  221  dirs
+  222  pushd ../../
+  223  ls
+  224  cd NEWcelestia-g2/
+  225  ls
+  226  cd celestia/
+  227  ls
+  228  qmake
+  229  man qmake
+  230  pushd
+  231  ls
+  232  man qmake
+  233  ls -lt |head
+  234  less Makefile
+  235  qmake
+  236  man qmake
+  237  qmake
+  238  man qmake
+  239  qmake -Wall
+  240  ls /usr/share
+  241  ls /usr/share/lua5.2/
+  242  ls /usr/share/lua5.2/version-script 
+  243  file /usr/share/lua5.2/version-script 
+  244  less /usr/share/lua5.2/version-script 
+  245  man qmake
+  246  qmake -Wall -d -d
+  247  less celestia.pro 
+  248  ls /usr/share/lua*
+  249  cat /usr/share/lua5.2/version-script 
+  250  fg
+  251  grep lua  celestia.pro 
+  252  emacs celestia.pro 
+  253  bg
+  254  qmake -Wall -d -d
+  255  fg
+  256  bg
+  257  cat  /usr/share/lua5.2/version-script 
+  258  locate lua.5.3.0
+  259  locate lua.5.3-0
+  260  locate lua.5*
+  261  qmake -Wall -d -d
+  262  ls
+  263  ls -lt |head
+  264  make
+  265  qmake -Wall -d -d
+  266  make |tee ~/tmp/make0,txt
+  267  ifconfig
+  268  find . \( -name '*.cpp' -o -name '*.h' \) |grep LUA_GLOBAL_INDEX "{}" /dev/null ";"
+  269  find . \( -name '*.cpp' -o -name '*.h' \) |-exec grep LUA_GLOBAL_INDEX "{}" /dev/null ";"
+  270  find . \( -name '*.cpp' -o -name '*.h' \) -exec grep LUA_GLOBAL_INDEX "{}" /dev/null ";"
+  271  find . \( -name '*.cpp' -o -name '*.h' \) -exec grep LUA_GLOBALINDEX "{}" /dev/null ";"
+  272  find . \( -name '*.cpp' -o -name '*.h' \) -exec grep LUA_GLOBALSINDEX "{}" /dev/null ";"
+  273  exit
+  274  mount
+  275  df
+  276  metacity
+  277  sudo reboot
+  278  sudo apt-get update
+  279  sudo apt-get upgrade
+  280  history |less
+  281  history  > /tmp/fish.txt
+  282  ifconfig
+  283  mount
+  284  ls
+  285  ls /dev
+  286  metacity
+  287  history  > ~/tmp/history_snap.txt

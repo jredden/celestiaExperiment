@@ -584,7 +584,8 @@ unix {
     CONFIG += link_pkgconfig
 
     # find pkg-config for lua5.1. Version 5.2+ will not work !!!
-    LUALIST = lua lua51 lua5.1
+    #    LUALIST = lua lua51 lua5.1
+    LUALIST = lua lua53 lua5.3 lua5.3.0
     for(libpc, LUALIST):system(pkg-config --exists $${libpc}):LUAPC = $${libpc}
     isEmpty (LUAPC) {error("No shared Lua library found!")}
 
