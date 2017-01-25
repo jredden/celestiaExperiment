@@ -14,10 +14,11 @@
 
 #include <celengine/parser.h>
 #include "rotation.h"
+#include "scriptorbit.h"
 
 struct lua_State;
 
-class ScriptedRotation : public RotationModel
+class ScriptedRotation : public RotationModel, public ScriptedOrbit
 {
  public:
     EIGEN_MAKE_ALIGNED_OPERATOR_NEW
@@ -33,6 +34,7 @@ class ScriptedRotation : public RotationModel
     virtual bool isPeriodic() const;
     virtual double getPeriod() const;
     virtual void getValidRange(double& begin, double& end) const;
+    virtual int getLuaGlobalIndex() const;
 
  private:
     lua_State* luaState;

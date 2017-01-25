@@ -32,7 +32,6 @@ ScriptedOrbit::~ScriptedOrbit()
 {
 }
 
-
 /*! Initialize the script orbit.
  *  moduleName is the name of a module that contains the orbit factory
  *  function. The module will be loaded with Lua's require function before
@@ -57,11 +56,15 @@ ScriptedOrbit::~ScriptedOrbit()
  *         (TDB Julian day) and returns three values which are the x, y, and
  *         z coordinates. Units for the position are kilometers.
  */
+
+
 bool
 ScriptedOrbit::initialize(const std::string& moduleName,
                           const std::string& funcName,
                           Hash* parameters)
 {
+  
+
     if (parameters == NULL)
         return false;
 
@@ -75,7 +78,7 @@ ScriptedOrbit::initialize(const std::string& moduleName,
     if (!moduleName.empty())
     {
         lua_pushstring(luaState, "require");
-        lua_gettable(luaState, LUA_GLOBALSINDEX);
+        lua_gettable(luaState, getLuaGlobalIndex());
         if (!lua_isfunction(luaState, -1))
         {
             clog << "Cannot load ScriptedOrbit package: 'require' function is unavailable\n";
@@ -94,7 +97,7 @@ ScriptedOrbit::initialize(const std::string& moduleName,
 
     // Get the orbit generator function
     lua_pushstring(luaState, funcName.c_str());
-    lua_gettable(luaState, LUA_GLOBALSINDEX);
+    lua_gettable(luaState, ScriptedOrbit::getLuaGlobalIndex());
 
     if (lua_isfunction(luaState, -1) == 0)
     {
@@ -134,7 +137,7 @@ ScriptedOrbit::initialize(const std::string& moduleName,
     // Attach the name to the script orbit
     lua_pushstring(luaState, luaOrbitObjectName.c_str());
     lua_pushvalue(luaState, -2); // dup the orbit object on top of stack
-    lua_settable(luaState, LUA_GLOBALSINDEX);
+    lua_settable(luaState, ScriptedOrbit::getLuaGlobalIndex());
 
     // Now, call orbit object methods to get the bounding radius
     // and valid time range.
@@ -182,7 +185,7 @@ ScriptedOrbit::computePosition(double tjd) const
     Vector3d pos(Vector3d::Zero());
 
     lua_pushstring(luaState, luaOrbitObjectName.c_str());
-    lua_gettable(luaState, LUA_GLOBALSINDEX);
+    lua_gettable(luaState, ScriptedOrbit::getLuaGlobalIndex());
     if (lua_istable(luaState, -1))
     {
         lua_pushstring(luaState, "position");
@@ -260,4 +263,10 @@ double
 ScriptedOrbit::getBoundingRadius() const
 {
     return boundingRadius;
+}
+
+int ScriptedOrbit::getLuaGlobalIndex() const
+{
+  int LUA_GLOBALSINDEX = 10002;
+  return LUA_GLOBALSINDEX;
 }

@@ -33,6 +33,7 @@ class ScriptedOrbit : public CachingOrbit
     virtual double getPeriod() const;
     virtual double getBoundingRadius() const;
     virtual void getValidRange(double& begin, double& end) const;
+    virtual int getLuaGlobalIndex() const;
 
  private:
     lua_State* luaState;

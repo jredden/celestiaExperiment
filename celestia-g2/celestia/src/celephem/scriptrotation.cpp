@@ -75,7 +75,7 @@ ScriptedRotation::initialize(const std::string& moduleName,
     if (!moduleName.empty())
     {
         lua_pushstring(luaState, "require");
-        lua_gettable(luaState, LUA_GLOBALSINDEX);
+        lua_gettable(luaState, ScriptedOrbit::getLuaGlobalIndex());
         if (!lua_isfunction(luaState, -1))
         {
             clog << "Cannot load ScriptedRotation package: 'require' function is unavailable\n";
@@ -94,7 +94,7 @@ ScriptedRotation::initialize(const std::string& moduleName,
 
     // Get the rotation generator function
     lua_pushstring(luaState, funcName.c_str());
-    lua_gettable(luaState, LUA_GLOBALSINDEX);
+    lua_gettable(luaState, ScriptedOrbit::getLuaGlobalIndex());
 
     if (lua_isfunction(luaState, -1) == 0)
     {
@@ -133,7 +133,7 @@ ScriptedRotation::initialize(const std::string& moduleName,
     // Attach the name to the script rotation
     lua_pushstring(luaState, luaRotationObjectName.c_str());
     lua_pushvalue(luaState, -2); // dup the rotation object on top of stack
-    lua_settable(luaState, LUA_GLOBALSINDEX);
+    lua_settable(luaState, ScriptedOrbit::getLuaGlobalIndex());
 
     // Get the rest of the rotation parameters; they are all optional.
     period          = SafeGetLuaNumber(luaState, -1, "period", 0.0);
@@ -161,7 +161,7 @@ ScriptedRotation::spin(double tjd) const
     if (tjd != lastTime || !cacheable)
     {
         lua_pushstring(luaState, luaRotationObjectName.c_str());
-        lua_gettable(luaState, LUA_GLOBALSINDEX);
+        lua_gettable(luaState, ScriptedOrbit::getLuaGlobalIndex());
         if (lua_istable(luaState, -1))
         {
             lua_pushstring(luaState, "orientation");
