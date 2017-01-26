@@ -167,7 +167,9 @@ public:
     static bool mapsInitialized;
     
     static const char* ClassNames[];
-    
+
+    int getLuaGlobalIndex();    
+
 private:
     lua_State* m_lua;
 };

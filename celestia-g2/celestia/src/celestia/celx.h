@@ -34,6 +34,8 @@ extern "C" {
 class CelestiaCore;
 class View;
 
+
+
 class LuaState
 {
 public:
@@ -83,6 +85,7 @@ public:
         IOAllowed = 4,
         IODenied = 8
     };
+
 
 private:
     lua_State* state;

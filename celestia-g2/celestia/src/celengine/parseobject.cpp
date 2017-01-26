@@ -27,7 +27,7 @@
 #include <celutil/debug.h>
 #include <cassert>
 
-#include "plog/Log.h"
+#include <../plog/Log.h>
 
 using namespace Eigen;
 using namespace std;
