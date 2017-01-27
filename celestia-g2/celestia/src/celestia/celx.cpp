@@ -665,8 +665,8 @@ static int resumeLuaThread(lua_State *L, lua_State *co, int narg)
     //   luaL_error(L, "too many arguments to resume");
     lua_xmove(L, co, narg);
 
-    //    status = lua_resume(co, narg);
-    status = 0;
+    status = lua_resume(co, co, narg);
+    // status = 0;
 #if LUA_VER >= 0x050100
     if (status == 0 || status == LUA_YIELD)
 #else
@@ -974,7 +974,7 @@ int LuaState::loadScript(istream& in, const string& streamname)
         lua_settable(state, LUA_REGISTRYINDEX);
     }
 
-    int status = lua_load(state, readStreamChunk, &info, streamname.c_str());
+    int status = lua_load(state, readStreamChunk, &info, streamname.c_str(), "bt");
     if (status != 0)
         cout << "Error loading script: " << lua_tostring(state, -1) << '\n';
 
