@@ -1,25 +1,57 @@
 /****************************************************************************
 ** Meta object code from reading C++ file 'qtcelestiaactions.h'
 **
-** Created by: The Qt Meta Object Compiler version 63 (Qt 4.8.7)
+** Created by: The Qt Meta Object Compiler version 67 (Qt 5.5.1)
 **
 ** WARNING! All changes made in this file will be lost!
 *****************************************************************************/
 
 #include "../src/celestia/qt/qtcelestiaactions.h"
+#include <QtCore/qbytearray.h>
+#include <QtCore/qmetatype.h>
 #if !defined(Q_MOC_OUTPUT_REVISION)
 #error "The header file 'qtcelestiaactions.h' doesn't include <QObject>."
-#elif Q_MOC_OUTPUT_REVISION != 63
-#error "This file was generated using the moc from 4.8.7. It"
+#elif Q_MOC_OUTPUT_REVISION != 67
+#error "This file was generated using the moc from 5.5.1. It"
 #error "cannot be used with the include files from this version of Qt."
 #error "(The moc has changed too much.)"
 #endif
 
 QT_BEGIN_MOC_NAMESPACE
+struct qt_meta_stringdata_CelestiaActions_t {
+    QByteArrayData data[9];
+    char stringdata0[162];
+};
+#define QT_MOC_LITERAL(idx, ofs, len) \
+    Q_STATIC_BYTE_ARRAY_DATA_HEADER_INITIALIZER_WITH_OFFSET(len, \
+    qptrdiff(offsetof(qt_meta_stringdata_CelestiaActions_t, stringdata0) + ofs \
+        - idx * sizeof(QByteArrayData)) \
+    )
+static const qt_meta_stringdata_CelestiaActions_t qt_meta_stringdata_CelestiaActions = {
+    {
+QT_MOC_LITERAL(0, 0, 15), // "CelestiaActions"
+QT_MOC_LITERAL(1, 16, 20), // "slotToggleRenderFlag"
+QT_MOC_LITERAL(2, 37, 0), // ""
+QT_MOC_LITERAL(3, 38, 15), // "slotToggleLabel"
+QT_MOC_LITERAL(4, 54, 15), // "slotToggleOrbit"
+QT_MOC_LITERAL(5, 70, 16), // "slotSetStarStyle"
+QT_MOC_LITERAL(6, 87, 24), // "slotSetTextureResolution"
+QT_MOC_LITERAL(7, 112, 27), // "slotAdjustLimitingMagnitude"
+QT_MOC_LITERAL(8, 140, 21) // "slotSetLightTimeDelay"
+
+    },
+    "CelestiaActions\0slotToggleRenderFlag\0"
+    "\0slotToggleLabel\0slotToggleOrbit\0"
+    "slotSetStarStyle\0slotSetTextureResolution\0"
+    "slotAdjustLimitingMagnitude\0"
+    "slotSetLightTimeDelay"
+};
+#undef QT_MOC_LITERAL
+
 static const uint qt_meta_data_CelestiaActions[] = {
 
  // content:
-       6,       // revision
+       7,       // revision
        0,       // classname
        0,    0, // classinfo
        7,   14, // methods
@@ -29,31 +61,32 @@ static const uint qt_meta_data_CelestiaActions[] = {
        0,       // flags
        0,       // signalCount
 
- // slots: signature, parameters, type, tag, flags
-      17,   16,   16,   16, 0x08,
-      40,   16,   16,   16, 0x08,
-      58,   16,   16,   16, 0x08,
-      76,   16,   16,   16, 0x08,
-      95,   16,   16,   16, 0x08,
-     122,   16,   16,   16, 0x08,
-     152,   16,   16,   16, 0x08,
+ // slots: name, argc, parameters, tag, flags
+       1,    0,   49,    2, 0x08 /* Private */,
+       3,    0,   50,    2, 0x08 /* Private */,
+       4,    0,   51,    2, 0x08 /* Private */,
+       5,    0,   52,    2, 0x08 /* Private */,
+       6,    0,   53,    2, 0x08 /* Private */,
+       7,    0,   54,    2, 0x08 /* Private */,
+       8,    0,   55,    2, 0x08 /* Private */,
+
+ // slots: parameters
+    QMetaType::Void,
+    QMetaType::Void,
+    QMetaType::Void,
+    QMetaType::Void,
+    QMetaType::Void,
+    QMetaType::Void,
+    QMetaType::Void,
 
        0        // eod
-};
-
-static const char qt_meta_stringdata_CelestiaActions[] = {
-    "CelestiaActions\0\0slotToggleRenderFlag()\0"
-    "slotToggleLabel()\0slotToggleOrbit()\0"
-    "slotSetStarStyle()\0slotSetTextureResolution()\0"
-    "slotAdjustLimitingMagnitude()\0"
-    "slotSetLightTimeDelay()\0"
 };
 
 void CelestiaActions::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, void **_a)
 {
     if (_c == QMetaObject::InvokeMetaMethod) {
-        Q_ASSERT(staticMetaObject.cast(_o));
         CelestiaActions *_t = static_cast<CelestiaActions *>(_o);
+        Q_UNUSED(_t)
         switch (_id) {
         case 0: _t->slotToggleRenderFlag(); break;
         case 1: _t->slotToggleLabel(); break;
@@ -68,28 +101,21 @@ void CelestiaActions::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int 
     Q_UNUSED(_a);
 }
 
-const QMetaObjectExtraData CelestiaActions::staticMetaObjectExtraData = {
-    0,  qt_static_metacall 
-};
-
 const QMetaObject CelestiaActions::staticMetaObject = {
-    { &QObject::staticMetaObject, qt_meta_stringdata_CelestiaActions,
-      qt_meta_data_CelestiaActions, &staticMetaObjectExtraData }
+    { &QObject::staticMetaObject, qt_meta_stringdata_CelestiaActions.data,
+      qt_meta_data_CelestiaActions,  qt_static_metacall, Q_NULLPTR, Q_NULLPTR}
 };
 
-#ifdef Q_NO_DATA_RELOCATION
-const QMetaObject &CelestiaActions::getStaticMetaObject() { return staticMetaObject; }
-#endif //Q_NO_DATA_RELOCATION
 
 const QMetaObject *CelestiaActions::metaObject() const
 {
-    return QObject::d_ptr->metaObject ? QObject::d_ptr->metaObject : &staticMetaObject;
+    return QObject::d_ptr->metaObject ? QObject::d_ptr->dynamicMetaObject() : &staticMetaObject;
 }
 
 void *CelestiaActions::qt_metacast(const char *_clname)
 {
-    if (!_clname) return 0;
-    if (!strcmp(_clname, qt_meta_stringdata_CelestiaActions))
+    if (!_clname) return Q_NULLPTR;
+    if (!strcmp(_clname, qt_meta_stringdata_CelestiaActions.stringdata0))
         return static_cast<void*>(const_cast< CelestiaActions*>(this));
     if (!strcmp(_clname, "RendererWatcher"))
         return static_cast< RendererWatcher*>(const_cast< CelestiaActions*>(this));
@@ -104,6 +130,10 @@ int CelestiaActions::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
     if (_c == QMetaObject::InvokeMetaMethod) {
         if (_id < 7)
             qt_static_metacall(this, _c, _id, _a);
+        _id -= 7;
+    } else if (_c == QMetaObject::RegisterMethodArgumentMetaType) {
+        if (_id < 7)
+            *reinterpret_cast<int*>(_a[0]) = -1;
         _id -= 7;
     }
     return _id;

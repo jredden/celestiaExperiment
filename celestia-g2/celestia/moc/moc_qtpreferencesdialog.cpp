@@ -1,25 +1,193 @@
 /****************************************************************************
 ** Meta object code from reading C++ file 'qtpreferencesdialog.h'
 **
-** Created by: The Qt Meta Object Compiler version 63 (Qt 4.8.7)
+** Created by: The Qt Meta Object Compiler version 67 (Qt 5.5.1)
 **
 ** WARNING! All changes made in this file will be lost!
 *****************************************************************************/
 
 #include "../src/celestia/qt/qtpreferencesdialog.h"
+#include <QtCore/qbytearray.h>
+#include <QtCore/qmetatype.h>
 #if !defined(Q_MOC_OUTPUT_REVISION)
 #error "The header file 'qtpreferencesdialog.h' doesn't include <QObject>."
-#elif Q_MOC_OUTPUT_REVISION != 63
-#error "This file was generated using the moc from 4.8.7. It"
+#elif Q_MOC_OUTPUT_REVISION != 67
+#error "This file was generated using the moc from 5.5.1. It"
 #error "cannot be used with the include files from this version of Qt."
 #error "(The moc has changed too much.)"
 #endif
 
 QT_BEGIN_MOC_NAMESPACE
+struct qt_meta_stringdata_PreferencesDialog_t {
+    QByteArrayData data[78];
+    char stringdata0[2461];
+};
+#define QT_MOC_LITERAL(idx, ofs, len) \
+    Q_STATIC_BYTE_ARRAY_DATA_HEADER_INITIALIZER_WITH_OFFSET(len, \
+    qptrdiff(offsetof(qt_meta_stringdata_PreferencesDialog_t, stringdata0) + ofs \
+        - idx * sizeof(QByteArrayData)) \
+    )
+static const qt_meta_stringdata_PreferencesDialog_t qt_meta_stringdata_PreferencesDialog = {
+    {
+QT_MOC_LITERAL(0, 0, 17), // "PreferencesDialog"
+QT_MOC_LITERAL(1, 18, 26), // "on_starsCheck_stateChanged"
+QT_MOC_LITERAL(2, 45, 0), // ""
+QT_MOC_LITERAL(3, 46, 5), // "state"
+QT_MOC_LITERAL(4, 52, 28), // "on_planetsCheck_stateChanged"
+QT_MOC_LITERAL(5, 81, 29), // "on_galaxiesCheck_stateChanged"
+QT_MOC_LITERAL(6, 111, 28), // "on_nebulaeCheck_stateChanged"
+QT_MOC_LITERAL(7, 140, 33), // "on_openClustersCheck_stateCha..."
+QT_MOC_LITERAL(8, 174, 37), // "on_globularClustersCheck_stat..."
+QT_MOC_LITERAL(9, 212, 32), // "on_atmospheresCheck_stateChanged"
+QT_MOC_LITERAL(10, 245, 27), // "on_cloudsCheck_stateChanged"
+QT_MOC_LITERAL(11, 273, 33), // "on_cloudShadowsCheck_stateCha..."
+QT_MOC_LITERAL(12, 307, 35), // "on_eclipseShadowsCheck_stateC..."
+QT_MOC_LITERAL(13, 343, 32), // "on_ringShadowsCheck_stateChanged"
+QT_MOC_LITERAL(14, 376, 36), // "on_nightsideLightsCheck_state..."
+QT_MOC_LITERAL(15, 413, 31), // "on_cometTailsCheck_stateChanged"
+QT_MOC_LITERAL(16, 445, 37), // "on_limitOfKnowledgeCheck_stat..."
+QT_MOC_LITERAL(17, 483, 27), // "on_orbitsCheck_stateChanged"
+QT_MOC_LITERAL(18, 511, 31), // "on_starOrbitsCheck_stateChanged"
+QT_MOC_LITERAL(19, 543, 33), // "on_planetOrbitsCheck_stateCha..."
+QT_MOC_LITERAL(20, 577, 38), // "on_dwarfPlanetOrbitsCheck_sta..."
+QT_MOC_LITERAL(21, 616, 31), // "on_moonOrbitsCheck_stateChanged"
+QT_MOC_LITERAL(22, 648, 36), // "on_minorMoonOrbitsCheck_state..."
+QT_MOC_LITERAL(23, 685, 35), // "on_asteroidOrbitsCheck_stateC..."
+QT_MOC_LITERAL(24, 721, 32), // "on_cometOrbitsCheck_stateChanged"
+QT_MOC_LITERAL(25, 754, 37), // "on_spacecraftOrbitsCheck_stat..."
+QT_MOC_LITERAL(26, 792, 40), // "on_partialTrajectoriesCheck_s..."
+QT_MOC_LITERAL(27, 833, 35), // "on_equatorialGridCheck_stateC..."
+QT_MOC_LITERAL(28, 869, 33), // "on_eclipticGridCheck_stateCha..."
+QT_MOC_LITERAL(29, 903, 33), // "on_galacticGridCheck_stateCha..."
+QT_MOC_LITERAL(30, 937, 35), // "on_horizontalGridCheck_stateC..."
+QT_MOC_LITERAL(31, 973, 29), // "on_diagramsCheck_stateChanged"
+QT_MOC_LITERAL(32, 1003, 31), // "on_boundariesCheck_stateChanged"
+QT_MOC_LITERAL(33, 1035, 31), // "on_latinNamesCheck_stateChanged"
+QT_MOC_LITERAL(34, 1067, 28), // "on_markersCheck_stateChanged"
+QT_MOC_LITERAL(35, 1096, 33), // "on_eclipticLineCheck_stateCha..."
+QT_MOC_LITERAL(36, 1130, 31), // "on_starLabelsCheck_stateChanged"
+QT_MOC_LITERAL(37, 1162, 33), // "on_planetLabelsCheck_stateCha..."
+QT_MOC_LITERAL(38, 1196, 38), // "on_dwarfPlanetLabelsCheck_sta..."
+QT_MOC_LITERAL(39, 1235, 31), // "on_moonLabelsCheck_stateChanged"
+QT_MOC_LITERAL(40, 1267, 36), // "on_minorMoonLabelsCheck_state..."
+QT_MOC_LITERAL(41, 1304, 35), // "on_asteroidLabelsCheck_stateC..."
+QT_MOC_LITERAL(42, 1340, 32), // "on_cometLabelsCheck_stateChanged"
+QT_MOC_LITERAL(43, 1373, 37), // "on_spacecraftLabelsCheck_stat..."
+QT_MOC_LITERAL(44, 1411, 33), // "on_galaxyLabelsCheck_stateCha..."
+QT_MOC_LITERAL(45, 1445, 33), // "on_nebulaLabelsCheck_stateCha..."
+QT_MOC_LITERAL(46, 1479, 38), // "on_openClusterLabelsCheck_sta..."
+QT_MOC_LITERAL(47, 1518, 42), // "on_globularClusterLabelsCheck..."
+QT_MOC_LITERAL(48, 1561, 40), // "on_constellationLabelsCheck_s..."
+QT_MOC_LITERAL(49, 1602, 30), // "on_locationsCheck_stateChanged"
+QT_MOC_LITERAL(50, 1633, 27), // "on_citiesCheck_stateChanged"
+QT_MOC_LITERAL(51, 1661, 34), // "on_observatoriesCheck_stateCh..."
+QT_MOC_LITERAL(52, 1696, 33), // "on_landingSitesCheck_stateCha..."
+QT_MOC_LITERAL(53, 1730, 27), // "on_montesCheck_stateChanged"
+QT_MOC_LITERAL(54, 1758, 26), // "on_mariaCheck_stateChanged"
+QT_MOC_LITERAL(55, 1785, 28), // "on_cratersCheck_stateChanged"
+QT_MOC_LITERAL(56, 1814, 27), // "on_vallesCheck_stateChanged"
+QT_MOC_LITERAL(57, 1842, 27), // "on_terraeCheck_stateChanged"
+QT_MOC_LITERAL(58, 1870, 30), // "on_volcanoesCheck_stateChanged"
+QT_MOC_LITERAL(59, 1901, 35), // "on_otherLocationsCheck_stateC..."
+QT_MOC_LITERAL(60, 1937, 33), // "on_featureSizeSlider_valueCha..."
+QT_MOC_LITERAL(61, 1971, 5), // "value"
+QT_MOC_LITERAL(62, 1977, 29), // "on_featureSizeEdit_textEdited"
+QT_MOC_LITERAL(63, 2007, 4), // "text"
+QT_MOC_LITERAL(64, 2012, 36), // "on_renderPathBox_currentIndex..."
+QT_MOC_LITERAL(65, 2049, 5), // "index"
+QT_MOC_LITERAL(66, 2055, 35), // "on_antialiasLinesCheck_stateC..."
+QT_MOC_LITERAL(67, 2091, 39), // "on_tintedIlluminationCheck_st..."
+QT_MOC_LITERAL(68, 2131, 30), // "on_lowResolutionButton_clicked"
+QT_MOC_LITERAL(69, 2162, 33), // "on_mediumResolutionButton_cli..."
+QT_MOC_LITERAL(70, 2196, 31), // "on_highResolutionButton_clicked"
+QT_MOC_LITERAL(71, 2228, 34), // "on_ambientLightSlider_valueCh..."
+QT_MOC_LITERAL(72, 2263, 27), // "on_pointStarsButton_clicked"
+QT_MOC_LITERAL(73, 2291, 28), // "on_scaledDiscsButton_clicked"
+QT_MOC_LITERAL(74, 2320, 32), // "on_fuzzyPointStarsButton_clicked"
+QT_MOC_LITERAL(75, 2353, 34), // "on_autoMagnitudeCheck_stateCh..."
+QT_MOC_LITERAL(76, 2388, 35), // "on_starColorBox_currentIndexC..."
+QT_MOC_LITERAL(77, 2424, 36) // "on_dateFormatBox_currentIndex..."
+
+    },
+    "PreferencesDialog\0on_starsCheck_stateChanged\0"
+    "\0state\0on_planetsCheck_stateChanged\0"
+    "on_galaxiesCheck_stateChanged\0"
+    "on_nebulaeCheck_stateChanged\0"
+    "on_openClustersCheck_stateChanged\0"
+    "on_globularClustersCheck_stateChanged\0"
+    "on_atmospheresCheck_stateChanged\0"
+    "on_cloudsCheck_stateChanged\0"
+    "on_cloudShadowsCheck_stateChanged\0"
+    "on_eclipseShadowsCheck_stateChanged\0"
+    "on_ringShadowsCheck_stateChanged\0"
+    "on_nightsideLightsCheck_stateChanged\0"
+    "on_cometTailsCheck_stateChanged\0"
+    "on_limitOfKnowledgeCheck_stateChanged\0"
+    "on_orbitsCheck_stateChanged\0"
+    "on_starOrbitsCheck_stateChanged\0"
+    "on_planetOrbitsCheck_stateChanged\0"
+    "on_dwarfPlanetOrbitsCheck_stateChanged\0"
+    "on_moonOrbitsCheck_stateChanged\0"
+    "on_minorMoonOrbitsCheck_stateChanged\0"
+    "on_asteroidOrbitsCheck_stateChanged\0"
+    "on_cometOrbitsCheck_stateChanged\0"
+    "on_spacecraftOrbitsCheck_stateChanged\0"
+    "on_partialTrajectoriesCheck_stateChanged\0"
+    "on_equatorialGridCheck_stateChanged\0"
+    "on_eclipticGridCheck_stateChanged\0"
+    "on_galacticGridCheck_stateChanged\0"
+    "on_horizontalGridCheck_stateChanged\0"
+    "on_diagramsCheck_stateChanged\0"
+    "on_boundariesCheck_stateChanged\0"
+    "on_latinNamesCheck_stateChanged\0"
+    "on_markersCheck_stateChanged\0"
+    "on_eclipticLineCheck_stateChanged\0"
+    "on_starLabelsCheck_stateChanged\0"
+    "on_planetLabelsCheck_stateChanged\0"
+    "on_dwarfPlanetLabelsCheck_stateChanged\0"
+    "on_moonLabelsCheck_stateChanged\0"
+    "on_minorMoonLabelsCheck_stateChanged\0"
+    "on_asteroidLabelsCheck_stateChanged\0"
+    "on_cometLabelsCheck_stateChanged\0"
+    "on_spacecraftLabelsCheck_stateChanged\0"
+    "on_galaxyLabelsCheck_stateChanged\0"
+    "on_nebulaLabelsCheck_stateChanged\0"
+    "on_openClusterLabelsCheck_stateChanged\0"
+    "on_globularClusterLabelsCheck_stateChanged\0"
+    "on_constellationLabelsCheck_stateChanged\0"
+    "on_locationsCheck_stateChanged\0"
+    "on_citiesCheck_stateChanged\0"
+    "on_observatoriesCheck_stateChanged\0"
+    "on_landingSitesCheck_stateChanged\0"
+    "on_montesCheck_stateChanged\0"
+    "on_mariaCheck_stateChanged\0"
+    "on_cratersCheck_stateChanged\0"
+    "on_vallesCheck_stateChanged\0"
+    "on_terraeCheck_stateChanged\0"
+    "on_volcanoesCheck_stateChanged\0"
+    "on_otherLocationsCheck_stateChanged\0"
+    "on_featureSizeSlider_valueChanged\0"
+    "value\0on_featureSizeEdit_textEdited\0"
+    "text\0on_renderPathBox_currentIndexChanged\0"
+    "index\0on_antialiasLinesCheck_stateChanged\0"
+    "on_tintedIlluminationCheck_stateChanged\0"
+    "on_lowResolutionButton_clicked\0"
+    "on_mediumResolutionButton_clicked\0"
+    "on_highResolutionButton_clicked\0"
+    "on_ambientLightSlider_valueChanged\0"
+    "on_pointStarsButton_clicked\0"
+    "on_scaledDiscsButton_clicked\0"
+    "on_fuzzyPointStarsButton_clicked\0"
+    "on_autoMagnitudeCheck_stateChanged\0"
+    "on_starColorBox_currentIndexChanged\0"
+    "on_dateFormatBox_currentIndexChanged"
+};
+#undef QT_MOC_LITERAL
+
 static const uint qt_meta_data_PreferencesDialog[] = {
 
  // content:
-       6,       // revision
+       7,       // revision
        0,       // classname
        0,    0, // classinfo
       72,   14, // methods
@@ -29,164 +197,162 @@ static const uint qt_meta_data_PreferencesDialog[] = {
        0,       // flags
        0,       // signalCount
 
- // slots: signature, parameters, type, tag, flags
-      25,   19,   18,   18, 0x08,
-      57,   19,   18,   18, 0x08,
-      91,   19,   18,   18, 0x08,
-     126,   19,   18,   18, 0x08,
-     160,   19,   18,   18, 0x08,
-     199,   19,   18,   18, 0x08,
-     242,   19,   18,   18, 0x08,
-     280,   19,   18,   18, 0x08,
-     313,   19,   18,   18, 0x08,
-     352,   19,   18,   18, 0x08,
-     393,   19,   18,   18, 0x08,
-     431,   19,   18,   18, 0x08,
-     473,   19,   18,   18, 0x08,
-     510,   19,   18,   18, 0x08,
-     553,   19,   18,   18, 0x08,
-     586,   19,   18,   18, 0x08,
-     623,   19,   18,   18, 0x08,
-     662,   19,   18,   18, 0x08,
-     706,   19,   18,   18, 0x08,
-     743,   19,   18,   18, 0x08,
-     785,   19,   18,   18, 0x08,
-     826,   19,   18,   18, 0x08,
-     864,   19,   18,   18, 0x08,
-     907,   19,   18,   18, 0x08,
-     953,   19,   18,   18, 0x08,
-     994,   19,   18,   18, 0x08,
-    1033,   19,   18,   18, 0x08,
-    1072,   19,   18,   18, 0x08,
-    1113,   19,   18,   18, 0x08,
-    1148,   19,   18,   18, 0x08,
-    1185,   19,   18,   18, 0x08,
-    1222,   19,   18,   18, 0x08,
-    1256,   19,   18,   18, 0x08,
-    1295,   19,   18,   18, 0x08,
-    1332,   19,   18,   18, 0x08,
-    1371,   19,   18,   18, 0x08,
-    1415,   19,   18,   18, 0x08,
-    1452,   19,   18,   18, 0x08,
-    1494,   19,   18,   18, 0x08,
-    1535,   19,   18,   18, 0x08,
-    1573,   19,   18,   18, 0x08,
-    1616,   19,   18,   18, 0x08,
-    1655,   19,   18,   18, 0x08,
-    1694,   19,   18,   18, 0x08,
-    1738,   19,   18,   18, 0x08,
-    1786,   19,   18,   18, 0x08,
-    1832,   19,   18,   18, 0x08,
-    1868,   19,   18,   18, 0x08,
-    1901,   19,   18,   18, 0x08,
-    1941,   19,   18,   18, 0x08,
-    1980,   19,   18,   18, 0x08,
-    2013,   19,   18,   18, 0x08,
-    2045,   19,   18,   18, 0x08,
-    2079,   19,   18,   18, 0x08,
-    2112,   19,   18,   18, 0x08,
-    2145,   19,   18,   18, 0x08,
-    2181,   19,   18,   18, 0x08,
-    2228, 2222,   18,   18, 0x08,
-    2272, 2267,   18,   18, 0x08,
-    2317, 2311,   18,   18, 0x08,
-    2359,   19,   18,   18, 0x08,
-    2400,   19,   18,   18, 0x08,
-    2445,   18,   18,   18, 0x08,
-    2478,   18,   18,   18, 0x08,
-    2514,   18,   18,   18, 0x08,
-    2548, 2222,   18,   18, 0x08,
-    2588,   18,   18,   18, 0x08,
-    2618,   18,   18,   18, 0x08,
-    2649,   18,   18,   18, 0x08,
-    2684,   19,   18,   18, 0x08,
-    2724, 2311,   18,   18, 0x08,
-    2765, 2311,   18,   18, 0x08,
+ // slots: name, argc, parameters, tag, flags
+       1,    1,  374,    2, 0x08 /* Private */,
+       4,    1,  377,    2, 0x08 /* Private */,
+       5,    1,  380,    2, 0x08 /* Private */,
+       6,    1,  383,    2, 0x08 /* Private */,
+       7,    1,  386,    2, 0x08 /* Private */,
+       8,    1,  389,    2, 0x08 /* Private */,
+       9,    1,  392,    2, 0x08 /* Private */,
+      10,    1,  395,    2, 0x08 /* Private */,
+      11,    1,  398,    2, 0x08 /* Private */,
+      12,    1,  401,    2, 0x08 /* Private */,
+      13,    1,  404,    2, 0x08 /* Private */,
+      14,    1,  407,    2, 0x08 /* Private */,
+      15,    1,  410,    2, 0x08 /* Private */,
+      16,    1,  413,    2, 0x08 /* Private */,
+      17,    1,  416,    2, 0x08 /* Private */,
+      18,    1,  419,    2, 0x08 /* Private */,
+      19,    1,  422,    2, 0x08 /* Private */,
+      20,    1,  425,    2, 0x08 /* Private */,
+      21,    1,  428,    2, 0x08 /* Private */,
+      22,    1,  431,    2, 0x08 /* Private */,
+      23,    1,  434,    2, 0x08 /* Private */,
+      24,    1,  437,    2, 0x08 /* Private */,
+      25,    1,  440,    2, 0x08 /* Private */,
+      26,    1,  443,    2, 0x08 /* Private */,
+      27,    1,  446,    2, 0x08 /* Private */,
+      28,    1,  449,    2, 0x08 /* Private */,
+      29,    1,  452,    2, 0x08 /* Private */,
+      30,    1,  455,    2, 0x08 /* Private */,
+      31,    1,  458,    2, 0x08 /* Private */,
+      32,    1,  461,    2, 0x08 /* Private */,
+      33,    1,  464,    2, 0x08 /* Private */,
+      34,    1,  467,    2, 0x08 /* Private */,
+      35,    1,  470,    2, 0x08 /* Private */,
+      36,    1,  473,    2, 0x08 /* Private */,
+      37,    1,  476,    2, 0x08 /* Private */,
+      38,    1,  479,    2, 0x08 /* Private */,
+      39,    1,  482,    2, 0x08 /* Private */,
+      40,    1,  485,    2, 0x08 /* Private */,
+      41,    1,  488,    2, 0x08 /* Private */,
+      42,    1,  491,    2, 0x08 /* Private */,
+      43,    1,  494,    2, 0x08 /* Private */,
+      44,    1,  497,    2, 0x08 /* Private */,
+      45,    1,  500,    2, 0x08 /* Private */,
+      46,    1,  503,    2, 0x08 /* Private */,
+      47,    1,  506,    2, 0x08 /* Private */,
+      48,    1,  509,    2, 0x08 /* Private */,
+      49,    1,  512,    2, 0x08 /* Private */,
+      50,    1,  515,    2, 0x08 /* Private */,
+      51,    1,  518,    2, 0x08 /* Private */,
+      52,    1,  521,    2, 0x08 /* Private */,
+      53,    1,  524,    2, 0x08 /* Private */,
+      54,    1,  527,    2, 0x08 /* Private */,
+      55,    1,  530,    2, 0x08 /* Private */,
+      56,    1,  533,    2, 0x08 /* Private */,
+      57,    1,  536,    2, 0x08 /* Private */,
+      58,    1,  539,    2, 0x08 /* Private */,
+      59,    1,  542,    2, 0x08 /* Private */,
+      60,    1,  545,    2, 0x08 /* Private */,
+      62,    1,  548,    2, 0x08 /* Private */,
+      64,    1,  551,    2, 0x08 /* Private */,
+      66,    1,  554,    2, 0x08 /* Private */,
+      67,    1,  557,    2, 0x08 /* Private */,
+      68,    0,  560,    2, 0x08 /* Private */,
+      69,    0,  561,    2, 0x08 /* Private */,
+      70,    0,  562,    2, 0x08 /* Private */,
+      71,    1,  563,    2, 0x08 /* Private */,
+      72,    0,  566,    2, 0x08 /* Private */,
+      73,    0,  567,    2, 0x08 /* Private */,
+      74,    0,  568,    2, 0x08 /* Private */,
+      75,    1,  569,    2, 0x08 /* Private */,
+      76,    1,  572,    2, 0x08 /* Private */,
+      77,    1,  575,    2, 0x08 /* Private */,
+
+ // slots: parameters
+    QMetaType::Void, QMetaType::Int,    3,
+    QMetaType::Void, QMetaType::Int,    3,
+    QMetaType::Void, QMetaType::Int,    3,
+    QMetaType::Void, QMetaType::Int,    3,
+    QMetaType::Void, QMetaType::Int,    3,
+    QMetaType::Void, QMetaType::Int,    3,
+    QMetaType::Void, QMetaType::Int,    3,
+    QMetaType::Void, QMetaType::Int,    3,
+    QMetaType::Void, QMetaType::Int,    3,
+    QMetaType::Void, QMetaType::Int,    3,
+    QMetaType::Void, QMetaType::Int,    3,
+    QMetaType::Void, QMetaType::Int,    3,
+    QMetaType::Void, QMetaType::Int,    3,
+    QMetaType::Void, QMetaType::Int,    3,
+    QMetaType::Void, QMetaType::Int,    3,
+    QMetaType::Void, QMetaType::Int,    3,
+    QMetaType::Void, QMetaType::Int,    3,
+    QMetaType::Void, QMetaType::Int,    3,
+    QMetaType::Void, QMetaType::Int,    3,
+    QMetaType::Void, QMetaType::Int,    3,
+    QMetaType::Void, QMetaType::Int,    3,
+    QMetaType::Void, QMetaType::Int,    3,
+    QMetaType::Void, QMetaType::Int,    3,
+    QMetaType::Void, QMetaType::Int,    3,
+    QMetaType::Void, QMetaType::Int,    3,
+    QMetaType::Void, QMetaType::Int,    3,
+    QMetaType::Void, QMetaType::Int,    3,
+    QMetaType::Void, QMetaType::Int,    3,
+    QMetaType::Void, QMetaType::Int,    3,
+    QMetaType::Void, QMetaType::Int,    3,
+    QMetaType::Void, QMetaType::Int,    3,
+    QMetaType::Void, QMetaType::Int,    3,
+    QMetaType::Void, QMetaType::Int,    3,
+    QMetaType::Void, QMetaType::Int,    3,
+    QMetaType::Void, QMetaType::Int,    3,
+    QMetaType::Void, QMetaType::Int,    3,
+    QMetaType::Void, QMetaType::Int,    3,
+    QMetaType::Void, QMetaType::Int,    3,
+    QMetaType::Void, QMetaType::Int,    3,
+    QMetaType::Void, QMetaType::Int,    3,
+    QMetaType::Void, QMetaType::Int,    3,
+    QMetaType::Void, QMetaType::Int,    3,
+    QMetaType::Void, QMetaType::Int,    3,
+    QMetaType::Void, QMetaType::Int,    3,
+    QMetaType::Void, QMetaType::Int,    3,
+    QMetaType::Void, QMetaType::Int,    3,
+    QMetaType::Void, QMetaType::Int,    3,
+    QMetaType::Void, QMetaType::Int,    3,
+    QMetaType::Void, QMetaType::Int,    3,
+    QMetaType::Void, QMetaType::Int,    3,
+    QMetaType::Void, QMetaType::Int,    3,
+    QMetaType::Void, QMetaType::Int,    3,
+    QMetaType::Void, QMetaType::Int,    3,
+    QMetaType::Void, QMetaType::Int,    3,
+    QMetaType::Void, QMetaType::Int,    3,
+    QMetaType::Void, QMetaType::Int,    3,
+    QMetaType::Void, QMetaType::Int,    3,
+    QMetaType::Void, QMetaType::Int,   61,
+    QMetaType::Void, QMetaType::QString,   63,
+    QMetaType::Void, QMetaType::Int,   65,
+    QMetaType::Void, QMetaType::Int,    3,
+    QMetaType::Void, QMetaType::Int,    3,
+    QMetaType::Void,
+    QMetaType::Void,
+    QMetaType::Void,
+    QMetaType::Void, QMetaType::Int,   61,
+    QMetaType::Void,
+    QMetaType::Void,
+    QMetaType::Void,
+    QMetaType::Void, QMetaType::Int,    3,
+    QMetaType::Void, QMetaType::Int,   65,
+    QMetaType::Void, QMetaType::Int,   65,
 
        0        // eod
-};
-
-static const char qt_meta_stringdata_PreferencesDialog[] = {
-    "PreferencesDialog\0\0state\0"
-    "on_starsCheck_stateChanged(int)\0"
-    "on_planetsCheck_stateChanged(int)\0"
-    "on_galaxiesCheck_stateChanged(int)\0"
-    "on_nebulaeCheck_stateChanged(int)\0"
-    "on_openClustersCheck_stateChanged(int)\0"
-    "on_globularClustersCheck_stateChanged(int)\0"
-    "on_atmospheresCheck_stateChanged(int)\0"
-    "on_cloudsCheck_stateChanged(int)\0"
-    "on_cloudShadowsCheck_stateChanged(int)\0"
-    "on_eclipseShadowsCheck_stateChanged(int)\0"
-    "on_ringShadowsCheck_stateChanged(int)\0"
-    "on_nightsideLightsCheck_stateChanged(int)\0"
-    "on_cometTailsCheck_stateChanged(int)\0"
-    "on_limitOfKnowledgeCheck_stateChanged(int)\0"
-    "on_orbitsCheck_stateChanged(int)\0"
-    "on_starOrbitsCheck_stateChanged(int)\0"
-    "on_planetOrbitsCheck_stateChanged(int)\0"
-    "on_dwarfPlanetOrbitsCheck_stateChanged(int)\0"
-    "on_moonOrbitsCheck_stateChanged(int)\0"
-    "on_minorMoonOrbitsCheck_stateChanged(int)\0"
-    "on_asteroidOrbitsCheck_stateChanged(int)\0"
-    "on_cometOrbitsCheck_stateChanged(int)\0"
-    "on_spacecraftOrbitsCheck_stateChanged(int)\0"
-    "on_partialTrajectoriesCheck_stateChanged(int)\0"
-    "on_equatorialGridCheck_stateChanged(int)\0"
-    "on_eclipticGridCheck_stateChanged(int)\0"
-    "on_galacticGridCheck_stateChanged(int)\0"
-    "on_horizontalGridCheck_stateChanged(int)\0"
-    "on_diagramsCheck_stateChanged(int)\0"
-    "on_boundariesCheck_stateChanged(int)\0"
-    "on_latinNamesCheck_stateChanged(int)\0"
-    "on_markersCheck_stateChanged(int)\0"
-    "on_eclipticLineCheck_stateChanged(int)\0"
-    "on_starLabelsCheck_stateChanged(int)\0"
-    "on_planetLabelsCheck_stateChanged(int)\0"
-    "on_dwarfPlanetLabelsCheck_stateChanged(int)\0"
-    "on_moonLabelsCheck_stateChanged(int)\0"
-    "on_minorMoonLabelsCheck_stateChanged(int)\0"
-    "on_asteroidLabelsCheck_stateChanged(int)\0"
-    "on_cometLabelsCheck_stateChanged(int)\0"
-    "on_spacecraftLabelsCheck_stateChanged(int)\0"
-    "on_galaxyLabelsCheck_stateChanged(int)\0"
-    "on_nebulaLabelsCheck_stateChanged(int)\0"
-    "on_openClusterLabelsCheck_stateChanged(int)\0"
-    "on_globularClusterLabelsCheck_stateChanged(int)\0"
-    "on_constellationLabelsCheck_stateChanged(int)\0"
-    "on_locationsCheck_stateChanged(int)\0"
-    "on_citiesCheck_stateChanged(int)\0"
-    "on_observatoriesCheck_stateChanged(int)\0"
-    "on_landingSitesCheck_stateChanged(int)\0"
-    "on_montesCheck_stateChanged(int)\0"
-    "on_mariaCheck_stateChanged(int)\0"
-    "on_cratersCheck_stateChanged(int)\0"
-    "on_vallesCheck_stateChanged(int)\0"
-    "on_terraeCheck_stateChanged(int)\0"
-    "on_volcanoesCheck_stateChanged(int)\0"
-    "on_otherLocationsCheck_stateChanged(int)\0"
-    "value\0on_featureSizeSlider_valueChanged(int)\0"
-    "text\0on_featureSizeEdit_textEdited(QString)\0"
-    "index\0on_renderPathBox_currentIndexChanged(int)\0"
-    "on_antialiasLinesCheck_stateChanged(int)\0"
-    "on_tintedIlluminationCheck_stateChanged(int)\0"
-    "on_lowResolutionButton_clicked()\0"
-    "on_mediumResolutionButton_clicked()\0"
-    "on_highResolutionButton_clicked()\0"
-    "on_ambientLightSlider_valueChanged(int)\0"
-    "on_pointStarsButton_clicked()\0"
-    "on_scaledDiscsButton_clicked()\0"
-    "on_fuzzyPointStarsButton_clicked()\0"
-    "on_autoMagnitudeCheck_stateChanged(int)\0"
-    "on_starColorBox_currentIndexChanged(int)\0"
-    "on_dateFormatBox_currentIndexChanged(int)\0"
 };
 
 void PreferencesDialog::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, void **_a)
 {
     if (_c == QMetaObject::InvokeMetaMethod) {
-        Q_ASSERT(staticMetaObject.cast(_o));
         PreferencesDialog *_t = static_cast<PreferencesDialog *>(_o);
+        Q_UNUSED(_t)
         switch (_id) {
         case 0: _t->on_starsCheck_stateChanged((*reinterpret_cast< int(*)>(_a[1]))); break;
         case 1: _t->on_planetsCheck_stateChanged((*reinterpret_cast< int(*)>(_a[1]))); break;
@@ -265,28 +431,21 @@ void PreferencesDialog::qt_static_metacall(QObject *_o, QMetaObject::Call _c, in
     }
 }
 
-const QMetaObjectExtraData PreferencesDialog::staticMetaObjectExtraData = {
-    0,  qt_static_metacall 
-};
-
 const QMetaObject PreferencesDialog::staticMetaObject = {
-    { &QDialog::staticMetaObject, qt_meta_stringdata_PreferencesDialog,
-      qt_meta_data_PreferencesDialog, &staticMetaObjectExtraData }
+    { &QDialog::staticMetaObject, qt_meta_stringdata_PreferencesDialog.data,
+      qt_meta_data_PreferencesDialog,  qt_static_metacall, Q_NULLPTR, Q_NULLPTR}
 };
 
-#ifdef Q_NO_DATA_RELOCATION
-const QMetaObject &PreferencesDialog::getStaticMetaObject() { return staticMetaObject; }
-#endif //Q_NO_DATA_RELOCATION
 
 const QMetaObject *PreferencesDialog::metaObject() const
 {
-    return QObject::d_ptr->metaObject ? QObject::d_ptr->metaObject : &staticMetaObject;
+    return QObject::d_ptr->metaObject ? QObject::d_ptr->dynamicMetaObject() : &staticMetaObject;
 }
 
 void *PreferencesDialog::qt_metacast(const char *_clname)
 {
-    if (!_clname) return 0;
-    if (!strcmp(_clname, qt_meta_stringdata_PreferencesDialog))
+    if (!_clname) return Q_NULLPTR;
+    if (!strcmp(_clname, qt_meta_stringdata_PreferencesDialog.stringdata0))
         return static_cast<void*>(const_cast< PreferencesDialog*>(this));
     return QDialog::qt_metacast(_clname);
 }
@@ -299,6 +458,10 @@ int PreferencesDialog::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
     if (_c == QMetaObject::InvokeMetaMethod) {
         if (_id < 72)
             qt_static_metacall(this, _c, _id, _a);
+        _id -= 72;
+    } else if (_c == QMetaObject::RegisterMethodArgumentMetaType) {
+        if (_id < 72)
+            *reinterpret_cast<int*>(_a[0]) = -1;
         _id -= 72;
     }
     return _id;

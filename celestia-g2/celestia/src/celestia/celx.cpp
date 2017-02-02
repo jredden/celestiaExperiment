@@ -3547,7 +3547,7 @@ bool LuaState::init(CelestiaCore* appCore)
     openLuaLibrary(state, LUA_STRLIBNAME, luaopen_string);
     // Make the package library, except the loadlib function, available
     // for celx regardless of script system access policy.
-		allowLuaPackageAccess();
+    // allowLuaPackageAccess();
 #else
     lua_baselibopen(state);
     lua_mathlibopen(state);
@@ -3572,14 +3572,14 @@ bool LuaState::init(CelestiaCore* appCore)
 
     lua_pushstring(state, "KM_PER_MICROLY");
     lua_pushnumber(state, (lua_Number)KM_PER_LY/1e6);
-    lua_settable(state, getLuaGlobalIndex());
+    // lua_settable(state, getLuaGlobalIndex());
 
     loadLuaLibs(state);
 
     // Create the celestia object
     lua_pushstring(state, "celestia");
     celestia_new(state, appCore);
-    lua_settable(state, getLuaGlobalIndex());
+    // lua_settable(state, getLuaGlobalIndex());
     // add reference to appCore in the registry
     lua_pushstring(state, "celestia-appcore");
     lua_pushlightuserdata(state, static_cast<void*>(appCore));
@@ -3614,16 +3614,17 @@ bool LuaState::init(CelestiaCore* appCore)
 
 void LuaState::setLuaPath(const string& s)
 {
-#if LUA_VER >= 0x050100
-    lua_getfield(state, getLuaGlobalIndex(), "package");
+  /* #if LUA_VER >= 0x050100
+    // lua_getfield(state, getLuaGlobalIndex(), "package");
     lua_pushstring(state, s.c_str());
     lua_setfield(state, -2, "path");
     lua_pop(state, 1);
 #else
+  */
     lua_pushstring(state, "LUA_PATH");
     lua_pushstring(state, s.c_str());
-    lua_settable(state, getLuaGlobalIndex());
-#endif
+    // lua_settable(state, getLuaGlobalIndex());
+/* #endif */
 }
 
 
@@ -4129,9 +4130,9 @@ void LuaState::allowLuaPackageAccess()
     openLuaLibrary(state, LUA_LOADLIBNAME, luaopen_package);
 
     // Disallow loadlib
-    lua_getfield(state, getLuaGlobalIndex(), "package");
+    // lua_getfield(state, getLuaGlobalIndex(), "package");
     lua_pushnil(state);
-    lua_setfield(state, -2, "loadlib");
+    //   lua_setfield(state, -2, "loadlib");
     lua_pop(state, 1);
 #endif
 }
@@ -4595,6 +4596,6 @@ LuaState* CelxLua::getLuaStateObject()
 
 int CelxLua::getLuaGlobalIndex()
 {
-  int LUA_GLOBALSINDEX = 10002;
+  int LUA_GLOBALSINDEX = -10002;
   return LUA_GLOBALSINDEX;
 }
