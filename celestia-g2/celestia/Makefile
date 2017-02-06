@@ -12,10 +12,10 @@ MAKEFILE      = Makefile
 
 CC            = gcc
 CXX           = g++
-DEFINES       = -DGLEW_STATIC -DUSE_SPICE -DEIGEN_NO_DEBUG -DEIGEN_NO_DEBUG -DNDEBUG -DNO_DEBUG -DTHEORA -DCELX -DLUA_VER=0x050300 -DCONFIG_DATA_DIR=\"/usr/local/share/celestia\" -DQT_NO_DEBUG -DQT_OPENGL_LIB -DQT_WIDGETS_LIB -DQT_GUI_LIB -DQT_XML_LIB -DQT_CORE_LIB
-CFLAGS        = -m64 -pipe -O0 -ggdb -Wall -W -D_REENTRANT -fPIC $(DEFINES)
-CXXFLAGS      = -m64 -pipe -O0 -ggdb -Wall -Wextra -W -D_REENTRANT -fPIC $(DEFINES)
-INCPATH       = -I. -I. -Isrc -Ithirdparty/glew/include -Ithirdparty/Eigen -Ithirdparty/curveplot/include -I/opt/cspice/include -isystem /usr/include/libdrm -isystem /home/johnredden/Src/lua-5.3.4/install/include -isystem /usr/include/libpng12 -isystem /usr/include/x86_64-linux-gnu/qt5 -isystem /usr/include/x86_64-linux-gnu/qt5/QtOpenGL -isystem /usr/include/x86_64-linux-gnu/qt5/QtWidgets -isystem /usr/include/x86_64-linux-gnu/qt5/QtGui -isystem /usr/include/x86_64-linux-gnu/qt5/QtXml -isystem /usr/include/x86_64-linux-gnu/qt5/QtCore -Imoc -I. -I/usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++-64
+DEFINES       = -DGLEW_STATIC -DUSE_SPICE -DEIGEN_NO_DEBUG -DEIGEN_NO_DEBUG -DNDEBUG -DNO_DEBUG -DTHEORA -DCELX -DLUA_VER=0x050100 -DCONFIG_DATA_DIR=\"/usr/local/share/celestia\" -DQT_NO_DEBUG -DQT_OPENGL_LIB -DQT_WIDGETS_LIB -DQT_GUI_LIB -DQT_XML_LIB -DQT_CORE_LIB
+CFLAGS        = -m64 -pipe -O2 -Wall -W -D_REENTRANT -fPIC $(DEFINES)
+CXXFLAGS      = -m64 -pipe -O2 -Wall -W -D_REENTRANT -fPIC $(DEFINES)
+INCPATH       = -I. -I. -Isrc -Ithirdparty/glew/include -Ithirdparty/Eigen -Ithirdparty/curveplot/include -I/opt/cspice/include -isystem /usr/include/libdrm -isystem /usr/include/lua5.3 -isystem /usr/include/libpng12 -isystem /usr/include/x86_64-linux-gnu/qt5 -isystem /usr/include/x86_64-linux-gnu/qt5/QtOpenGL -isystem /usr/include/x86_64-linux-gnu/qt5/QtWidgets -isystem /usr/include/x86_64-linux-gnu/qt5/QtGui -isystem /usr/include/x86_64-linux-gnu/qt5/QtXml -isystem /usr/include/x86_64-linux-gnu/qt5/QtCore -Imoc -I. -I/usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++-64
 QMAKE         = /usr/lib/x86_64-linux-gnu/qt5/bin/qmake
 DEL_FILE      = rm -f
 CHK_DIR_EXISTS= test -d
@@ -36,7 +36,7 @@ DISTNAME      = celestia1.7.0
 DISTDIR = /home/johnredden/Src/celestiaExperiment/celestia-g2/celestia/obj/celestia1.7.0
 LINK          = g++
 LFLAGS        = -m64 -Wl,-O1
-LIBS          = $(SUBLIBS) -L/usr/X11R6/lib64 -ljpeg /opt/cspice/lib/cspice.a -lGLU /home/johnredden/Src/lua-5.3.4/install/lib/liblua.a -lpng12 -ltheora -logg -lQt5OpenGL -lQt5Widgets -lQt5Gui -lQt5Xml -lQt5Core -lGL -lpthread -ldl
+LIBS          = $(SUBLIBS) -L/usr/X11R6/lib64 -ljpeg /opt/cspice/lib/cspice.a -lGLU -llua5.3 -lpng12 -ltheora -logg -lQt5OpenGL -lQt5Widgets -lQt5Gui -lQt5Xml -lQt5Core -lGL -lpthread 
 AR            = ar cqs
 RANLIB        = 
 SED           = sed
@@ -800,12 +800,7 @@ Makefile: celestia.pro /usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++-64/qmake.
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/yacc.prf \
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/lex.prf \
 		celestia.pro \
-		src/celestia/qt/icons.qrc \
-		/usr/lib/x86_64-linux-gnu/libQt5OpenGL.prl \
-		/usr/lib/x86_64-linux-gnu/libQt5Widgets.prl \
-		/usr/lib/x86_64-linux-gnu/libQt5Gui.prl \
-		/usr/lib/x86_64-linux-gnu/libQt5Xml.prl \
-		/usr/lib/x86_64-linux-gnu/libQt5Core.prl
+		src/celestia/qt/icons.qrc
 	$(QMAKE) -Wall -o Makefile celestia.pro
 /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/spec_pre.prf:
 /usr/lib/x86_64-linux-gnu/qt5/mkspecs/common/unix.conf:
@@ -866,11 +861,6 @@ Makefile: celestia.pro /usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++-64/qmake.
 /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/lex.prf:
 celestia.pro:
 src/celestia/qt/icons.qrc:
-/usr/lib/x86_64-linux-gnu/libQt5OpenGL.prl:
-/usr/lib/x86_64-linux-gnu/libQt5Widgets.prl:
-/usr/lib/x86_64-linux-gnu/libQt5Gui.prl:
-/usr/lib/x86_64-linux-gnu/libQt5Xml.prl:
-/usr/lib/x86_64-linux-gnu/libQt5Core.prl:
 qmake: FORCE
 	@$(QMAKE) -Wall -o Makefile celestia.pro
 
@@ -1079,14 +1069,15 @@ moc/moc_qtappwin.cpp: src/celestia/celestiacore.h \
 		src/celestia/destination.h \
 		src/celestia/moviecapture.h \
 		src/celestia/celx.h \
+		src/celephem/lua.h \
 		src/celestia/qt/qtappwin.h
-	/usr/lib/x86_64-linux-gnu/qt5/bin/moc $(DEFINES) -I/usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++-64 -I/home/johnredden/Src/celestiaExperiment/celestia-g2/celestia -I/home/johnredden/Src/celestiaExperiment/celestia-g2/celestia -I/home/johnredden/Src/celestiaExperiment/celestia-g2/celestia/src -I/home/johnredden/Src/celestiaExperiment/celestia-g2/celestia/thirdparty/glew/include -I/home/johnredden/Src/celestiaExperiment/celestia-g2/celestia/thirdparty/Eigen -I/home/johnredden/Src/celestiaExperiment/celestia-g2/celestia/thirdparty/curveplot/include -I/opt/cspice/include -I/usr/include/libdrm -I/home/johnredden/Src/lua-5.3.4/install/include -I/usr/include/libpng12 -I/usr/include/x86_64-linux-gnu/qt5 -I/usr/include/x86_64-linux-gnu/qt5/QtOpenGL -I/usr/include/x86_64-linux-gnu/qt5/QtWidgets -I/usr/include/x86_64-linux-gnu/qt5/QtGui -I/usr/include/x86_64-linux-gnu/qt5/QtXml -I/usr/include/x86_64-linux-gnu/qt5/QtCore -I/usr/include/c++/5 -I/usr/include/x86_64-linux-gnu/c++/5 -I/usr/include/c++/5/backward -I/usr/lib/gcc/x86_64-linux-gnu/5/include -I/usr/local/include -I/usr/lib/gcc/x86_64-linux-gnu/5/include-fixed -I/usr/include/x86_64-linux-gnu -I/usr/include src/celestia/qt/qtappwin.h -o moc/moc_qtappwin.cpp
+	/usr/lib/x86_64-linux-gnu/qt5/bin/moc $(DEFINES) -I/usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++-64 -I/home/johnredden/Src/celestiaExperiment/celestia-g2/celestia -I/home/johnredden/Src/celestiaExperiment/celestia-g2/celestia -I/home/johnredden/Src/celestiaExperiment/celestia-g2/celestia/src -I/home/johnredden/Src/celestiaExperiment/celestia-g2/celestia/thirdparty/glew/include -I/home/johnredden/Src/celestiaExperiment/celestia-g2/celestia/thirdparty/Eigen -I/home/johnredden/Src/celestiaExperiment/celestia-g2/celestia/thirdparty/curveplot/include -I/opt/cspice/include -I/usr/include/libdrm -I/usr/include/lua5.3 -I/usr/include/libpng12 -I/usr/include/x86_64-linux-gnu/qt5 -I/usr/include/x86_64-linux-gnu/qt5/QtOpenGL -I/usr/include/x86_64-linux-gnu/qt5/QtWidgets -I/usr/include/x86_64-linux-gnu/qt5/QtGui -I/usr/include/x86_64-linux-gnu/qt5/QtXml -I/usr/include/x86_64-linux-gnu/qt5/QtCore -I/usr/include/c++/5 -I/usr/include/x86_64-linux-gnu/c++/5 -I/usr/include/c++/5/backward -I/usr/lib/gcc/x86_64-linux-gnu/5/include -I/usr/local/include -I/usr/lib/gcc/x86_64-linux-gnu/5/include-fixed -I/usr/include/x86_64-linux-gnu -I/usr/include src/celestia/qt/qtappwin.h -o moc/moc_qtappwin.cpp
 
 moc/moc_qtbookmark.cpp: ui_addbookmark.h \
 		ui_newbookmarkfolder.h \
 		ui_organizebookmarks.h \
 		src/celestia/qt/qtbookmark.h
-	/usr/lib/x86_64-linux-gnu/qt5/bin/moc $(DEFINES) -I/usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++-64 -I/home/johnredden/Src/celestiaExperiment/celestia-g2/celestia -I/home/johnredden/Src/celestiaExperiment/celestia-g2/celestia -I/home/johnredden/Src/celestiaExperiment/celestia-g2/celestia/src -I/home/johnredden/Src/celestiaExperiment/celestia-g2/celestia/thirdparty/glew/include -I/home/johnredden/Src/celestiaExperiment/celestia-g2/celestia/thirdparty/Eigen -I/home/johnredden/Src/celestiaExperiment/celestia-g2/celestia/thirdparty/curveplot/include -I/opt/cspice/include -I/usr/include/libdrm -I/home/johnredden/Src/lua-5.3.4/install/include -I/usr/include/libpng12 -I/usr/include/x86_64-linux-gnu/qt5 -I/usr/include/x86_64-linux-gnu/qt5/QtOpenGL -I/usr/include/x86_64-linux-gnu/qt5/QtWidgets -I/usr/include/x86_64-linux-gnu/qt5/QtGui -I/usr/include/x86_64-linux-gnu/qt5/QtXml -I/usr/include/x86_64-linux-gnu/qt5/QtCore -I/usr/include/c++/5 -I/usr/include/x86_64-linux-gnu/c++/5 -I/usr/include/c++/5/backward -I/usr/lib/gcc/x86_64-linux-gnu/5/include -I/usr/local/include -I/usr/lib/gcc/x86_64-linux-gnu/5/include-fixed -I/usr/include/x86_64-linux-gnu -I/usr/include src/celestia/qt/qtbookmark.h -o moc/moc_qtbookmark.cpp
+	/usr/lib/x86_64-linux-gnu/qt5/bin/moc $(DEFINES) -I/usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++-64 -I/home/johnredden/Src/celestiaExperiment/celestia-g2/celestia -I/home/johnredden/Src/celestiaExperiment/celestia-g2/celestia -I/home/johnredden/Src/celestiaExperiment/celestia-g2/celestia/src -I/home/johnredden/Src/celestiaExperiment/celestia-g2/celestia/thirdparty/glew/include -I/home/johnredden/Src/celestiaExperiment/celestia-g2/celestia/thirdparty/Eigen -I/home/johnredden/Src/celestiaExperiment/celestia-g2/celestia/thirdparty/curveplot/include -I/opt/cspice/include -I/usr/include/libdrm -I/usr/include/lua5.3 -I/usr/include/libpng12 -I/usr/include/x86_64-linux-gnu/qt5 -I/usr/include/x86_64-linux-gnu/qt5/QtOpenGL -I/usr/include/x86_64-linux-gnu/qt5/QtWidgets -I/usr/include/x86_64-linux-gnu/qt5/QtGui -I/usr/include/x86_64-linux-gnu/qt5/QtXml -I/usr/include/x86_64-linux-gnu/qt5/QtCore -I/usr/include/c++/5 -I/usr/include/x86_64-linux-gnu/c++/5 -I/usr/include/c++/5/backward -I/usr/lib/gcc/x86_64-linux-gnu/5/include -I/usr/local/include -I/usr/lib/gcc/x86_64-linux-gnu/5/include-fixed -I/usr/include/x86_64-linux-gnu -I/usr/include src/celestia/qt/qtbookmark.h -o moc/moc_qtbookmark.cpp
 
 moc/moc_qtglwidget.cpp: thirdparty/glew/include/GL/glew.h \
 		src/celestia/celestiacore.h \
@@ -1235,14 +1226,15 @@ moc/moc_qtglwidget.cpp: thirdparty/glew/include/GL/glew.h \
 		src/celestia/destination.h \
 		src/celestia/moviecapture.h \
 		src/celestia/celx.h \
+		src/celephem/lua.h \
 		src/celengine/starbrowser.h \
 		src/celestia/qt/qtglwidget.h
-	/usr/lib/x86_64-linux-gnu/qt5/bin/moc $(DEFINES) -I/usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++-64 -I/home/johnredden/Src/celestiaExperiment/celestia-g2/celestia -I/home/johnredden/Src/celestiaExperiment/celestia-g2/celestia -I/home/johnredden/Src/celestiaExperiment/celestia-g2/celestia/src -I/home/johnredden/Src/celestiaExperiment/celestia-g2/celestia/thirdparty/glew/include -I/home/johnredden/Src/celestiaExperiment/celestia-g2/celestia/thirdparty/Eigen -I/home/johnredden/Src/celestiaExperiment/celestia-g2/celestia/thirdparty/curveplot/include -I/opt/cspice/include -I/usr/include/libdrm -I/home/johnredden/Src/lua-5.3.4/install/include -I/usr/include/libpng12 -I/usr/include/x86_64-linux-gnu/qt5 -I/usr/include/x86_64-linux-gnu/qt5/QtOpenGL -I/usr/include/x86_64-linux-gnu/qt5/QtWidgets -I/usr/include/x86_64-linux-gnu/qt5/QtGui -I/usr/include/x86_64-linux-gnu/qt5/QtXml -I/usr/include/x86_64-linux-gnu/qt5/QtCore -I/usr/include/c++/5 -I/usr/include/x86_64-linux-gnu/c++/5 -I/usr/include/c++/5/backward -I/usr/lib/gcc/x86_64-linux-gnu/5/include -I/usr/local/include -I/usr/lib/gcc/x86_64-linux-gnu/5/include-fixed -I/usr/include/x86_64-linux-gnu -I/usr/include src/celestia/qt/qtglwidget.h -o moc/moc_qtglwidget.cpp
+	/usr/lib/x86_64-linux-gnu/qt5/bin/moc $(DEFINES) -I/usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++-64 -I/home/johnredden/Src/celestiaExperiment/celestia-g2/celestia -I/home/johnredden/Src/celestiaExperiment/celestia-g2/celestia -I/home/johnredden/Src/celestiaExperiment/celestia-g2/celestia/src -I/home/johnredden/Src/celestiaExperiment/celestia-g2/celestia/thirdparty/glew/include -I/home/johnredden/Src/celestiaExperiment/celestia-g2/celestia/thirdparty/Eigen -I/home/johnredden/Src/celestiaExperiment/celestia-g2/celestia/thirdparty/curveplot/include -I/opt/cspice/include -I/usr/include/libdrm -I/usr/include/lua5.3 -I/usr/include/libpng12 -I/usr/include/x86_64-linux-gnu/qt5 -I/usr/include/x86_64-linux-gnu/qt5/QtOpenGL -I/usr/include/x86_64-linux-gnu/qt5/QtWidgets -I/usr/include/x86_64-linux-gnu/qt5/QtGui -I/usr/include/x86_64-linux-gnu/qt5/QtXml -I/usr/include/x86_64-linux-gnu/qt5/QtCore -I/usr/include/c++/5 -I/usr/include/x86_64-linux-gnu/c++/5 -I/usr/include/c++/5/backward -I/usr/lib/gcc/x86_64-linux-gnu/5/include -I/usr/local/include -I/usr/lib/gcc/x86_64-linux-gnu/5/include-fixed -I/usr/include/x86_64-linux-gnu -I/usr/include src/celestia/qt/qtglwidget.h -o moc/moc_qtglwidget.cpp
 
 moc/moc_qtpreferencesdialog.cpp: ui_preferences.h \
 		src/celutil/basictypes.h \
 		src/celestia/qt/qtpreferencesdialog.h
-	/usr/lib/x86_64-linux-gnu/qt5/bin/moc $(DEFINES) -I/usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++-64 -I/home/johnredden/Src/celestiaExperiment/celestia-g2/celestia -I/home/johnredden/Src/celestiaExperiment/celestia-g2/celestia -I/home/johnredden/Src/celestiaExperiment/celestia-g2/celestia/src -I/home/johnredden/Src/celestiaExperiment/celestia-g2/celestia/thirdparty/glew/include -I/home/johnredden/Src/celestiaExperiment/celestia-g2/celestia/thirdparty/Eigen -I/home/johnredden/Src/celestiaExperiment/celestia-g2/celestia/thirdparty/curveplot/include -I/opt/cspice/include -I/usr/include/libdrm -I/home/johnredden/Src/lua-5.3.4/install/include -I/usr/include/libpng12 -I/usr/include/x86_64-linux-gnu/qt5 -I/usr/include/x86_64-linux-gnu/qt5/QtOpenGL -I/usr/include/x86_64-linux-gnu/qt5/QtWidgets -I/usr/include/x86_64-linux-gnu/qt5/QtGui -I/usr/include/x86_64-linux-gnu/qt5/QtXml -I/usr/include/x86_64-linux-gnu/qt5/QtCore -I/usr/include/c++/5 -I/usr/include/x86_64-linux-gnu/c++/5 -I/usr/include/c++/5/backward -I/usr/lib/gcc/x86_64-linux-gnu/5/include -I/usr/local/include -I/usr/lib/gcc/x86_64-linux-gnu/5/include-fixed -I/usr/include/x86_64-linux-gnu -I/usr/include src/celestia/qt/qtpreferencesdialog.h -o moc/moc_qtpreferencesdialog.cpp
+	/usr/lib/x86_64-linux-gnu/qt5/bin/moc $(DEFINES) -I/usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++-64 -I/home/johnredden/Src/celestiaExperiment/celestia-g2/celestia -I/home/johnredden/Src/celestiaExperiment/celestia-g2/celestia -I/home/johnredden/Src/celestiaExperiment/celestia-g2/celestia/src -I/home/johnredden/Src/celestiaExperiment/celestia-g2/celestia/thirdparty/glew/include -I/home/johnredden/Src/celestiaExperiment/celestia-g2/celestia/thirdparty/Eigen -I/home/johnredden/Src/celestiaExperiment/celestia-g2/celestia/thirdparty/curveplot/include -I/opt/cspice/include -I/usr/include/libdrm -I/usr/include/lua5.3 -I/usr/include/libpng12 -I/usr/include/x86_64-linux-gnu/qt5 -I/usr/include/x86_64-linux-gnu/qt5/QtOpenGL -I/usr/include/x86_64-linux-gnu/qt5/QtWidgets -I/usr/include/x86_64-linux-gnu/qt5/QtGui -I/usr/include/x86_64-linux-gnu/qt5/QtXml -I/usr/include/x86_64-linux-gnu/qt5/QtCore -I/usr/include/c++/5 -I/usr/include/x86_64-linux-gnu/c++/5 -I/usr/include/c++/5/backward -I/usr/lib/gcc/x86_64-linux-gnu/5/include -I/usr/local/include -I/usr/lib/gcc/x86_64-linux-gnu/5/include-fixed -I/usr/include/x86_64-linux-gnu -I/usr/include src/celestia/qt/qtpreferencesdialog.h -o moc/moc_qtpreferencesdialog.cpp
 
 moc/moc_qtcelestialbrowser.cpp: src/celestia/qt/qtselectionpopup.h \
 		src/celengine/selection.h \
@@ -1347,7 +1339,7 @@ moc/moc_qtcelestialbrowser.cpp: src/celestia/qt/qtselectionpopup.h \
 		src/celengine/parser.h \
 		src/celengine/tokenizer.h \
 		src/celestia/qt/qtcelestialbrowser.h
-	/usr/lib/x86_64-linux-gnu/qt5/bin/moc $(DEFINES) -I/usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++-64 -I/home/johnredden/Src/celestiaExperiment/celestia-g2/celestia -I/home/johnredden/Src/celestiaExperiment/celestia-g2/celestia -I/home/johnredden/Src/celestiaExperiment/celestia-g2/celestia/src -I/home/johnredden/Src/celestiaExperiment/celestia-g2/celestia/thirdparty/glew/include -I/home/johnredden/Src/celestiaExperiment/celestia-g2/celestia/thirdparty/Eigen -I/home/johnredden/Src/celestiaExperiment/celestia-g2/celestia/thirdparty/curveplot/include -I/opt/cspice/include -I/usr/include/libdrm -I/home/johnredden/Src/lua-5.3.4/install/include -I/usr/include/libpng12 -I/usr/include/x86_64-linux-gnu/qt5 -I/usr/include/x86_64-linux-gnu/qt5/QtOpenGL -I/usr/include/x86_64-linux-gnu/qt5/QtWidgets -I/usr/include/x86_64-linux-gnu/qt5/QtGui -I/usr/include/x86_64-linux-gnu/qt5/QtXml -I/usr/include/x86_64-linux-gnu/qt5/QtCore -I/usr/include/c++/5 -I/usr/include/x86_64-linux-gnu/c++/5 -I/usr/include/c++/5/backward -I/usr/lib/gcc/x86_64-linux-gnu/5/include -I/usr/local/include -I/usr/lib/gcc/x86_64-linux-gnu/5/include-fixed -I/usr/include/x86_64-linux-gnu -I/usr/include src/celestia/qt/qtcelestialbrowser.h -o moc/moc_qtcelestialbrowser.cpp
+	/usr/lib/x86_64-linux-gnu/qt5/bin/moc $(DEFINES) -I/usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++-64 -I/home/johnredden/Src/celestiaExperiment/celestia-g2/celestia -I/home/johnredden/Src/celestiaExperiment/celestia-g2/celestia -I/home/johnredden/Src/celestiaExperiment/celestia-g2/celestia/src -I/home/johnredden/Src/celestiaExperiment/celestia-g2/celestia/thirdparty/glew/include -I/home/johnredden/Src/celestiaExperiment/celestia-g2/celestia/thirdparty/Eigen -I/home/johnredden/Src/celestiaExperiment/celestia-g2/celestia/thirdparty/curveplot/include -I/opt/cspice/include -I/usr/include/libdrm -I/usr/include/lua5.3 -I/usr/include/libpng12 -I/usr/include/x86_64-linux-gnu/qt5 -I/usr/include/x86_64-linux-gnu/qt5/QtOpenGL -I/usr/include/x86_64-linux-gnu/qt5/QtWidgets -I/usr/include/x86_64-linux-gnu/qt5/QtGui -I/usr/include/x86_64-linux-gnu/qt5/QtXml -I/usr/include/x86_64-linux-gnu/qt5/QtCore -I/usr/include/c++/5 -I/usr/include/x86_64-linux-gnu/c++/5 -I/usr/include/c++/5/backward -I/usr/lib/gcc/x86_64-linux-gnu/5/include -I/usr/local/include -I/usr/lib/gcc/x86_64-linux-gnu/5/include-fixed -I/usr/include/x86_64-linux-gnu -I/usr/include src/celestia/qt/qtcelestialbrowser.h -o moc/moc_qtcelestialbrowser.cpp
 
 moc/moc_qtdeepskybrowser.cpp: src/celengine/selection.h \
 		src/celengine/star.h \
@@ -1451,7 +1443,7 @@ moc/moc_qtdeepskybrowser.cpp: src/celengine/selection.h \
 		src/celengine/parser.h \
 		src/celengine/tokenizer.h \
 		src/celestia/qt/qtdeepskybrowser.h
-	/usr/lib/x86_64-linux-gnu/qt5/bin/moc $(DEFINES) -I/usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++-64 -I/home/johnredden/Src/celestiaExperiment/celestia-g2/celestia -I/home/johnredden/Src/celestiaExperiment/celestia-g2/celestia -I/home/johnredden/Src/celestiaExperiment/celestia-g2/celestia/src -I/home/johnredden/Src/celestiaExperiment/celestia-g2/celestia/thirdparty/glew/include -I/home/johnredden/Src/celestiaExperiment/celestia-g2/celestia/thirdparty/Eigen -I/home/johnredden/Src/celestiaExperiment/celestia-g2/celestia/thirdparty/curveplot/include -I/opt/cspice/include -I/usr/include/libdrm -I/home/johnredden/Src/lua-5.3.4/install/include -I/usr/include/libpng12 -I/usr/include/x86_64-linux-gnu/qt5 -I/usr/include/x86_64-linux-gnu/qt5/QtOpenGL -I/usr/include/x86_64-linux-gnu/qt5/QtWidgets -I/usr/include/x86_64-linux-gnu/qt5/QtGui -I/usr/include/x86_64-linux-gnu/qt5/QtXml -I/usr/include/x86_64-linux-gnu/qt5/QtCore -I/usr/include/c++/5 -I/usr/include/x86_64-linux-gnu/c++/5 -I/usr/include/c++/5/backward -I/usr/lib/gcc/x86_64-linux-gnu/5/include -I/usr/local/include -I/usr/lib/gcc/x86_64-linux-gnu/5/include-fixed -I/usr/include/x86_64-linux-gnu -I/usr/include src/celestia/qt/qtdeepskybrowser.h -o moc/moc_qtdeepskybrowser.cpp
+	/usr/lib/x86_64-linux-gnu/qt5/bin/moc $(DEFINES) -I/usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++-64 -I/home/johnredden/Src/celestiaExperiment/celestia-g2/celestia -I/home/johnredden/Src/celestiaExperiment/celestia-g2/celestia -I/home/johnredden/Src/celestiaExperiment/celestia-g2/celestia/src -I/home/johnredden/Src/celestiaExperiment/celestia-g2/celestia/thirdparty/glew/include -I/home/johnredden/Src/celestiaExperiment/celestia-g2/celestia/thirdparty/Eigen -I/home/johnredden/Src/celestiaExperiment/celestia-g2/celestia/thirdparty/curveplot/include -I/opt/cspice/include -I/usr/include/libdrm -I/usr/include/lua5.3 -I/usr/include/libpng12 -I/usr/include/x86_64-linux-gnu/qt5 -I/usr/include/x86_64-linux-gnu/qt5/QtOpenGL -I/usr/include/x86_64-linux-gnu/qt5/QtWidgets -I/usr/include/x86_64-linux-gnu/qt5/QtGui -I/usr/include/x86_64-linux-gnu/qt5/QtXml -I/usr/include/x86_64-linux-gnu/qt5/QtCore -I/usr/include/c++/5 -I/usr/include/x86_64-linux-gnu/c++/5 -I/usr/include/c++/5/backward -I/usr/lib/gcc/x86_64-linux-gnu/5/include -I/usr/local/include -I/usr/lib/gcc/x86_64-linux-gnu/5/include-fixed -I/usr/include/x86_64-linux-gnu -I/usr/include src/celestia/qt/qtdeepskybrowser.h -o moc/moc_qtdeepskybrowser.cpp
 
 moc/moc_qtsolarsystembrowser.cpp: src/celengine/selection.h \
 		src/celengine/star.h \
@@ -1555,7 +1547,7 @@ moc/moc_qtsolarsystembrowser.cpp: src/celengine/selection.h \
 		src/celengine/parser.h \
 		src/celengine/tokenizer.h \
 		src/celestia/qt/qtsolarsystembrowser.h
-	/usr/lib/x86_64-linux-gnu/qt5/bin/moc $(DEFINES) -I/usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++-64 -I/home/johnredden/Src/celestiaExperiment/celestia-g2/celestia -I/home/johnredden/Src/celestiaExperiment/celestia-g2/celestia -I/home/johnredden/Src/celestiaExperiment/celestia-g2/celestia/src -I/home/johnredden/Src/celestiaExperiment/celestia-g2/celestia/thirdparty/glew/include -I/home/johnredden/Src/celestiaExperiment/celestia-g2/celestia/thirdparty/Eigen -I/home/johnredden/Src/celestiaExperiment/celestia-g2/celestia/thirdparty/curveplot/include -I/opt/cspice/include -I/usr/include/libdrm -I/home/johnredden/Src/lua-5.3.4/install/include -I/usr/include/libpng12 -I/usr/include/x86_64-linux-gnu/qt5 -I/usr/include/x86_64-linux-gnu/qt5/QtOpenGL -I/usr/include/x86_64-linux-gnu/qt5/QtWidgets -I/usr/include/x86_64-linux-gnu/qt5/QtGui -I/usr/include/x86_64-linux-gnu/qt5/QtXml -I/usr/include/x86_64-linux-gnu/qt5/QtCore -I/usr/include/c++/5 -I/usr/include/x86_64-linux-gnu/c++/5 -I/usr/include/c++/5/backward -I/usr/lib/gcc/x86_64-linux-gnu/5/include -I/usr/local/include -I/usr/lib/gcc/x86_64-linux-gnu/5/include-fixed -I/usr/include/x86_64-linux-gnu -I/usr/include src/celestia/qt/qtsolarsystembrowser.h -o moc/moc_qtsolarsystembrowser.cpp
+	/usr/lib/x86_64-linux-gnu/qt5/bin/moc $(DEFINES) -I/usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++-64 -I/home/johnredden/Src/celestiaExperiment/celestia-g2/celestia -I/home/johnredden/Src/celestiaExperiment/celestia-g2/celestia -I/home/johnredden/Src/celestiaExperiment/celestia-g2/celestia/src -I/home/johnredden/Src/celestiaExperiment/celestia-g2/celestia/thirdparty/glew/include -I/home/johnredden/Src/celestiaExperiment/celestia-g2/celestia/thirdparty/Eigen -I/home/johnredden/Src/celestiaExperiment/celestia-g2/celestia/thirdparty/curveplot/include -I/opt/cspice/include -I/usr/include/libdrm -I/usr/include/lua5.3 -I/usr/include/libpng12 -I/usr/include/x86_64-linux-gnu/qt5 -I/usr/include/x86_64-linux-gnu/qt5/QtOpenGL -I/usr/include/x86_64-linux-gnu/qt5/QtWidgets -I/usr/include/x86_64-linux-gnu/qt5/QtGui -I/usr/include/x86_64-linux-gnu/qt5/QtXml -I/usr/include/x86_64-linux-gnu/qt5/QtCore -I/usr/include/c++/5 -I/usr/include/x86_64-linux-gnu/c++/5 -I/usr/include/c++/5/backward -I/usr/lib/gcc/x86_64-linux-gnu/5/include -I/usr/local/include -I/usr/lib/gcc/x86_64-linux-gnu/5/include-fixed -I/usr/include/x86_64-linux-gnu -I/usr/include src/celestia/qt/qtsolarsystembrowser.h -o moc/moc_qtsolarsystembrowser.cpp
 
 moc/moc_qtselectionpopup.cpp: src/celengine/selection.h \
 		src/celengine/star.h \
@@ -1659,13 +1651,13 @@ moc/moc_qtselectionpopup.cpp: src/celengine/selection.h \
 		src/celengine/parser.h \
 		src/celengine/tokenizer.h \
 		src/celestia/qt/qtselectionpopup.h
-	/usr/lib/x86_64-linux-gnu/qt5/bin/moc $(DEFINES) -I/usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++-64 -I/home/johnredden/Src/celestiaExperiment/celestia-g2/celestia -I/home/johnredden/Src/celestiaExperiment/celestia-g2/celestia -I/home/johnredden/Src/celestiaExperiment/celestia-g2/celestia/src -I/home/johnredden/Src/celestiaExperiment/celestia-g2/celestia/thirdparty/glew/include -I/home/johnredden/Src/celestiaExperiment/celestia-g2/celestia/thirdparty/Eigen -I/home/johnredden/Src/celestiaExperiment/celestia-g2/celestia/thirdparty/curveplot/include -I/opt/cspice/include -I/usr/include/libdrm -I/home/johnredden/Src/lua-5.3.4/install/include -I/usr/include/libpng12 -I/usr/include/x86_64-linux-gnu/qt5 -I/usr/include/x86_64-linux-gnu/qt5/QtOpenGL -I/usr/include/x86_64-linux-gnu/qt5/QtWidgets -I/usr/include/x86_64-linux-gnu/qt5/QtGui -I/usr/include/x86_64-linux-gnu/qt5/QtXml -I/usr/include/x86_64-linux-gnu/qt5/QtCore -I/usr/include/c++/5 -I/usr/include/x86_64-linux-gnu/c++/5 -I/usr/include/c++/5/backward -I/usr/lib/gcc/x86_64-linux-gnu/5/include -I/usr/local/include -I/usr/lib/gcc/x86_64-linux-gnu/5/include-fixed -I/usr/include/x86_64-linux-gnu -I/usr/include src/celestia/qt/qtselectionpopup.h -o moc/moc_qtselectionpopup.cpp
+	/usr/lib/x86_64-linux-gnu/qt5/bin/moc $(DEFINES) -I/usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++-64 -I/home/johnredden/Src/celestiaExperiment/celestia-g2/celestia -I/home/johnredden/Src/celestiaExperiment/celestia-g2/celestia -I/home/johnredden/Src/celestiaExperiment/celestia-g2/celestia/src -I/home/johnredden/Src/celestiaExperiment/celestia-g2/celestia/thirdparty/glew/include -I/home/johnredden/Src/celestiaExperiment/celestia-g2/celestia/thirdparty/Eigen -I/home/johnredden/Src/celestiaExperiment/celestia-g2/celestia/thirdparty/curveplot/include -I/opt/cspice/include -I/usr/include/libdrm -I/usr/include/lua5.3 -I/usr/include/libpng12 -I/usr/include/x86_64-linux-gnu/qt5 -I/usr/include/x86_64-linux-gnu/qt5/QtOpenGL -I/usr/include/x86_64-linux-gnu/qt5/QtWidgets -I/usr/include/x86_64-linux-gnu/qt5/QtGui -I/usr/include/x86_64-linux-gnu/qt5/QtXml -I/usr/include/x86_64-linux-gnu/qt5/QtCore -I/usr/include/c++/5 -I/usr/include/x86_64-linux-gnu/c++/5 -I/usr/include/c++/5/backward -I/usr/lib/gcc/x86_64-linux-gnu/5/include -I/usr/local/include -I/usr/lib/gcc/x86_64-linux-gnu/5/include-fixed -I/usr/include/x86_64-linux-gnu -I/usr/include src/celestia/qt/qtselectionpopup.h -o moc/moc_qtselectionpopup.cpp
 
 moc/moc_qtcolorswatchwidget.cpp: src/celestia/qt/qtcolorswatchwidget.h
-	/usr/lib/x86_64-linux-gnu/qt5/bin/moc $(DEFINES) -I/usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++-64 -I/home/johnredden/Src/celestiaExperiment/celestia-g2/celestia -I/home/johnredden/Src/celestiaExperiment/celestia-g2/celestia -I/home/johnredden/Src/celestiaExperiment/celestia-g2/celestia/src -I/home/johnredden/Src/celestiaExperiment/celestia-g2/celestia/thirdparty/glew/include -I/home/johnredden/Src/celestiaExperiment/celestia-g2/celestia/thirdparty/Eigen -I/home/johnredden/Src/celestiaExperiment/celestia-g2/celestia/thirdparty/curveplot/include -I/opt/cspice/include -I/usr/include/libdrm -I/home/johnredden/Src/lua-5.3.4/install/include -I/usr/include/libpng12 -I/usr/include/x86_64-linux-gnu/qt5 -I/usr/include/x86_64-linux-gnu/qt5/QtOpenGL -I/usr/include/x86_64-linux-gnu/qt5/QtWidgets -I/usr/include/x86_64-linux-gnu/qt5/QtGui -I/usr/include/x86_64-linux-gnu/qt5/QtXml -I/usr/include/x86_64-linux-gnu/qt5/QtCore -I/usr/include/c++/5 -I/usr/include/x86_64-linux-gnu/c++/5 -I/usr/include/c++/5/backward -I/usr/lib/gcc/x86_64-linux-gnu/5/include -I/usr/local/include -I/usr/lib/gcc/x86_64-linux-gnu/5/include-fixed -I/usr/include/x86_64-linux-gnu -I/usr/include src/celestia/qt/qtcolorswatchwidget.h -o moc/moc_qtcolorswatchwidget.cpp
+	/usr/lib/x86_64-linux-gnu/qt5/bin/moc $(DEFINES) -I/usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++-64 -I/home/johnredden/Src/celestiaExperiment/celestia-g2/celestia -I/home/johnredden/Src/celestiaExperiment/celestia-g2/celestia -I/home/johnredden/Src/celestiaExperiment/celestia-g2/celestia/src -I/home/johnredden/Src/celestiaExperiment/celestia-g2/celestia/thirdparty/glew/include -I/home/johnredden/Src/celestiaExperiment/celestia-g2/celestia/thirdparty/Eigen -I/home/johnredden/Src/celestiaExperiment/celestia-g2/celestia/thirdparty/curveplot/include -I/opt/cspice/include -I/usr/include/libdrm -I/usr/include/lua5.3 -I/usr/include/libpng12 -I/usr/include/x86_64-linux-gnu/qt5 -I/usr/include/x86_64-linux-gnu/qt5/QtOpenGL -I/usr/include/x86_64-linux-gnu/qt5/QtWidgets -I/usr/include/x86_64-linux-gnu/qt5/QtGui -I/usr/include/x86_64-linux-gnu/qt5/QtXml -I/usr/include/x86_64-linux-gnu/qt5/QtCore -I/usr/include/c++/5 -I/usr/include/x86_64-linux-gnu/c++/5 -I/usr/include/c++/5/backward -I/usr/lib/gcc/x86_64-linux-gnu/5/include -I/usr/local/include -I/usr/lib/gcc/x86_64-linux-gnu/5/include-fixed -I/usr/include/x86_64-linux-gnu -I/usr/include src/celestia/qt/qtcolorswatchwidget.h -o moc/moc_qtcolorswatchwidget.cpp
 
 moc/moc_qttimetoolbar.cpp: src/celestia/qt/qttimetoolbar.h
-	/usr/lib/x86_64-linux-gnu/qt5/bin/moc $(DEFINES) -I/usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++-64 -I/home/johnredden/Src/celestiaExperiment/celestia-g2/celestia -I/home/johnredden/Src/celestiaExperiment/celestia-g2/celestia -I/home/johnredden/Src/celestiaExperiment/celestia-g2/celestia/src -I/home/johnredden/Src/celestiaExperiment/celestia-g2/celestia/thirdparty/glew/include -I/home/johnredden/Src/celestiaExperiment/celestia-g2/celestia/thirdparty/Eigen -I/home/johnredden/Src/celestiaExperiment/celestia-g2/celestia/thirdparty/curveplot/include -I/opt/cspice/include -I/usr/include/libdrm -I/home/johnredden/Src/lua-5.3.4/install/include -I/usr/include/libpng12 -I/usr/include/x86_64-linux-gnu/qt5 -I/usr/include/x86_64-linux-gnu/qt5/QtOpenGL -I/usr/include/x86_64-linux-gnu/qt5/QtWidgets -I/usr/include/x86_64-linux-gnu/qt5/QtGui -I/usr/include/x86_64-linux-gnu/qt5/QtXml -I/usr/include/x86_64-linux-gnu/qt5/QtCore -I/usr/include/c++/5 -I/usr/include/x86_64-linux-gnu/c++/5 -I/usr/include/c++/5/backward -I/usr/lib/gcc/x86_64-linux-gnu/5/include -I/usr/local/include -I/usr/lib/gcc/x86_64-linux-gnu/5/include-fixed -I/usr/include/x86_64-linux-gnu -I/usr/include src/celestia/qt/qttimetoolbar.h -o moc/moc_qttimetoolbar.cpp
+	/usr/lib/x86_64-linux-gnu/qt5/bin/moc $(DEFINES) -I/usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++-64 -I/home/johnredden/Src/celestiaExperiment/celestia-g2/celestia -I/home/johnredden/Src/celestiaExperiment/celestia-g2/celestia -I/home/johnredden/Src/celestiaExperiment/celestia-g2/celestia/src -I/home/johnredden/Src/celestiaExperiment/celestia-g2/celestia/thirdparty/glew/include -I/home/johnredden/Src/celestiaExperiment/celestia-g2/celestia/thirdparty/Eigen -I/home/johnredden/Src/celestiaExperiment/celestia-g2/celestia/thirdparty/curveplot/include -I/opt/cspice/include -I/usr/include/libdrm -I/usr/include/lua5.3 -I/usr/include/libpng12 -I/usr/include/x86_64-linux-gnu/qt5 -I/usr/include/x86_64-linux-gnu/qt5/QtOpenGL -I/usr/include/x86_64-linux-gnu/qt5/QtWidgets -I/usr/include/x86_64-linux-gnu/qt5/QtGui -I/usr/include/x86_64-linux-gnu/qt5/QtXml -I/usr/include/x86_64-linux-gnu/qt5/QtCore -I/usr/include/c++/5 -I/usr/include/x86_64-linux-gnu/c++/5 -I/usr/include/c++/5/backward -I/usr/lib/gcc/x86_64-linux-gnu/5/include -I/usr/local/include -I/usr/lib/gcc/x86_64-linux-gnu/5/include-fixed -I/usr/include/x86_64-linux-gnu -I/usr/include src/celestia/qt/qttimetoolbar.h -o moc/moc_qttimetoolbar.cpp
 
 moc/moc_qtcelestiaactions.cpp: src/celengine/render.h \
 		thirdparty/Eigen/Eigen/Core \
@@ -1798,13 +1790,13 @@ moc/moc_qtcelestiaactions.cpp: src/celengine/render.h \
 		src/celmodel/material.h \
 		src/celtxf/texturefont.h \
 		src/celestia/qt/qtcelestiaactions.h
-	/usr/lib/x86_64-linux-gnu/qt5/bin/moc $(DEFINES) -I/usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++-64 -I/home/johnredden/Src/celestiaExperiment/celestia-g2/celestia -I/home/johnredden/Src/celestiaExperiment/celestia-g2/celestia -I/home/johnredden/Src/celestiaExperiment/celestia-g2/celestia/src -I/home/johnredden/Src/celestiaExperiment/celestia-g2/celestia/thirdparty/glew/include -I/home/johnredden/Src/celestiaExperiment/celestia-g2/celestia/thirdparty/Eigen -I/home/johnredden/Src/celestiaExperiment/celestia-g2/celestia/thirdparty/curveplot/include -I/opt/cspice/include -I/usr/include/libdrm -I/home/johnredden/Src/lua-5.3.4/install/include -I/usr/include/libpng12 -I/usr/include/x86_64-linux-gnu/qt5 -I/usr/include/x86_64-linux-gnu/qt5/QtOpenGL -I/usr/include/x86_64-linux-gnu/qt5/QtWidgets -I/usr/include/x86_64-linux-gnu/qt5/QtGui -I/usr/include/x86_64-linux-gnu/qt5/QtXml -I/usr/include/x86_64-linux-gnu/qt5/QtCore -I/usr/include/c++/5 -I/usr/include/x86_64-linux-gnu/c++/5 -I/usr/include/c++/5/backward -I/usr/lib/gcc/x86_64-linux-gnu/5/include -I/usr/local/include -I/usr/lib/gcc/x86_64-linux-gnu/5/include-fixed -I/usr/include/x86_64-linux-gnu -I/usr/include src/celestia/qt/qtcelestiaactions.h -o moc/moc_qtcelestiaactions.cpp
+	/usr/lib/x86_64-linux-gnu/qt5/bin/moc $(DEFINES) -I/usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++-64 -I/home/johnredden/Src/celestiaExperiment/celestia-g2/celestia -I/home/johnredden/Src/celestiaExperiment/celestia-g2/celestia -I/home/johnredden/Src/celestiaExperiment/celestia-g2/celestia/src -I/home/johnredden/Src/celestiaExperiment/celestia-g2/celestia/thirdparty/glew/include -I/home/johnredden/Src/celestiaExperiment/celestia-g2/celestia/thirdparty/Eigen -I/home/johnredden/Src/celestiaExperiment/celestia-g2/celestia/thirdparty/curveplot/include -I/opt/cspice/include -I/usr/include/libdrm -I/usr/include/lua5.3 -I/usr/include/libpng12 -I/usr/include/x86_64-linux-gnu/qt5 -I/usr/include/x86_64-linux-gnu/qt5/QtOpenGL -I/usr/include/x86_64-linux-gnu/qt5/QtWidgets -I/usr/include/x86_64-linux-gnu/qt5/QtGui -I/usr/include/x86_64-linux-gnu/qt5/QtXml -I/usr/include/x86_64-linux-gnu/qt5/QtCore -I/usr/include/c++/5 -I/usr/include/x86_64-linux-gnu/c++/5 -I/usr/include/c++/5/backward -I/usr/lib/gcc/x86_64-linux-gnu/5/include -I/usr/local/include -I/usr/lib/gcc/x86_64-linux-gnu/5/include-fixed -I/usr/include/x86_64-linux-gnu -I/usr/include src/celestia/qt/qtcelestiaactions.h -o moc/moc_qtcelestiaactions.cpp
 
 moc/moc_qteventfinder.cpp: src/celestia/qt/qteventfinder.h
-	/usr/lib/x86_64-linux-gnu/qt5/bin/moc $(DEFINES) -I/usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++-64 -I/home/johnredden/Src/celestiaExperiment/celestia-g2/celestia -I/home/johnredden/Src/celestiaExperiment/celestia-g2/celestia -I/home/johnredden/Src/celestiaExperiment/celestia-g2/celestia/src -I/home/johnredden/Src/celestiaExperiment/celestia-g2/celestia/thirdparty/glew/include -I/home/johnredden/Src/celestiaExperiment/celestia-g2/celestia/thirdparty/Eigen -I/home/johnredden/Src/celestiaExperiment/celestia-g2/celestia/thirdparty/curveplot/include -I/opt/cspice/include -I/usr/include/libdrm -I/home/johnredden/Src/lua-5.3.4/install/include -I/usr/include/libpng12 -I/usr/include/x86_64-linux-gnu/qt5 -I/usr/include/x86_64-linux-gnu/qt5/QtOpenGL -I/usr/include/x86_64-linux-gnu/qt5/QtWidgets -I/usr/include/x86_64-linux-gnu/qt5/QtGui -I/usr/include/x86_64-linux-gnu/qt5/QtXml -I/usr/include/x86_64-linux-gnu/qt5/QtCore -I/usr/include/c++/5 -I/usr/include/x86_64-linux-gnu/c++/5 -I/usr/include/c++/5/backward -I/usr/lib/gcc/x86_64-linux-gnu/5/include -I/usr/local/include -I/usr/lib/gcc/x86_64-linux-gnu/5/include-fixed -I/usr/include/x86_64-linux-gnu -I/usr/include src/celestia/qt/qteventfinder.h -o moc/moc_qteventfinder.cpp
+	/usr/lib/x86_64-linux-gnu/qt5/bin/moc $(DEFINES) -I/usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++-64 -I/home/johnredden/Src/celestiaExperiment/celestia-g2/celestia -I/home/johnredden/Src/celestiaExperiment/celestia-g2/celestia -I/home/johnredden/Src/celestiaExperiment/celestia-g2/celestia/src -I/home/johnredden/Src/celestiaExperiment/celestia-g2/celestia/thirdparty/glew/include -I/home/johnredden/Src/celestiaExperiment/celestia-g2/celestia/thirdparty/Eigen -I/home/johnredden/Src/celestiaExperiment/celestia-g2/celestia/thirdparty/curveplot/include -I/opt/cspice/include -I/usr/include/libdrm -I/usr/include/lua5.3 -I/usr/include/libpng12 -I/usr/include/x86_64-linux-gnu/qt5 -I/usr/include/x86_64-linux-gnu/qt5/QtOpenGL -I/usr/include/x86_64-linux-gnu/qt5/QtWidgets -I/usr/include/x86_64-linux-gnu/qt5/QtGui -I/usr/include/x86_64-linux-gnu/qt5/QtXml -I/usr/include/x86_64-linux-gnu/qt5/QtCore -I/usr/include/c++/5 -I/usr/include/x86_64-linux-gnu/c++/5 -I/usr/include/c++/5/backward -I/usr/lib/gcc/x86_64-linux-gnu/5/include -I/usr/local/include -I/usr/lib/gcc/x86_64-linux-gnu/5/include-fixed -I/usr/include/x86_64-linux-gnu -I/usr/include src/celestia/qt/qteventfinder.h -o moc/moc_qteventfinder.cpp
 
 moc/moc_qtsettimedialog.cpp: src/celestia/qt/qtsettimedialog.h
-	/usr/lib/x86_64-linux-gnu/qt5/bin/moc $(DEFINES) -I/usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++-64 -I/home/johnredden/Src/celestiaExperiment/celestia-g2/celestia -I/home/johnredden/Src/celestiaExperiment/celestia-g2/celestia -I/home/johnredden/Src/celestiaExperiment/celestia-g2/celestia/src -I/home/johnredden/Src/celestiaExperiment/celestia-g2/celestia/thirdparty/glew/include -I/home/johnredden/Src/celestiaExperiment/celestia-g2/celestia/thirdparty/Eigen -I/home/johnredden/Src/celestiaExperiment/celestia-g2/celestia/thirdparty/curveplot/include -I/opt/cspice/include -I/usr/include/libdrm -I/home/johnredden/Src/lua-5.3.4/install/include -I/usr/include/libpng12 -I/usr/include/x86_64-linux-gnu/qt5 -I/usr/include/x86_64-linux-gnu/qt5/QtOpenGL -I/usr/include/x86_64-linux-gnu/qt5/QtWidgets -I/usr/include/x86_64-linux-gnu/qt5/QtGui -I/usr/include/x86_64-linux-gnu/qt5/QtXml -I/usr/include/x86_64-linux-gnu/qt5/QtCore -I/usr/include/c++/5 -I/usr/include/x86_64-linux-gnu/c++/5 -I/usr/include/c++/5/backward -I/usr/lib/gcc/x86_64-linux-gnu/5/include -I/usr/local/include -I/usr/lib/gcc/x86_64-linux-gnu/5/include-fixed -I/usr/include/x86_64-linux-gnu -I/usr/include src/celestia/qt/qtsettimedialog.h -o moc/moc_qtsettimedialog.cpp
+	/usr/lib/x86_64-linux-gnu/qt5/bin/moc $(DEFINES) -I/usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++-64 -I/home/johnredden/Src/celestiaExperiment/celestia-g2/celestia -I/home/johnredden/Src/celestiaExperiment/celestia-g2/celestia -I/home/johnredden/Src/celestiaExperiment/celestia-g2/celestia/src -I/home/johnredden/Src/celestiaExperiment/celestia-g2/celestia/thirdparty/glew/include -I/home/johnredden/Src/celestiaExperiment/celestia-g2/celestia/thirdparty/Eigen -I/home/johnredden/Src/celestiaExperiment/celestia-g2/celestia/thirdparty/curveplot/include -I/opt/cspice/include -I/usr/include/libdrm -I/usr/include/lua5.3 -I/usr/include/libpng12 -I/usr/include/x86_64-linux-gnu/qt5 -I/usr/include/x86_64-linux-gnu/qt5/QtOpenGL -I/usr/include/x86_64-linux-gnu/qt5/QtWidgets -I/usr/include/x86_64-linux-gnu/qt5/QtGui -I/usr/include/x86_64-linux-gnu/qt5/QtXml -I/usr/include/x86_64-linux-gnu/qt5/QtCore -I/usr/include/c++/5 -I/usr/include/x86_64-linux-gnu/c++/5 -I/usr/include/c++/5/backward -I/usr/lib/gcc/x86_64-linux-gnu/5/include -I/usr/local/include -I/usr/lib/gcc/x86_64-linux-gnu/5/include-fixed -I/usr/include/x86_64-linux-gnu -I/usr/include src/celestia/qt/qtsettimedialog.h -o moc/moc_qtsettimedialog.cpp
 
 compiler_moc_source_make_all:
 compiler_moc_source_clean:
@@ -2972,6 +2964,7 @@ obj/samporient.o: src/celephem/samporient.cpp src/celephem/samporient.h \
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o obj/samporient.o src/celephem/samporient.cpp
 
 obj/scriptobject.o: src/celephem/scriptobject.cpp src/celephem/scriptobject.h \
+		src/celephem/lua.h \
 		src/celengine/parser.h \
 		src/celmath/vecmath.h \
 		src/celmath/quaternion.h \
@@ -3050,6 +3043,7 @@ obj/scriptobject.o: src/celephem/scriptobject.cpp src/celephem/scriptobject.h \
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o obj/scriptobject.o src/celephem/scriptobject.cpp
 
 obj/scriptorbit.o: src/celephem/scriptorbit.cpp src/celephem/scriptobject.h \
+		src/celephem/lua.h \
 		src/celengine/parser.h \
 		src/celmath/vecmath.h \
 		src/celmath/quaternion.h \
@@ -3130,6 +3124,7 @@ obj/scriptorbit.o: src/celephem/scriptorbit.cpp src/celephem/scriptobject.h \
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o obj/scriptorbit.o src/celephem/scriptorbit.cpp
 
 obj/scriptrotation.o: src/celephem/scriptrotation.cpp src/celephem/scriptobject.h \
+		src/celephem/lua.h \
 		src/celengine/parser.h \
 		src/celmath/vecmath.h \
 		src/celmath/quaternion.h \
@@ -3206,7 +3201,9 @@ obj/scriptrotation.o: src/celephem/scriptrotation.cpp src/celephem/scriptobject.
 		thirdparty/Eigen/Eigen/src/Geometry/ParametrizedLine.h \
 		thirdparty/Eigen/Eigen/src/Geometry/AlignedBox.h \
 		src/celephem/scriptrotation.h \
-		src/celephem/rotation.h
+		src/celephem/rotation.h \
+		src/celephem/scriptorbit.h \
+		src/celephem/orbit.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o obj/scriptrotation.o src/celephem/scriptrotation.cpp
 
 obj/vsop87.o: src/celephem/vsop87.cpp src/celmath/mathlib.h \
@@ -4222,6 +4219,7 @@ obj/cmdparser.o: src/celengine/cmdparser.cpp src/celengine/celestia.h \
 		src/celengine/texmanager.h \
 		src/celutil/resmanager.h \
 		src/celestia/celx.h \
+		src/celephem/lua.h \
 		src/celutil/timer.h \
 		src/celestia/celx_internal.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o obj/cmdparser.o src/celengine/cmdparser.cpp
@@ -4374,6 +4372,7 @@ obj/command.o: src/celengine/command.cpp src/celengine/command.h \
 		src/celestia/destination.h \
 		src/celestia/moviecapture.h \
 		src/celestia/celx.h \
+		src/celephem/lua.h \
 		src/celestia/imagecapture.h \
 		src/celestia/celx_internal.h \
 		src/celengine/eigenport.h
@@ -6844,7 +6843,18 @@ obj/parseobject.o: src/celengine/parseobject.cpp src/celengine/parseobject.h \
 		src/celephem/spicerotation.h \
 		src/celephem/scriptorbit.h \
 		src/celephem/scriptrotation.h \
-		src/celmath/geomutil.h
+		src/celmath/geomutil.h \
+		plog/Log.h \
+		plog/Record.h \
+		plog/Util.h \
+		plog/Severity.h \
+		plog/Logger.h \
+		plog/Appenders/IAppender.h \
+		plog/Init.h \
+		plog/Formatters/CsvFormatter.h \
+		plog/Formatters/TxtFormatter.h \
+		plog/Appenders/RollingFileAppender.h \
+		plog/Converters/UTF8Converter.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o obj/parseobject.o src/celengine/parseobject.cpp
 
 obj/parser.o: src/celengine/parser.cpp src/celengine/parser.h \
@@ -8198,7 +8208,18 @@ obj/solarsys.o: src/celengine/solarsys.cpp config.h \
 		src/celengine/parseobject.h \
 		src/celengine/frametree.h \
 		src/celengine/timelinephase.h \
-		src/celengine/atmosphere.h
+		src/celengine/atmosphere.h \
+		plog/Log.h \
+		plog/Record.h \
+		plog/Util.h \
+		plog/Severity.h \
+		plog/Logger.h \
+		plog/Appenders/IAppender.h \
+		plog/Init.h \
+		plog/Formatters/CsvFormatter.h \
+		plog/Formatters/TxtFormatter.h \
+		plog/Appenders/RollingFileAppender.h \
+		plog/Converters/UTF8Converter.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o obj/solarsys.o src/celengine/solarsys.cpp
 
 obj/spheremesh.o: src/celengine/spheremesh.cpp src/celengine/spheremesh.h \
@@ -9849,6 +9870,7 @@ obj/celestiacore.o: src/celestia/celestiacore.cpp src/celestia/celestiacore.h \
 		src/celestia/destination.h \
 		src/celestia/moviecapture.h \
 		src/celestia/celx.h \
+		src/celephem/lua.h \
 		src/celestia/url.h \
 		src/celengine/asterism.h \
 		src/celengine/boundaries.h \
@@ -9864,6 +9886,17 @@ obj/celestiacore.o: src/celestia/celestiacore.cpp src/celestia/celestiacore.h \
 		src/celutil/filetype.h \
 		src/celutil/directory.h \
 		src/celutil/formatnum.h \
+		plog/Log.h \
+		plog/Record.h \
+		plog/Util.h \
+		plog/Severity.h \
+		plog/Logger.h \
+		plog/Appenders/IAppender.h \
+		plog/Init.h \
+		plog/Formatters/CsvFormatter.h \
+		plog/Formatters/TxtFormatter.h \
+		plog/Appenders/RollingFileAppender.h \
+		plog/Converters/UTF8Converter.h \
 		src/celephem/scriptobject.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o obj/celestiacore.o src/celestia/celestiacore.cpp
 
@@ -10193,6 +10226,7 @@ obj/eclipsefinder.o: src/celestia/eclipsefinder.cpp src/celestia/eclipsefinder.h
 		src/celestia/destination.h \
 		src/celestia/moviecapture.h \
 		src/celestia/celx.h \
+		src/celephem/lua.h \
 		src/celmath/distance.h \
 		src/celmath/sphere.h \
 		src/celmath/ellipsoid.h \
@@ -10502,6 +10536,7 @@ obj/url.o: src/celestia/url.cpp src/celestia/celestiacore.h \
 		src/celestia/destination.h \
 		src/celestia/moviecapture.h \
 		src/celestia/celx.h \
+		src/celephem/lua.h \
 		src/celestia/url.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o obj/url.o src/celestia/url.cpp
 
@@ -10657,6 +10692,7 @@ obj/celx.o: src/celestia/celx.cpp src/celengine/astro.h \
 		src/celestia/destination.h \
 		src/celestia/moviecapture.h \
 		src/celestia/celx.h \
+		src/celephem/lua.h \
 		src/celestia/celx_internal.h \
 		src/celestia/celx_vector.h \
 		src/celestia/celx_rotation.h \
@@ -10671,6 +10707,7 @@ obj/celx.o: src/celestia/celx.cpp src/celengine/astro.h \
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o obj/celx.o src/celestia/celx.cpp
 
 obj/celx_celestia.o: src/celestia/celx_celestia.cpp src/celestia/celx.h \
+		src/celephem/lua.h \
 		src/celutil/timer.h \
 		src/celengine/observer.h \
 		src/celengine/frame.h \
@@ -10780,6 +10817,7 @@ obj/celx_celestia.o: src/celestia/celx_celestia.cpp src/celestia/celx.h \
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o obj/celx_celestia.o src/celestia/celx_celestia.cpp
 
 obj/celx_frame.o: src/celestia/celx_frame.cpp src/celestia/celx.h \
+		src/celephem/lua.h \
 		src/celutil/timer.h \
 		src/celengine/observer.h \
 		src/celengine/frame.h \
@@ -10932,6 +10970,7 @@ obj/celx_frame.o: src/celestia/celx_frame.cpp src/celestia/celx.h \
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o obj/celx_frame.o src/celestia/celx_frame.cpp
 
 obj/celx_gl.o: src/celestia/celx_gl.cpp src/celestia/celx.h \
+		src/celephem/lua.h \
 		src/celutil/timer.h \
 		src/celengine/observer.h \
 		src/celengine/frame.h \
@@ -11041,6 +11080,7 @@ obj/celx_gl.o: src/celestia/celx_gl.cpp src/celestia/celx.h \
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o obj/celx_gl.o src/celestia/celx_gl.cpp
 
 obj/celx_object.o: src/celestia/celx_object.cpp src/celestia/celx.h \
+		src/celephem/lua.h \
 		src/celutil/timer.h \
 		src/celengine/observer.h \
 		src/celengine/frame.h \
@@ -11197,6 +11237,7 @@ obj/celx_object.o: src/celestia/celx_object.cpp src/celestia/celx.h \
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o obj/celx_object.o src/celestia/celx_object.cpp
 
 obj/celx_observer.o: src/celestia/celx_observer.cpp src/celestia/celx.h \
+		src/celephem/lua.h \
 		src/celutil/timer.h \
 		src/celengine/observer.h \
 		src/celengine/frame.h \
@@ -11349,6 +11390,7 @@ obj/celx_observer.o: src/celestia/celx_observer.cpp src/celestia/celx.h \
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o obj/celx_observer.o src/celestia/celx_observer.cpp
 
 obj/celx_phase.o: src/celestia/celx_phase.cpp src/celestia/celx.h \
+		src/celephem/lua.h \
 		src/celutil/timer.h \
 		src/celengine/observer.h \
 		src/celengine/frame.h \
@@ -11460,6 +11502,7 @@ obj/celx_phase.o: src/celestia/celx_phase.cpp src/celestia/celx.h \
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o obj/celx_phase.o src/celestia/celx_phase.cpp
 
 obj/celx_position.o: src/celestia/celx_position.cpp src/celestia/celx.h \
+		src/celephem/lua.h \
 		src/celutil/timer.h \
 		src/celengine/observer.h \
 		src/celengine/frame.h \
@@ -11570,6 +11613,7 @@ obj/celx_position.o: src/celestia/celx_position.cpp src/celestia/celx.h \
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o obj/celx_position.o src/celestia/celx_position.cpp
 
 obj/celx_rotation.o: src/celestia/celx_rotation.cpp src/celestia/celx.h \
+		src/celephem/lua.h \
 		src/celutil/timer.h \
 		src/celengine/observer.h \
 		src/celengine/frame.h \
@@ -11679,6 +11723,7 @@ obj/celx_rotation.o: src/celestia/celx_rotation.cpp src/celestia/celx.h \
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o obj/celx_rotation.o src/celestia/celx_rotation.cpp
 
 obj/celx_vector.o: src/celestia/celx_vector.cpp src/celestia/celx.h \
+		src/celephem/lua.h \
 		src/celutil/timer.h \
 		src/celengine/observer.h \
 		src/celengine/frame.h \
@@ -11935,7 +11980,19 @@ obj/qtmain.o: src/celestia/qt/qtmain.cpp src/celestia/qt/qtappwin.h \
 		src/celestia/favorites.h \
 		src/celestia/destination.h \
 		src/celestia/moviecapture.h \
-		src/celestia/celx.h
+		src/celestia/celx.h \
+		src/celephem/lua.h \
+		plog/Log.h \
+		plog/Record.h \
+		plog/Util.h \
+		plog/Severity.h \
+		plog/Logger.h \
+		plog/Appenders/IAppender.h \
+		plog/Init.h \
+		plog/Formatters/CsvFormatter.h \
+		plog/Formatters/TxtFormatter.h \
+		plog/Appenders/RollingFileAppender.h \
+		plog/Converters/UTF8Converter.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o obj/qtmain.o src/celestia/qt/qtmain.cpp
 
 obj/qtappwin.o: src/celestia/qt/qtappwin.cpp src/celestia/qt/qtappwin.h \
@@ -12086,6 +12143,7 @@ obj/qtappwin.o: src/celestia/qt/qtappwin.cpp src/celestia/qt/qtappwin.h \
 		src/celestia/destination.h \
 		src/celestia/moviecapture.h \
 		src/celestia/celx.h \
+		src/celephem/lua.h \
 		src/celestia/qt/qtglwidget.h \
 		src/celengine/starbrowser.h \
 		src/celestia/qt/qtpreferencesdialog.h \
@@ -12257,6 +12315,7 @@ obj/qtbookmark.o: src/celestia/qt/qtbookmark.cpp src/celestia/url.h \
 		src/celestia/destination.h \
 		src/celestia/moviecapture.h \
 		src/celestia/celx.h \
+		src/celephem/lua.h \
 		src/celestia/qt/qtbookmark.h \
 		ui_addbookmark.h \
 		ui_newbookmarkfolder.h \
@@ -12414,6 +12473,7 @@ obj/qtglwidget.o: src/celestia/qt/qtglwidget.cpp src/celengine/celestia.h \
 		src/celestia/destination.h \
 		src/celestia/moviecapture.h \
 		src/celestia/celx.h \
+		src/celephem/lua.h \
 		src/celestia/qt/qtglwidget.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o obj/qtglwidget.o src/celestia/qt/qtglwidget.cpp
 
@@ -12565,6 +12625,7 @@ obj/qtpreferencesdialog.o: src/celestia/qt/qtpreferencesdialog.cpp src/celestia/
 		src/celestia/destination.h \
 		src/celestia/moviecapture.h \
 		src/celestia/celx.h \
+		src/celephem/lua.h \
 		src/celestia/qt/qtpreferencesdialog.h \
 		ui_preferences.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o obj/qtpreferencesdialog.o src/celestia/qt/qtpreferencesdialog.cpp
@@ -12716,6 +12777,7 @@ obj/qtcelestialbrowser.o: src/celestia/qt/qtcelestialbrowser.cpp src/celestia/ce
 		src/celestia/destination.h \
 		src/celestia/moviecapture.h \
 		src/celestia/celx.h \
+		src/celephem/lua.h \
 		src/celestia/qt/qtcelestialbrowser.h \
 		src/celestia/qt/qtselectionpopup.h \
 		src/celestia/qt/qtcolorswatchwidget.h
@@ -12868,6 +12930,7 @@ obj/qtdeepskybrowser.o: src/celestia/qt/qtdeepskybrowser.cpp src/celestia/celest
 		src/celestia/destination.h \
 		src/celestia/moviecapture.h \
 		src/celestia/celx.h \
+		src/celephem/lua.h \
 		src/celestia/qt/qtdeepskybrowser.h \
 		src/celestia/qt/qtcolorswatchwidget.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o obj/qtdeepskybrowser.o src/celestia/qt/qtdeepskybrowser.cpp
@@ -13019,6 +13082,7 @@ obj/qtsolarsystembrowser.o: src/celestia/qt/qtsolarsystembrowser.cpp src/celesti
 		src/celestia/destination.h \
 		src/celestia/moviecapture.h \
 		src/celestia/celx.h \
+		src/celephem/lua.h \
 		src/celestia/qt/qtsolarsystembrowser.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o obj/qtsolarsystembrowser.o src/celestia/qt/qtsolarsystembrowser.cpp
 
@@ -13169,6 +13233,7 @@ obj/qtselectionpopup.o: src/celestia/qt/qtselectionpopup.cpp src/celestia/celest
 		src/celestia/destination.h \
 		src/celestia/moviecapture.h \
 		src/celestia/celx.h \
+		src/celephem/lua.h \
 		src/celengine/axisarrow.h \
 		src/celengine/referencemark.h \
 		src/celengine/planetgrid.h \
@@ -13326,6 +13391,7 @@ obj/qttimetoolbar.o: src/celestia/qt/qttimetoolbar.cpp src/celestia/celestiacore
 		src/celestia/destination.h \
 		src/celestia/moviecapture.h \
 		src/celestia/celx.h \
+		src/celephem/lua.h \
 		src/celestia/qt/qttimetoolbar.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o obj/qttimetoolbar.o src/celestia/qt/qttimetoolbar.cpp
 
@@ -13476,6 +13542,7 @@ obj/qtcelestiaactions.o: src/celestia/qt/qtcelestiaactions.cpp src/celestia/cele
 		src/celestia/destination.h \
 		src/celestia/moviecapture.h \
 		src/celestia/celx.h \
+		src/celephem/lua.h \
 		src/celestia/qt/qtcelestiaactions.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o obj/qtcelestiaactions.o src/celestia/qt/qtcelestiaactions.cpp
 
@@ -13746,6 +13813,7 @@ obj/qteventfinder.o: src/celestia/qt/qteventfinder.cpp src/celestia/celestiacore
 		src/celestia/destination.h \
 		src/celestia/moviecapture.h \
 		src/celestia/celx.h \
+		src/celephem/lua.h \
 		src/celestia/qt/qteventfinder.h \
 		src/celmath/distance.h \
 		src/celmath/sphere.h \
@@ -13901,6 +13969,7 @@ obj/qtsettimedialog.o: src/celestia/qt/qtsettimedialog.cpp src/celestia/celestia
 		src/celestia/destination.h \
 		src/celestia/moviecapture.h \
 		src/celestia/celx.h \
+		src/celephem/lua.h \
 		src/celestia/qt/qtsettimedialog.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o obj/qtsettimedialog.o src/celestia/qt/qtsettimedialog.cpp
 
