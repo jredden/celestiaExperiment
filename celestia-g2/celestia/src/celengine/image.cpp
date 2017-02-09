@@ -89,12 +89,14 @@ using namespace std;
 // All rows are padded to a size that's a multiple of 4 bytes
 static int pad(int n)
 {
+  clog << "pad\t" << n << "\n";
     return (n + 3) & ~0x3;
 }
 
 
 static int formatComponents(int fmt)
 {
+  clog << "formatComponents \t" << fmt << "\n";
     switch (fmt)
     {
     case GL_RGBA:
@@ -126,6 +128,7 @@ static int formatComponents(int fmt)
 
 static int calcMipLevelSize(int fmt, int w, int h, int mip)
 {
+  clog << "calcMipLevelSize \t" << fmt << "\t" << w << "\t" << h << "\t" << mip << "\n";
     w = max(w >> mip, 1);
     h = max(h >> mip, 1);
 
@@ -151,6 +154,7 @@ Image::Image(int fmt, int w, int h, int mips) :
     format(fmt),
     pixels(NULL)
 {
+  clog << "Image CTOR \t" << fmt << "\t" << w << "\t" << h << "\t" << mips << "\n";
     components = formatComponents(fmt);
     assert(components != 0);
 
@@ -165,6 +169,7 @@ Image::Image(int fmt, int w, int h, int mips) :
 
 Image::~Image()
 {
+  clog << "Image DTOR \n";
     if (pixels != NULL)
         delete[] pixels;
 }
@@ -172,54 +177,70 @@ Image::~Image()
 
 int Image::getWidth() const
 {
+  clog << "Image::getWidth \t" << width << "\n";
     return width;
 }
 
 
 int Image::getHeight() const
 {
+  clog << "Image::getHeight \t" << height << "\n";
     return height;
 }
 
 
 int Image::getPitch() const
 {
+    clog << "Image::getPitch \t" << pitch << "\n";
+
     return pitch;
 }
 
 
 int Image::getMipLevelCount() const
 {
+    clog << "Image::getMipLevelCount \t" << mipLevels << "\n";
+
     return mipLevels;
 }
 
 
 int Image::getSize() const
 {
+    clog << "Image::getSize \t" << size << "\n";
+
     return size;
 }
 
 
 int Image::getFormat() const
 {
+    clog << "Image::getFormat \t" << format << "\n";
+
     return format;
 }
 
 
 int Image::getComponents() const
 {
+    clog << "Image::getComponents \t" << components << "\n";
+
     return components;
 }
 
 
 unsigned char* Image::getPixels()
 {
+    clog << "Image::getpixels \n";
+
     return pixels;
 }
 
 
 unsigned char* Image::getPixelRow(int mip, int row)
 {
+  clog << "Image::getPixelRow \t" << mip << "\t" << row << "\n";
+
     /*int w = max(width >> mip, 1); Unused*/
     int h = max(height >> mip, 1);
     if (mip >= mipLevels || row >= h)
@@ -235,12 +256,16 @@ unsigned char* Image::getPixelRow(int mip, int row)
 
 unsigned char* Image::getPixelRow(int row)
 {
+    clog << "Image::getPixelRow \t" << row << "\n";
+
     return getPixelRow(0, row);
 }
 
 
 unsigned char* Image::getMipLevel(int mip)
 {
+    clog << "Image::getMipLevel \t" << mip << "\n";
+
     if (mip >= mipLevels)
         return NULL;
 
@@ -254,6 +279,8 @@ unsigned char* Image::getMipLevel(int mip)
 
 int Image::getMipLevelSize(int mip) const
 {
+      clog << "Image::getMipLevelSize \t" << mip << "\n";
+
     if (mip >= mipLevels)
         return 0;
     else
@@ -263,6 +290,8 @@ int Image::getMipLevelSize(int mip) const
 
 bool Image::isCompressed() const
 {
+      clog << "Image::isCompressed \t" << format << "\n";
+
     switch (format)
     {
     case GL_COMPRESSED_RGBA_S3TC_DXT1_EXT:
@@ -277,6 +306,8 @@ bool Image::isCompressed() const
 
 bool Image::hasAlpha() const
 {
+      clog << "Image::hasAlpha \t" << format << "\n";
+
     switch (format)
     {
     case GL_COMPRESSED_RGBA_S3TC_DXT3_EXT:
@@ -298,6 +329,8 @@ bool Image::hasAlpha() const
 // expected results for grayscale values in RGB images.
 Image* Image::computeNormalMap(float scale, bool wrap) const
 {
+  clog << "Image::computeNormalMap \t" << scale << "\t" << wrap << "\n";
+
     // Can't do anything with compressed input; there are probably some other
     // formats that should be rejected as well . . .
     if (isCompressed())
@@ -412,6 +445,8 @@ typedef struct my_error_mgr *my_error_ptr;
 
 METHODDEF(void) my_error_exit(j_common_ptr cinfo)
 {
+      clog << "my_error_exit \n";
+
     // cinfo->err really points to a my_error_mgr struct, so coerce pointer
     my_error_ptr myerr = (my_error_ptr) cinfo->err;
 
@@ -427,6 +462,8 @@ METHODDEF(void) my_error_exit(j_common_ptr cinfo)
 
 Image* LoadJPEGImage(const string& filename, int)
 {
+  clog << "LoadJPEGImage \t" << filename << "\t" << "\n";
+
 #ifdef JPEG_SUPPORT
     Image* img = NULL;
 
@@ -629,6 +666,8 @@ Image* LoadJPEGImage(const string& filename, int)
 #ifdef PNG_SUPPORT
 void PNGReadData(png_structp png_ptr, png_bytep data, png_size_t length)
 {
+      clog << "PNGReadData \t" << length << "\n";
+
     FILE* fp = (FILE*) png_get_io_ptr(png_ptr);
     fread((void*) data, 1, length, fp);
 }
@@ -637,6 +676,7 @@ void PNGReadData(png_structp png_ptr, png_bytep data, png_size_t length)
 
 Image* LoadPNGImage(const string& filename)
 {
+  clog << "LoadPNGImage \t" << filename << "\n";
 #ifndef PNG_SUPPORT
     return NULL;
 #else
@@ -800,6 +840,7 @@ typedef struct
 
 static int readInt(ifstream& in)
 {
+  clog << "Start readInt \n";
     unsigned char b[4];
     in.read(reinterpret_cast<char*>(b), 4);
     return ((int) b[3] << 24) + ((int) b[2] << 16)
@@ -808,6 +849,7 @@ static int readInt(ifstream& in)
 
 static short readShort(ifstream& in)
 {
+  clog << "Start readShort \n";
     unsigned char b[2];
     in.read(reinterpret_cast<char*>(b), 2);
     return ((short) b[1] << 8) + (short) b[0];
@@ -816,6 +858,7 @@ static short readShort(ifstream& in)
 
 static Image* LoadBMPImage(ifstream& in)
 {
+  clog << "Start LoadBMPImage \n";
     BMPFileHeader fileHeader;
     BMPImageHeader imageHeader;
     unsigned char* pixels;
@@ -936,6 +979,8 @@ static Image* LoadBMPImage(ifstream& in)
 
 Image* LoadBMPImage(const string& filename)
 {
+  clog << "Start LoadBMPImage overload \t" << filename <<  "\n";
+
     ifstream bmpFile(filename.c_str(), ios::in | ios::binary);
 
     if (bmpFile.good())

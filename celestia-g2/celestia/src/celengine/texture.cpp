@@ -106,6 +106,7 @@ static TextureCaps texCaps;
 
 static bool testMaxLevel()
 {
+   clog << "Starting testMaxLevel \n";
     unsigned char texels[64];
 
     glEnable(GL_TEXTURE_2D);
@@ -129,6 +130,7 @@ static bool testMaxLevel()
 
 static const TextureCaps& GetTextureCaps()
 {
+   clog << "Starting GetTextureCaps \n";
     if (!texCapsInitialized)
     {
         texCapsInitialized = true;
@@ -164,6 +166,7 @@ static const TextureCaps& GetTextureCaps()
 
 static int getInternalFormat(int format)
 {
+  clog << "Starting getInternalFormat\t" << format << " \n";
     switch (format)
     {
     case GL_RGBA:
@@ -224,6 +227,7 @@ static int getCompressedInternalFormat(int format)
 
 static int getCompressedBlockSize(int format)
 {
+  clog << "getCompressedBlockSize\t" << format << " \n";
     if (format == GL_COMPRESSED_RGBA_S3TC_DXT1_EXT)
         return 8;
     else
@@ -233,6 +237,7 @@ static int getCompressedBlockSize(int format)
 
 static GLenum GetGLTexAddressMode(Texture::AddressMode addressMode)
 {
+  clog << "GetGLTexAddressMode\t" << addressMode << " \n";
     const TextureCaps& caps = GetTextureCaps();
 
     switch (addressMode)
@@ -256,6 +261,7 @@ static GLenum GetGLTexAddressMode(Texture::AddressMode addressMode)
 
 static void SetBorderColor(Color borderColor, GLenum target)
 {
+   clog << "Starting SetBorderColor \n";
     float bc[4] = { borderColor.red(), borderColor.green(),
                     borderColor.blue(), borderColor.alpha() };
     glTexParameterfv(target, GL_TEXTURE_BORDER_COLOR, bc);
@@ -266,6 +272,7 @@ static void SetBorderColor(Color borderColor, GLenum target)
 // a complete set of mipmap levels.
 static void LoadMipmapSet(Image& img, GLenum target)
 {
+   clog << "Starting LoadMipmapSet \n";
     int internalFormat = getInternalFormat(img.getFormat());
 
     for (int mip = 0; mip < img.getMipLevelCount(); mip++)
@@ -301,6 +308,7 @@ static void LoadMipmapSet(Image& img, GLenum target)
 // Load a texture without any mipmaps
 static void LoadMiplessTexture(Image& img, GLenum target)
 {
+   clog << "Starting LoadMiplessTexture \n";
     int internalFormat = getInternalFormat(img.getFormat());
 
     if (img.isCompressed())
@@ -329,6 +337,7 @@ static void LoadMiplessTexture(Image& img, GLenum target)
 
 static int ilog2(unsigned int x)
 {
+   clog << "Starting ilog2 \n";
     int n = -1;
 
     while (x != 0)
@@ -343,6 +352,7 @@ static int ilog2(unsigned int x)
 
 static int CalcMipLevelCount(int w, int h)
 {
+   clog << "Starting CalcMipLevelCount \n";
     return max(ilog2(w), ilog2(h)) + 1;
 }
 
@@ -355,6 +365,7 @@ Texture::Texture(int w, int h, int d) :
     depth(d),
     formatOptions(0)
 {
+   clog << " Texture CTOR \n";
 }
 
 
@@ -400,24 +411,29 @@ int Texture::getWidth() const
 
 int Texture::getHeight() const
 {
+  clog << "getHeight:\t" << height << " \n";
     return height;
 }
 
 
 int Texture::getDepth() const
 {
+   clog << "getDepth:\t" << depth << " \n";
     return depth;
 }
 
 
 unsigned int Texture::getFormatOptions() const
 {
+   clog << "getFormatOptions:\t" << formatOptions << " \n";
     return formatOptions;
 }
 
 
 void Texture::setFormatOptions(unsigned int opts)
 {
+     clog << "setFormatOptions:\t" << opts << " \n";
+
     formatOptions = opts;
 }
 
@@ -428,6 +444,8 @@ ImageTexture::ImageTexture(Image& img,
     Texture(img.getWidth(), img.getHeight()),
     glName(0)
 {
+     clog << "ImageTexture CTOR\n";
+
     glGenTextures(1, (GLuint*) &glName);
     glBindTexture(GL_TEXTURE_2D, glName);
 
@@ -499,6 +517,8 @@ ImageTexture::ImageTexture(Image& img,
 
 ImageTexture::~ImageTexture()
 {
+     clog << "ImageTexture DTOR:\t" << glName << " \n";
+
     if (glName != 0)
         glDeleteTextures(1, (const GLuint*) &glName);
 }
@@ -506,12 +526,15 @@ ImageTexture::~ImageTexture()
 
 void ImageTexture::bind()
 {
+     clog << "ImageTexture;:bind\t" << glName << " \n";
+
     glBindTexture(GL_TEXTURE_2D, glName);
 }
 
 
 const TextureTile ImageTexture::getTile(int lod, int u, int v)
 {
+  clog << "ImageTexture;:getTile\t" << lod << "\t" << u << "\t"  << v << " \n";
     if (lod != 0 || u != 0 || v != 0)
         return TextureTile(0);
     else
@@ -521,12 +544,14 @@ const TextureTile ImageTexture::getTile(int lod, int u, int v)
 
 unsigned int ImageTexture::getName() const
 {
+   clog << "ImageTexture::getName\t" << glName << " \n";
     return glName;
 }
 
 
 void ImageTexture::setBorderColor(Color borderColor)
 {
+   clog << "ImageTexture::setBorderColor \n";
     bind();
     SetBorderColor(borderColor, GL_TEXTURE_2D);
 }
@@ -540,6 +565,7 @@ TiledTexture::TiledTexture(Image& img,
     vSplit(_vSplit),
     glNames(NULL)
 {
+   clog << "TiledTexture CTOR \n";
     glNames = new uint[uSplit * vSplit];
     {
         for (int i = 0; i < uSplit * vSplit; i++)
@@ -694,6 +720,7 @@ TiledTexture::TiledTexture(Image& img,
 
 TiledTexture::~TiledTexture()
 {
+  clog << "TiledTexture DTOR \n";
     if (glNames != NULL)
     {
         for (int i = 0; i < uSplit * vSplit; i++)
@@ -713,6 +740,7 @@ void TiledTexture::bind()
 
 void TiledTexture::setBorderColor(Color borderColor)
 {
+  clog << "TiledTexture::setBorderColor \n";
     for (int i = 0; i < vSplit; i++)
     {
         for (int j = 0; j < uSplit; j++)
@@ -726,18 +754,21 @@ void TiledTexture::setBorderColor(Color borderColor)
 
 int TiledTexture::getUTileCount(int) const
 {
+  clog << "TiledTexture::getUTileCount\t" << uSplit << " \n";
     return uSplit;
 }
 
 
 int TiledTexture::getVTileCount(int) const
 {
+   clog << "TiledTexture::getVTileCount\t" << vSplit << " \n";
     return vSplit;
 }
 
 
 const TextureTile TiledTexture::getTile(int lod, int u, int v)
 {
+  clog << "TiledTexture::getTile\t" << lod << "\t" << u << "\t" << v << " \n";
     if (lod != 0 || u >= uSplit || u < 0 || v >= vSplit || v < 0)
         return TextureTile(0);
     else
@@ -752,6 +783,7 @@ CubeMap::CubeMap(Image* faces[]) :
     Texture(faces[0]->getWidth(), faces[0]->getHeight()),
     glName(0)
 {
+   clog << "CubeMap CTOR \n";
     // Verify that all the faces are square and have the same size
     int width = faces[0]->getWidth();
     int format = faces[0]->getFormat();
@@ -821,6 +853,7 @@ CubeMap::CubeMap(Image* faces[]) :
 
 CubeMap::~CubeMap()
 {
+  clog << "CubeMap DTOR \t" << glName << "\n";
     if (glName != 0)
         glDeleteTextures(1, (const GLuint*) &glName);
 }
@@ -834,6 +867,7 @@ void CubeMap::bind()
 
 const TextureTile CubeMap::getTile(int lod, int u, int v)
 {
+  clog << "CubeMap::getTIle \t" << lod << "\t" << u << "\t" << v << "\n";
     if (lod != 0 || u != 0 || v != 0)
         return TextureTile(0);
     else
@@ -843,6 +877,7 @@ const TextureTile CubeMap::getTile(int lod, int u, int v)
 
 void CubeMap::setBorderColor(Color borderColor)
 {
+   clog << "CubeMap::setBorderColor \n";
     bind();
     SetBorderColor(borderColor, GL_TEXTURE_CUBE_MAP_ARB);
 }
@@ -855,6 +890,7 @@ Texture* CreateProceduralTexture(int width, int height,
                                  Texture::AddressMode addressMode,
                                  Texture::MipMapMode mipMode)
 {
+  clog << "Start CreateProceduralTexture \n";
     Image* img = new Image(format, width, height);
     if (img == NULL)
         return NULL;
@@ -882,6 +918,7 @@ Texture* CreateProceduralTexture(int width, int height,
                                  Texture::AddressMode addressMode,
                                  Texture::MipMapMode mipMode)
 {
+   clog << "Start CreateProceduralTexture overloaded \n";
     Image* img = new Image(format, width, height);
     if (img == NULL)
         return NULL;
@@ -907,6 +944,7 @@ Texture* CreateProceduralTexture(int width, int height,
 // vector pointing to (s, t) on the specified face.
 static Vector3f cubeVector(int face, float s, float t)
 {
+  clog << "Start cubeVector\n";
     Vector3f v;
     switch (face)
     {
@@ -942,6 +980,7 @@ static Vector3f cubeVector(int face, float s, float t)
 extern Texture* CreateProceduralCubeMap(int size, int format,
                                         ProceduralTexEval func)
 {
+  clog << "Start CreateProceduralCubeMap \n";
     Image* faces[6];
     bool failed = false;
 
@@ -996,6 +1035,7 @@ static Texture* CreateTextureFromImage(Image& img,
                                        Texture::AddressMode addressMode,
                                        Texture::MipMapMode mipMode)
 {
+   clog << "Starting CreateTextureFromImage \n";
 #if 0
     // Require texture dimensions to be powers of two.  Even though the
     // OpenGL driver will automatically rescale textures with non-power of
@@ -1050,6 +1090,7 @@ Texture* LoadTextureFromFile(const string& filename,
                              Texture::AddressMode addressMode,
                              Texture::MipMapMode mipMode)
 {
+  clog << "LoadTextureFromFile \t" << filename << "\n";
     // Check for a Celestia texture--these need to be handled specially.
     ContentType contentType = DetermineFileType(filename);
 
@@ -1087,6 +1128,7 @@ Texture* LoadHeightMapFromFile(const string& filename,
                                float height,
                                Texture::AddressMode addressMode)
 {
+  clog << "LoadHeightMapFromFile \t" << filename << "\n";
     Image* img = LoadImageFromFile(filename);
     if (img == NULL)
         return NULL;

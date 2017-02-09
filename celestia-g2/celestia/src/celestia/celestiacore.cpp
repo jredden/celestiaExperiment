@@ -3628,7 +3628,7 @@ void CelestiaCore::renderOverlay()
     // Selection info
     Selection sel = sim->getSelection();
     if(!sel.empty()){
-      LOG(plog::debug) << _("Selection:") << sel.getType();
+      //LOG(plog::debug) << _("Selection:") << sel.getType();
     }
     else{
       LOG(plog::debug) << _("Selection:is empty");
@@ -3739,7 +3739,7 @@ void CelestiaCore::renderOverlay()
                         selectionNames += alias;
                     }
                 }
-
+		LOG(plog::debug) << _("Planet:") << selectionNames;
                 overlay->setFont(titleFont);
                 *overlay << selectionNames;
                 overlay->setFont(font);
