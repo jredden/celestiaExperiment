@@ -84,6 +84,8 @@ extern "C" {
 #include "texture.h"
 #include "virtualtex.h"
 
+#include "plog/Log.h"
+
 using namespace Eigen;
 using namespace std;
 
@@ -1090,7 +1092,8 @@ Texture* LoadTextureFromFile(const string& filename,
                              Texture::AddressMode addressMode,
                              Texture::MipMapMode mipMode)
 {
-  clog << "LoadTextureFromFile \t" << filename << "\n";
+  //  clog << "LoadTextureFromFile \t" << filename << "\n";
+  LOG(plog::debug) << "LoadTextureFromFile \t" << filename << "\n";
     // Check for a Celestia texture--these need to be handled specially.
     ContentType contentType = DetermineFileType(filename);
 
@@ -1141,6 +1144,6 @@ Texture* LoadHeightMapFromFile(const string& filename,
     Texture* tex = CreateTextureFromImage(*normalMap, addressMode,
                                           Texture::DefaultMipMaps);
     delete normalMap;
-
+    clog << tex->getWidth();
     return tex;
 }

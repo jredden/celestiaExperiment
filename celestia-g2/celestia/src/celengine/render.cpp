@@ -81,6 +81,8 @@ std::ofstream hdrlog;
 #include <iomanip>
 #include "eigenport.h"
 
+#include "plog/Log.h"
+
 using namespace cmod;
 using namespace Eigen;
 using namespace std;
@@ -7578,6 +7580,8 @@ void Renderer::renderPlanet(Body& body,
                             float nearPlaneDistance,
                             float farPlaneDistance)
 {
+  LOG(plog::debug) << "in Renderer::renderPlanet\n";
+  
     double now = observer.getTime();
     float altitude = distance - body.getRadius();
     float discSizeInPixels = body.getRadius() /
