@@ -55,6 +55,8 @@
 #include "celx.h"
 #include "celestiacore.h"
 
+#include "plog/Log.h"
+
 using namespace Eigen;
 using namespace std;
 
@@ -3903,6 +3905,7 @@ static int celestia_getparamstring(lua_State* l)
 
 static int celestia_loadtexture(lua_State* l)
 {
+  LOG(plog::debug) << "celestia_loadtexture lua_State:" << l;
     Celx_CheckArgs(l, 2, 2, "Need one argument for celestia:loadtexture()");
     string s = Celx_SafeGetString(l, 2, AllErrors, "Argument to celestia:loadtexture() must be a string");
     lua_Debug ar;

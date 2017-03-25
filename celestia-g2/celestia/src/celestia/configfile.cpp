@@ -17,6 +17,8 @@
 #include <celengine/texmanager.h>
 #include "configfile.h"
 
+#include "plog/Log.h"
+
 using namespace std;
 
 
@@ -34,6 +36,7 @@ static unsigned int getUint(Hash* params,
 
 CelestiaConfig* ReadCelestiaConfig(string filename, CelestiaConfig *config)
 {
+	LOG(plog::debug) << "config filename:" << filename;
     ifstream configFile(filename.c_str());
     if (!configFile.good())
     {

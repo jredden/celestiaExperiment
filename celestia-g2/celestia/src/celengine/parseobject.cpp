@@ -679,6 +679,10 @@ CreateOrbit(const Selection& centralObject,
             const string& path,
             bool usePlanetUnits)
 {
+	LOG(plog::debug) << "enter Create Orbit0:" << centralObject.getName();
+//	LOG(plog::debug) << "enter Create Orbit1:" << *planetData;
+	LOG(plog::debug) << "enter Create Orbit2:" << path;
+	LOG(plog::debug) << "enter Create Orbit3:" << usePlanetUnits;
     Orbit* orbit = NULL;
 
     string customOrbitName;
