@@ -472,6 +472,8 @@ static bool CreateTimeline(Body* body,
 {
     FrameTree* parentFrameTree = NULL;
     Selection parentObject = GetParentObject(system);
+	
+	LOG(plog::debug) << parentObject.getName() << "::" << parentObject.star() << "::" << parentObject.body();
     bool orbitsPlanet = false;
     if (parentObject.body())
     {
@@ -604,7 +606,7 @@ static bool CreateTimeline(Body* body,
         orbitsPlanet = false;
     else
         orbitsPlanet = true;
-
+	LOG(plog::debug) << "CreateOrbit:";
     Orbit* newOrbit = CreateOrbit(orbitFrame->getCenter(), planetData, path, !orbitsPlanet);
     if (newOrbit == NULL && orbit == NULL)
     {

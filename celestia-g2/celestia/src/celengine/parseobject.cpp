@@ -680,7 +680,9 @@ CreateOrbit(const Selection& centralObject,
             bool usePlanetUnits)
 {
 	LOG(plog::debug) << "enter Create Orbit0:" << centralObject.getName();
-//	LOG(plog::debug) << "enter Create Orbit1:" << *planetData;
+	LOG(plog::debug) << "enter Create Orbit1.0:" << planetData->getValue("ScriptedOrbit");
+	LOG(plog::debug) << "enter Create Orbit1.1:" << planetData->getValue("SampledTrajectory");
+	LOG(plog::debug) << "enter Create Orbit1.2:" << planetData->getValue("EllipticalOrbit");
 	LOG(plog::debug) << "enter Create Orbit2:" << path;
 	LOG(plog::debug) << "enter Create Orbit3:" << usePlanetUnits;
     Orbit* orbit = NULL;
