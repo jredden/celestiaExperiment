@@ -68,6 +68,8 @@ extern "C" {
 #include <cmath>
 #include <cstring>
 
+#include <../plog/Log.h>
+
 using namespace std;
 
 
@@ -86,6 +88,7 @@ using namespace std;
 #endif // PNG_SUPPORT
 
 
+
 // All rows are padded to a size that's a multiple of 4 bytes
 static int pad(int n)
 {
@@ -97,6 +100,7 @@ static int pad(int n)
 static int formatComponents(int fmt)
 {
   clog << "formatComponents \t" << fmt << "\n";
+  LOG(plog::debug) << "formatComponents \t" << fmt << "\n";
     switch (fmt)
     {
     case GL_RGBA:
@@ -129,6 +133,7 @@ static int formatComponents(int fmt)
 static int calcMipLevelSize(int fmt, int w, int h, int mip)
 {
   clog << "calcMipLevelSize \t" << fmt << "\t" << w << "\t" << h << "\t" << mip << "\n";
+  LOG(plog::debug) << "calcMipLevelSize \t" << fmt << "\t" << w << "\t" << h << "\t" << mip << "\n";
     w = max(w >> mip, 1);
     h = max(h >> mip, 1);
 
@@ -155,6 +160,7 @@ Image::Image(int fmt, int w, int h, int mips) :
     pixels(NULL)
 {
   clog << "Image CTOR \t" << fmt << "\t" << w << "\t" << h << "\t" << mips << "\n";
+  LOG(plog::debug) << "Image CTOR \t" << fmt << "\t" << w << "\t" << h << "\t" << mips << "\n";
     components = formatComponents(fmt);
     assert(components != 0);
 
@@ -178,6 +184,7 @@ Image::~Image()
 int Image::getWidth() const
 {
   clog << "Image::getWidth \t" << width << "\n";
+  LOG(plog::debug) << "Image::getWidth \t" << width << "\n";
     return width;
 }
 
@@ -185,6 +192,7 @@ int Image::getWidth() const
 int Image::getHeight() const
 {
   clog << "Image::getHeight \t" << height << "\n";
+  LOG(plog::debug) << "Image::getHeight \t" << height << "\n";
     return height;
 }
 
@@ -192,7 +200,7 @@ int Image::getHeight() const
 int Image::getPitch() const
 {
     clog << "Image::getPitch \t" << pitch << "\n";
-
+	LOG(plog::debug) << "Image::getPitch \t" << pitch << "\n";
     return pitch;
 }
 
@@ -200,7 +208,7 @@ int Image::getPitch() const
 int Image::getMipLevelCount() const
 {
     clog << "Image::getMipLevelCount \t" << mipLevels << "\n";
-
+	LOG(plog::debug) << "Image::getMipLevelCount \t" << mipLevels << "\n";
     return mipLevels;
 }
 
@@ -208,7 +216,7 @@ int Image::getMipLevelCount() const
 int Image::getSize() const
 {
     clog << "Image::getSize \t" << size << "\n";
-
+	LOG(plog::debug) << "Image::getSize \t" << size << "\n";
     return size;
 }
 
@@ -216,7 +224,7 @@ int Image::getSize() const
 int Image::getFormat() const
 {
     clog << "Image::getFormat \t" << format << "\n";
-
+	LOG(plog::debug) << "Image::getFormat \t" << format << "\n";
     return format;
 }
 
@@ -224,7 +232,7 @@ int Image::getFormat() const
 int Image::getComponents() const
 {
     clog << "Image::getComponents \t" << components << "\n";
-
+	LOG(plog::debug) << "Image::getComponents \t" << components << "\n";
     return components;
 }
 
@@ -232,7 +240,7 @@ int Image::getComponents() const
 unsigned char* Image::getPixels()
 {
     clog << "Image::getpixels \n";
-
+	LOG(plog::debug) << "Image::getpixels \n";
     return pixels;
 }
 
@@ -240,7 +248,7 @@ unsigned char* Image::getPixels()
 unsigned char* Image::getPixelRow(int mip, int row)
 {
   clog << "Image::getPixelRow \t" << mip << "\t" << row << "\n";
-
+	LOG(plog::debug) << "Image::getPixelRow \t" << mip << "\t" << row << "\n";
     /*int w = max(width >> mip, 1); Unused*/
     int h = max(height >> mip, 1);
     if (mip >= mipLevels || row >= h)
@@ -257,7 +265,7 @@ unsigned char* Image::getPixelRow(int mip, int row)
 unsigned char* Image::getPixelRow(int row)
 {
     clog << "Image::getPixelRow \t" << row << "\n";
-
+	LOG(plog::debug)  << "Image::getPixelRow \t" << row << "\n";
     return getPixelRow(0, row);
 }
 
@@ -265,7 +273,7 @@ unsigned char* Image::getPixelRow(int row)
 unsigned char* Image::getMipLevel(int mip)
 {
     clog << "Image::getMipLevel \t" << mip << "\n";
-
+	LOG(plog::debug) << "Image::getMipLevel \t" << mip << "\n";
     if (mip >= mipLevels)
         return NULL;
 
@@ -280,7 +288,7 @@ unsigned char* Image::getMipLevel(int mip)
 int Image::getMipLevelSize(int mip) const
 {
       clog << "Image::getMipLevelSize \t" << mip << "\n";
-
+	LOG(plog::debug)  << "Image::getMipLevelSize \t" << mip << "\n";
     if (mip >= mipLevels)
         return 0;
     else
@@ -291,7 +299,7 @@ int Image::getMipLevelSize(int mip) const
 bool Image::isCompressed() const
 {
       clog << "Image::isCompressed \t" << format << "\n";
-
+	LOG(plog::debug) << "Image::isCompressed \t" << format << "\n";
     switch (format)
     {
     case GL_COMPRESSED_RGBA_S3TC_DXT1_EXT:
@@ -307,7 +315,7 @@ bool Image::isCompressed() const
 bool Image::hasAlpha() const
 {
       clog << "Image::hasAlpha \t" << format << "\n";
-
+	LOG(plog::debug) << "Image::hasAlpha \t" << format << "\n";
     switch (format)
     {
     case GL_COMPRESSED_RGBA_S3TC_DXT3_EXT:
@@ -330,7 +338,7 @@ bool Image::hasAlpha() const
 Image* Image::computeNormalMap(float scale, bool wrap) const
 {
   clog << "Image::computeNormalMap \t" << scale << "\t" << wrap << "\n";
-
+	LOG(plog::debug)  << "Image::computeNormalMap \t" << scale << "\t" << wrap << "\n";
     // Can't do anything with compressed input; there are probably some other
     // formats that should be rejected as well . . .
     if (isCompressed())
@@ -405,7 +413,7 @@ Image* LoadImageFromFile(const string& filename)
     Image* img = NULL;
 
     clog << _("Loading image from file ") << filename << '\n';
-
+	LOG(plog::debug)  << _("Loading image from file ") << filename << '\n';
     switch (type)
     {
     case Content_JPEG:
@@ -423,6 +431,7 @@ Image* LoadImageFromFile(const string& filename)
         break;
     default:
         clog << filename << _(": unrecognized or unsupported image file type.\n");
+		LOG(plog::error) << _(": unrecognized or unsupported image file type.\n");
         break;
     }
 
@@ -446,6 +455,7 @@ typedef struct my_error_mgr *my_error_ptr;
 METHODDEF(void) my_error_exit(j_common_ptr cinfo)
 {
       clog << "my_error_exit \n";
+	  LOG(plog::error) << "Error exit";
 
     // cinfo->err really points to a my_error_mgr struct, so coerce pointer
     my_error_ptr myerr = (my_error_ptr) cinfo->err;
@@ -463,7 +473,7 @@ METHODDEF(void) my_error_exit(j_common_ptr cinfo)
 Image* LoadJPEGImage(const string& filename, int)
 {
   clog << "LoadJPEGImage \t" << filename << "\t" << "\n";
-
+	LOG(plog::debug)  << "LoadJPEGImage \t" << filename << "\t" << "\n";
 #ifdef JPEG_SUPPORT
     Image* img = NULL;
 
