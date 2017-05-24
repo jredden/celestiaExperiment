@@ -63,6 +63,11 @@
 using namespace Eigen;
 using namespace std;
 
+enum // Define log instances. Default is 0 and is omitted from this enum.
+{
+    SecondLog = 1
+};
+
 static const int DragThreshold = 3;
 
 // Perhaps you'll want to put this stuff in configuration file.
@@ -3189,7 +3194,7 @@ static void displayStarInfo(Overlay& overlay,
     {
         SolarSystem* sys = universe.getSolarSystem(&star);
 	if(sys != NULL){
-	  LOG(plog::debug) <<  sys->getPlanets()->getSystemSize() << " number planets";
+	  LOG_(SecondLog,plog::debug) <<  sys->getPlanets()->getSystemSize() << " number planets";
 	}
 	
         if (sys != NULL && sys->getPlanets()->getSystemSize() != 0)
@@ -3384,7 +3389,7 @@ static void showViewFrame(const View* v, int width, int height)
 
 void CelestiaCore::renderOverlay()
 {
-
+	LOG_DEBUG_(SecondLog) << "In renderOverlay \n";
 #ifdef CELX
     if (luaHook) luaHook->callLuaHook(this,"renderoverlay");
 #endif
@@ -3631,7 +3636,7 @@ void CelestiaCore::renderOverlay()
       //LOG(plog::debug) << _("Selection:") << sel.getType();
     }
     else{
-      LOG(plog::debug) << _("Selection:is empty");
+      LOG_(SecondLog, plog::debug) << _("Selection:is empty");
     }
     if (!sel.empty() && hudDetail > 0 && (overlayElements & ShowSelection))
     {
@@ -3739,7 +3744,7 @@ void CelestiaCore::renderOverlay()
                         selectionNames += alias;
                     }
                 }
-		LOG(plog::debug) << _("Planet:") << selectionNames;
+		LOG_(SecondLog, plog::debug) << _("Planet:") << selectionNames;
                 overlay->setFont(titleFont);
                 *overlay << selectionNames;
                 overlay->setFont(font);
@@ -4022,7 +4027,7 @@ class SolarSystemLoader : public EnumFilesHandler
         {
             string fullname = getPath() + '/' + filename;
             // clog << _("Loading solar system catalog: ") << fullname << '\n';
-	    LOG(plog::debug) <<  _("Loading solar system catalog: ") << fullname << '\n';
+	    LOG_(SecondLog, plog::debug) <<  _("Loading solar system catalog: ") << fullname << '\n';
             if (notifier)
                 notifier->update(filename);
 
@@ -4032,7 +4037,7 @@ class SolarSystemLoader : public EnumFilesHandler
                 LoadSolarSystemObjects(solarSysFile,
                                        *universe,
                                        getPath());
-		LOG(plog::debug) <<  _("Loaded solar system catalog: ") << fullname << '\n';
+		LOG_(SecondLog, plog::debug) <<  _("Loaded solar system catalog: ") << fullname << '\n';
 
             }
         }
@@ -4065,8 +4070,8 @@ public:
         if (DetermineFileType(filename) == contentType)
         {
             string fullname = getPath() + '/' + filename;
-            clog << _("Loading ") << typeDesc << " catalog: " << fullname << '\n';
-            LOG(plog::debug) << _("Loading ") << typeDesc << " catalog: " << fullname << '\n';
+            // clog << _("Loading ") << typeDesc << " catalog: " << fullname << '\n';
+            LOG_(SecondLog, plog::debug) << _("Loading ") << typeDesc << " catalog: " << fullname << '\n';
             if (notifier)
                 notifier->update(filename);
 
@@ -4078,7 +4083,7 @@ public:
                 {
                     //DPRINTF(0, _("Error reading star file: %s\n"), fullname.c_str());
                     DPRINTF(0, "Error reading %s catalog file: %s\n", typeDesc.c_str(), fullname.c_str());
-		    LOG(plog::error) << _("Error reading ") << typeDesc.c_str() << _("catalog file") << fullname.c_str() << '\n';
+		    LOG_(SecondLog, plog::error) << _("Error reading ") << typeDesc.c_str() << _("catalog file") << fullname.c_str() << '\n';
                 }
             }
         }
@@ -4456,7 +4461,7 @@ static void loadCrossIndex(StarDatabase* starDB,
             if (!starDB->loadCrossIndex(catalog, xrefFile))
                 cerr << _("Error reading cross index ") << filename << '\n';
             else
-	      LOG(plog::debug) << _("Loaded cross index ") << filename << '\n';
+	      LOG_(SecondLog, plog::debug) << _("Loaded cross index ") << filename << '\n';
         }
     }
 }

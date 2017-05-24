@@ -89,6 +89,11 @@ extern "C" {
 using namespace Eigen;
 using namespace std;
 
+enum // Define log instances. Default is 0 and is omitted from this enum.
+{
+ 	TextureLog = 4
+};
+
 static bool texCapsInitialized = false;
 
 struct TextureCaps
@@ -1093,7 +1098,7 @@ Texture* LoadTextureFromFile(const string& filename,
                              Texture::MipMapMode mipMode)
 {
   //  clog << "LoadTextureFromFile \t" << filename << "\n";
-  LOG(plog::debug) << "LoadTextureFromFile \t" << filename << "\n";
+  LOG_(TextureLog, plog::debug) << "LoadTextureFromFile \t" << filename << "\n";
     // Check for a Celestia texture--these need to be handled specially.
     ContentType contentType = DetermineFileType(filename);
 

@@ -96,6 +96,11 @@ using namespace std;
 #define GL_COLOR_SUM_EXT 0x8458
 #endif
 
+enum // Define log instances. Default is 0 and is omitted from this enum.
+{
+ 	RenderLog = 6
+};
+
 static const float  STAR_DISTANCE_LIMIT  = 1.0e6f;
 static const int REF_DISTANCE_TO_SCREEN  = 400; //[mm]
 
@@ -7580,7 +7585,7 @@ void Renderer::renderPlanet(Body& body,
                             float nearPlaneDistance,
                             float farPlaneDistance)
 {
-  LOG(plog::debug) << "in Renderer::renderPlanet\n";
+  LOG_(RenderLog, plog::debug) << "in Renderer::renderPlanet\n";
   
     double now = observer.getTime();
     float altitude = distance - body.getRadius();

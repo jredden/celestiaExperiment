@@ -60,6 +60,11 @@
 using namespace Eigen;
 using namespace std;
 
+enum // Define log instances. Default is 0 and is omitted from this enum.
+{
+	ThirdLog = 2
+};
+
 const char* CelxLua::ClassNames[] =
 {
     "class_celestia",
@@ -3905,7 +3910,7 @@ static int celestia_getparamstring(lua_State* l)
 
 static int celestia_loadtexture(lua_State* l)
 {
-  LOG(plog::debug) << "celestia_loadtexture lua_State:" << l;
+  LOG_(ThirdLog, plog::debug) << "celestia_loadtexture lua_State:" << l;
     Celx_CheckArgs(l, 2, 2, "Need one argument for celestia:loadtexture()");
     string s = Celx_SafeGetString(l, 2, AllErrors, "Argument to celestia:loadtexture() must be a string");
     lua_Debug ar;

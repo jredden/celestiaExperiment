@@ -32,6 +32,11 @@
 using namespace Eigen;
 using namespace std;
 
+enum // Define log instances. Default is 0 and is omitted from this enum.
+{
+	ParseLog = 7
+};
+
 
 /**
  * Returns the default units scale for orbits.
@@ -151,7 +156,7 @@ CreateEllipticalOrbit(Hash* orbitData,
     {
         if (!orbitData->getLength("PericenterDistance", pericenterDistance, 1.0, distanceScale))
         {
-            LOG(plog::debug) << "SemiMajorAxis/PericenterDistance missing!  Skipping planet . . .\n";
+            LOG_(ParseLog, plog::debug) << "SemiMajorAxis/PericenterDistance missing!  Skipping planet . . .\n";
             return NULL;
         }
     }
@@ -159,7 +164,7 @@ CreateEllipticalOrbit(Hash* orbitData,
     double period = 0.0;
     if (!orbitData->getTime("Period", period, 1.0, timeScale))
     {
-        LOG(plog::debug) << "Period missing!  Skipping planet . . .\n";
+        LOG_(ParseLog,plog::debug) << "Period missing!  Skipping planet . . .\n";
         return NULL;
     }
     
@@ -247,7 +252,7 @@ CreateSampledTrajectory(Hash* trajData, const string& path)
         else if (!compareIgnoringCase(interpolationString, "cubic"))
             interpolation = TrajectoryInterpolationCubic;
         else
-            LOG(plog::debug) << "Unknown interpolation type " << interpolationString << endl; // non-fatal error
+            LOG_(ParseLog, plog::debug) << "Unknown interpolation type " << interpolationString << endl; // non-fatal error
     }
 
     // Double precision is true by default
@@ -260,7 +265,7 @@ CreateSampledTrajectory(Hash* trajData, const string& path)
     Orbit* orbit = GetTrajectoryManager()->find(orbitHandle);
     if (orbit == NULL)
     {
-        LOG(plog::debug) << "Could not load sampled trajectory from '" << sourceName << "'\n";
+        LOG_(ParseLog,plog::debug) << "Could not load sampled trajectory from '" << sourceName << "'\n";
     }
 
     return orbit;
@@ -298,7 +303,7 @@ CreateFixedPosition(Hash* trajData, const Selection& centralObject, bool usePlan
     {
         if (centralObject.getType() != Selection::Type_Body)
         {
-            LOG(plog::debug) << "FixedPosition planetographic coordinates aren't valid for stars.\n";
+            LOG_(ParseLog, plog::debug) << "FixedPosition planetographic coordinates aren't valid for stars.\n";
             return NULL;
         }
 
@@ -310,7 +315,7 @@ CreateFixedPosition(Hash* trajData, const Selection& centralObject, bool usePlan
     {
         if (centralObject.getType() != Selection::Type_Body)
         {
-            LOG(plog::debug) << "FixedPosition planetocentric coordinates aren't valid for stars.\n";
+            LOG_(ParseLog, plog::debug) << "FixedPosition planetocentric coordinates aren't valid for stars.\n";
             return NULL;
         }
 
@@ -319,7 +324,7 @@ CreateFixedPosition(Hash* trajData, const Selection& centralObject, bool usePlan
     }
     else
     {
-        LOG(plog::debug) << "Missing coordinates for FixedPosition\n";
+        LOG_(ParseLog, plog::debug) << "Missing coordinates for FixedPosition\n";
         return NULL;
     }
 
@@ -420,20 +425,20 @@ CreateSpiceOrbit(Hash* orbitData,
 		// the kernel pool.
 		if (!ParseStringList(orbitData, "Kernel", kernelList))
 		{
-			LOG(plog::debug) << "Kernel list for SPICE orbit is neither a string nor array of strings\n";
+			LOG_(ParseLog, plog::debug) << "Kernel list for SPICE orbit is neither a string nor array of strings\n";
 			return NULL;
 		}
 	}
 
     if (!orbitData->getString("Target", targetBodyName))
     {
-        LOG(plog::debug) << "Target name missing from SPICE orbit\n";
+        LOG_(ParseLog, plog::debug) << "Target name missing from SPICE orbit\n";
         return NULL;
     }
 
     if (!orbitData->getString("Origin", originName))
     {
-        LOG(plog::debug) << "Origin name missing from SPICE orbit\n";
+        LOG_(ParseLog, plog::debug) << "Origin name missing from SPICE orbit\n";
         return NULL;
     }
 
@@ -441,7 +446,7 @@ CreateSpiceOrbit(Hash* orbitData,
     double boundingRadius = 0.0;
     if (!orbitData->getLength("BoundingRadius", boundingRadius, 1.0, distanceScale))
     {
-        LOG(plog::debug) << "Bounding Radius missing from SPICE orbit\n";
+        LOG_(ParseLog, plog::debug) << "Bounding Radius missing from SPICE orbit\n";
         return NULL;
     }
 
@@ -457,13 +462,13 @@ CreateSpiceOrbit(Hash* orbitData,
 	Value* endingDate = orbitData->getValue("Ending");
 	if (beginningDate != NULL && endingDate == NULL)
 	{
-		LOG(plog::debug) << "Beginning specified for SPICE orbit, but ending is missing.\n";
+		LOG_(ParseLog, plog::debug) << "Beginning specified for SPICE orbit, but ending is missing.\n";
 		return NULL;
 	}
 
 	if (endingDate != NULL && beginningDate == NULL)
 	{
-		LOG(plog::debug) << "Ending specified for SPICE orbit, but beginning is missing.\n";
+		LOG_(ParseLog, plog::debug) << "Ending specified for SPICE orbit, but beginning is missing.\n";
 		return NULL;
 	}
 
@@ -473,14 +478,14 @@ CreateSpiceOrbit(Hash* orbitData,
 		double beginningTDBJD = 0.0;
 		if (!ParseDate(orbitData, "Beginning", beginningTDBJD))
 		{
-			LOG(plog::debug) << "Invalid beginning date specified for SPICE orbit.\n";
+			LOG_(ParseLog, plog::debug) << "Invalid beginning date specified for SPICE orbit.\n";
 			return NULL;
 		}
 
 		double endingTDBJD = 0.0;
 		if (!ParseDate(orbitData, "Ending", endingTDBJD))
 		{
-			LOG(plog::debug) << "Invalid ending date specified for SPICE orbit.\n";
+			LOG_(ParseLog, plog::debug) << "Invalid ending date specified for SPICE orbit.\n";
 			return NULL;
 		}
 	
@@ -555,14 +560,14 @@ CreateSpiceRotation(Hash* rotationData,
 		// the kernel pool.
 		if (!ParseStringList(rotationData, "Kernel", kernelList))
 		{
-			LOG(plog::debug) << "Kernel list for SPICE rotation is neither a string nor array of strings\n";
+			LOG_(ParseLog, plog::debug) << "Kernel list for SPICE rotation is neither a string nor array of strings\n";
 			return NULL;
 		}
 	}
 
     if (!rotationData->getString("Frame", frameName))
     {
-        LOG(plog::debug) << "Frame name missing from SPICE rotation\n";
+        LOG_(ParseLog, plog::debug) << "Frame name missing from SPICE rotation\n";
         return NULL;
     }
 
@@ -580,13 +585,13 @@ CreateSpiceRotation(Hash* rotationData,
 	Value* endingDate = rotationData->getValue("Ending");
 	if (beginningDate != NULL && endingDate == NULL)
 	{
-		LOG(plog::debug) << "Beginning specified for SPICE rotation, but ending is missing.\n";
+		LOG_(ParseLog, plog::debug) << "Beginning specified for SPICE rotation, but ending is missing.\n";
 		return NULL;
 	}
 
 	if (endingDate != NULL && beginningDate == NULL)
 	{
-		LOG(plog::debug) << "Ending specified for SPICE rotation, but beginning is missing.\n";
+		LOG_(ParseLog, plog::debug) << "Ending specified for SPICE rotation, but beginning is missing.\n";
 		return NULL;
 	}
 
@@ -596,14 +601,14 @@ CreateSpiceRotation(Hash* rotationData,
 		double beginningTDBJD = 0.0;
 		if (!ParseDate(rotationData, "Beginning", beginningTDBJD))
 		{
-			LOG(plog::debug) << "Invalid beginning date specified for SPICE rotation.\n";
+			LOG_(ParseLog, plog::debug) << "Invalid beginning date specified for SPICE rotation.\n";
 			return NULL;
 		}
 
 		double endingTDBJD = 0.0;
 		if (!ParseDate(rotationData, "Ending", endingTDBJD))
 		{
-			LOG(plog::debug) << "Invalid ending date specified for SPICE rotation.\n";
+			LOG_(ParseLog, plog::debug) << "Invalid ending date specified for SPICE rotation.\n";
 			return NULL;
 		}
 	
@@ -638,7 +643,7 @@ CreateScriptedOrbit(Hash* orbitData,
                     const string& path)
 {
 #if !defined(CELX)
-    LOG(plog::debug) << "ScriptedOrbit not usable without scripting support.\n";
+    LOG_(ParseLog, plog::debug) << "ScriptedOrbit not usable without scripting support.\n";
     return NULL;
 #else
 
@@ -646,7 +651,7 @@ CreateScriptedOrbit(Hash* orbitData,
     string funcName;
     if (!orbitData->getString("Function", funcName))
     {
-        LOG(plog::debug) << "Function name missing from script orbit definition.\n";
+        LOG_(ParseLog, plog::debug) << "Function name missing from script orbit definition.\n";
         return NULL;
     }
 
@@ -679,12 +684,12 @@ CreateOrbit(const Selection& centralObject,
             const string& path,
             bool usePlanetUnits)
 {
-	LOG(plog::debug) << "enter Create Orbit0:" << centralObject.getName();
-	LOG(plog::debug) << "enter Create Orbit1.0:" << planetData->getValue("ScriptedOrbit");
-	LOG(plog::debug) << "enter Create Orbit1.1:" << planetData->getValue("SampledTrajectory");
-	LOG(plog::debug) << "enter Create Orbit1.2:" << planetData->getValue("EllipticalOrbit");
-	LOG(plog::debug) << "enter Create Orbit2:" << path;
-	LOG(plog::debug) << "enter Create Orbit3:" << usePlanetUnits;
+	LOG_(ParseLog, plog::debug) << "enter Create Orbit0:" << centralObject.getName();
+	LOG_(ParseLog,plog::debug) << "enter Create Orbit1.0:" << planetData->getValue("ScriptedOrbit");
+	LOG_(ParseLog,plog::debug) << "enter Create Orbit1.1:" << planetData->getValue("SampledTrajectory");
+	LOG_(ParseLog,plog::debug) << "enter Create Orbit1.2:" << planetData->getValue("EllipticalOrbit");
+	LOG_(ParseLog,plog::debug) << "enter Create Orbit2:" << path;
+	LOG_(ParseLog,plog::debug) << "enter Create Orbit3:" << usePlanetUnits;
     Orbit* orbit = NULL;
 
     string customOrbitName;
@@ -695,7 +700,7 @@ CreateOrbit(const Selection& centralObject,
         {
             return orbit;
         }
-        LOG(plog::debug) << "Could not find custom orbit named '" << customOrbitName <<
+        LOG_(ParseLog,plog::debug) << "Could not find custom orbit named '" << customOrbitName <<
             "'\n";
     }
 
@@ -705,7 +710,7 @@ CreateOrbit(const Selection& centralObject,
     {
         if (spiceOrbitDataValue->getType() != Value::HashType)
         {
-            LOG(plog::debug) << "Object has incorrect spice orbit syntax.\n";
+            LOG_(ParseLog, plog::debug) << "Object has incorrect spice orbit syntax.\n";
             return NULL;
         }
         else
@@ -715,7 +720,7 @@ CreateOrbit(const Selection& centralObject,
             {
                 return orbit;
             }
-            LOG(plog::debug) << "Bad spice orbit\n";
+            LOG_(ParseLog,plog::debug) << "Bad spice orbit\n";
             DPRINTF(0, "Could not load SPICE orbit\n");
         }
     }
@@ -727,7 +732,7 @@ CreateOrbit(const Selection& centralObject,
     {
         if (scriptedOrbitValue->getType() != Value::HashType)
         {
-            LOG(plog::debug) << "Object has incorrect scripted orbit syntax.\n";
+            LOG_(ParseLog,plog::debug) << "Object has incorrect scripted orbit syntax.\n";
             return NULL;
         }
         else
@@ -745,7 +750,7 @@ CreateOrbit(const Selection& centralObject,
     {
         if (sampledTrajDataValue->getType() != Value::HashType)
         {
-            LOG(plog::debug) << "Object has incorrect syntax for SampledTrajectory.\n";
+            LOG_(ParseLog,plog::debug) << "Object has incorrect syntax for SampledTrajectory.\n";
             return NULL;
         }
         else
@@ -771,7 +776,7 @@ CreateOrbit(const Selection& centralObject,
         {
             return orbit;
         }
-        LOG(plog::debug) << "Could not load sampled orbit file '" << sampOrbitFile << "'\n";
+        LOG_(ParseLog,plog::debug) << "Could not load sampled orbit file '" << sampOrbitFile << "'\n";
     }
 
     Value* orbitDataValue = planetData->getValue("EllipticalOrbit");
@@ -779,7 +784,7 @@ CreateOrbit(const Selection& centralObject,
     {
         if (orbitDataValue->getType() != Value::HashType)
         {
-            LOG(plog::debug) << "Object has incorrect elliptical orbit syntax.\n";
+            LOG_(ParseLog,plog::debug) << "Object has incorrect elliptical orbit syntax.\n";
             return NULL;
         }
         else
@@ -824,7 +829,7 @@ CreateOrbit(const Selection& centralObject,
         }
         else
         {
-            LOG(plog::debug) << "Object has incorrect FixedPosition syntax.\n";
+            LOG_(ParseLog,plog::debug) << "Object has incorrect FixedPosition syntax.\n";
         }
     }
 
@@ -1030,7 +1035,7 @@ CreateScriptedRotation(Hash* rotationData,
                        const string& path)
 {
 #if !defined(CELX)
-    LOG(plog::debug) << "ScriptedRotation not usable without scripting support.\n";
+    LOG_(ParseLog,plog::debug) << "ScriptedRotation not usable without scripting support.\n";
     return NULL;
 #else
 
@@ -1038,7 +1043,7 @@ CreateScriptedRotation(Hash* rotationData,
     string funcName;
     if (!rotationData->getString("Function", funcName))
     {
-        LOG(plog::debug) << "Function name missing from scripted rotation definition.\n";
+        LOG_(ParseLog,plog::debug) << "Function name missing from scripted rotation definition.\n";
         return NULL;
     }
 
@@ -1095,7 +1100,7 @@ CreateRotationModel(Hash* planetData,
         {
             return rotationModel;
         }
-        LOG(plog::debug) << "Could not find custom rotation model named '" <<
+        LOG_(ParseLog,plog::debug) << "Could not find custom rotation model named '" <<
             customRotationModelName << "'\n";
     }
 
@@ -1105,7 +1110,7 @@ CreateRotationModel(Hash* planetData,
     {
         if (spiceRotationDataValue->getType() != Value::HashType)
         {
-            LOG(plog::debug) << "Object has incorrect spice rotation syntax.\n";
+            LOG_(ParseLog,plog::debug) << "Object has incorrect spice rotation syntax.\n";
             return NULL;
         }
         else
@@ -1126,7 +1131,7 @@ CreateRotationModel(Hash* planetData,
     {
         if (scriptedRotationValue->getType() != Value::HashType)
         {
-            LOG(plog::debug) << "Object has incorrect scripted rotation syntax.\n";
+            LOG_(ParseLog,plog::debug) << "Object has incorrect scripted rotation syntax.\n";
             return NULL;
         }
         else
@@ -1150,7 +1155,7 @@ CreateRotationModel(Hash* planetData,
             return rotationModel;
         }
 
-        LOG(plog::debug) << "Could not load rotation model file '" <<
+        LOG_(ParseLog,plog::debug) << "Could not load rotation model file '" <<
             sampOrientationFile << "'\n";
     }
 
@@ -1159,7 +1164,7 @@ CreateRotationModel(Hash* planetData,
     {
         if (precessingRotationValue->getType() != Value::HashType)
         {
-            LOG(plog::debug) << "Object has incorrect syntax for precessing rotation.\n";
+            LOG_(ParseLog,plog::debug) << "Object has incorrect syntax for precessing rotation.\n";
             return NULL;
         }
         else
@@ -1174,7 +1179,7 @@ CreateRotationModel(Hash* planetData,
     {
         if (uniformRotationValue->getType() != Value::HashType)
         {
-            LOG(plog::debug) << "Object has incorrect UniformRotation syntax.\n";
+            LOG_(ParseLog,plog::debug) << "Object has incorrect UniformRotation syntax.\n";
             return NULL;
         }
         else
@@ -1189,7 +1194,7 @@ CreateRotationModel(Hash* planetData,
     {
         if (fixedRotationValue->getType() != Value::HashType)
         {
-            LOG(plog::debug) << "Object has incorrect FixedRotation syntax.\n";
+            LOG_(ParseLog,plog::debug) << "Object has incorrect FixedRotation syntax.\n";
             return NULL;
         }
         else
@@ -1203,7 +1208,7 @@ CreateRotationModel(Hash* planetData,
     {
         if (fixedAttitudeValue->getType() != Value::HashType)
         {
-            LOG(plog::debug) << "Object has incorrect FixedAttitude syntax.\n";
+            LOG_(ParseLog,plog::debug) << "Object has incorrect FixedAttitude syntax.\n";
             return NULL;
         }
         else
@@ -1373,12 +1378,12 @@ CreateMeanEquatorFrame(const Universe& universe,
         obj = universe.findPath(objName, NULL, 0);
         if (obj.empty())
         {
-            LOG(plog::debug) << "Object '" << objName << "' for mean equator frame not found.\n";
+            LOG_(ParseLog,plog::debug) << "Object '" << objName << "' for mean equator frame not found.\n";
             return NULL;
         }
     }
 
-    LOG(plog::debug) << "CreateMeanEquatorFrame " << center.getName() << ", " << obj.getName() << "\n";
+    LOG_(ParseLog,plog::debug) << "CreateMeanEquatorFrame " << center.getName() << ", " << obj.getName() << "\n";
 
     double freezeEpoch = 0.0;
     if (ParseDate(frameData, "Freeze", freezeEpoch))
@@ -1483,14 +1488,14 @@ getVectorTarget(const Universe& universe, Hash* vectorData)
     string targetName;
     if (!vectorData->getString("Target", targetName))
     {
-        LOG(plog::debug) << "Bad two-vector frame: no target specified for vector.\n";
+        LOG_(ParseLog,plog::debug) << "Bad two-vector frame: no target specified for vector.\n";
         return Selection();
     }
 
     Selection targetObject = universe.findPath(targetName, NULL, 0);
     if (targetObject.empty())
     {
-        LOG(plog::debug) << "Bad two-vector frame: target object '" << targetName << "' of vector not found.\n";
+        LOG_(ParseLog,plog::debug) << "Bad two-vector frame: target object '" << targetName << "' of vector not found.\n";
         return Selection();
     }
 
@@ -1516,7 +1521,7 @@ getVectorObserver(const Universe& universe, Hash* vectorData)
     Selection obsObject = universe.findPath(obsName, NULL, 0);
     if (obsObject.empty())
     {
-        LOG(plog::debug) << "Bad two-vector frame: observer object '" << obsObject.getName() << "' of vector not found.\n";
+        LOG_(ParseLog,plog::debug) << "Bad two-vector frame: observer object '" << obsObject.getName() << "' of vector not found.\n";
         return Selection();
     }
 
@@ -1571,7 +1576,7 @@ CreateFrameVector(const Universe& universe,
         constVecData->getVector("Vector", vec);
         if (vec.norm() == 0.0)
         {
-            LOG(plog::debug) << "Bad two-vector frame: constant vector has length zero\n";
+            LOG_(ParseLog,plog::debug) << "Bad two-vector frame: constant vector has length zero\n";
             return NULL;
         }
         vec.normalize();
@@ -1592,7 +1597,7 @@ CreateFrameVector(const Universe& universe,
     }
     else
     {
-        LOG(plog::debug) << "Bad two-vector frame: unknown vector type\n";
+        LOG_(ParseLog,plog::debug) << "Bad two-vector frame: unknown vector type\n";
         return NULL;
     }
 }
@@ -1611,28 +1616,28 @@ CreateTwoVectorFrame(const Universe& universe,
     Value* primaryValue = frameData->getValue("Primary");
     if (!primaryValue)
     {
-        LOG(plog::debug) << "Primary axis missing from two-vector frame.\n";
+        LOG_(ParseLog,plog::debug) << "Primary axis missing from two-vector frame.\n";
         return NULL;
     }
 
     Hash* primaryData = primaryValue->getHash();
     if (!primaryData)
     {
-        LOG(plog::debug) << "Bad syntax for primary axis of two-vector frame.\n";
+        LOG_(ParseLog,plog::debug) << "Bad syntax for primary axis of two-vector frame.\n";
         return NULL;
     }
 
     Value* secondaryValue = frameData->getValue("Secondary");
     if (!secondaryValue)
     {
-        LOG(plog::debug) << "Secondary axis missing from two-vector frame.\n";
+        LOG_(ParseLog,plog::debug) << "Secondary axis missing from two-vector frame.\n";
         return NULL;
     }
 
     Hash* secondaryData = secondaryValue->getHash();
     if (!secondaryData)
     {
-        LOG(plog::debug) << "Bad syntax for secondary axis of two-vector frame.\n";
+        LOG_(ParseLog,plog::debug) << "Bad syntax for secondary axis of two-vector frame.\n";
         return NULL;
     }
 
@@ -1649,7 +1654,7 @@ CreateTwoVectorFrame(const Universe& universe,
 
     if (abs(primaryAxis) == abs(secondaryAxis))
     {
-        LOG(plog::debug) << "Bad two-vector frame: axes for vectors are collinear.\n";
+        LOG_(ParseLog,plog::debug) << "Bad two-vector frame: axes for vectors are collinear.\n";
         return NULL;
     }
 
@@ -1850,7 +1855,7 @@ CreateComplexFrame(const Universe& universe, Hash* frameData, const Selection& d
     {
         if (value->getType() != Value::HashType)
         {
-            LOG(plog::debug) << "Object has incorrect body-fixed frame syntax.\n";
+            LOG_(ParseLog,plog::debug) << "Object has incorrect body-fixed frame syntax.\n";
             return NULL;
         }
         else
@@ -1864,7 +1869,7 @@ CreateComplexFrame(const Universe& universe, Hash* frameData, const Selection& d
     {
         if (value->getType() != Value::HashType)
         {
-            LOG(plog::debug) << "Object has incorrect mean equator frame syntax.\n";
+            LOG_(ParseLog,plog::debug) << "Object has incorrect mean equator frame syntax.\n";
             return NULL;
         }
         else
@@ -1878,7 +1883,7 @@ CreateComplexFrame(const Universe& universe, Hash* frameData, const Selection& d
     {
         if (value->getType() != Value::HashType)
         {
-            LOG(plog::debug) << "Object has incorrect two-vector frame syntax.\n";
+            LOG_(ParseLog,plog::debug) << "Object has incorrect two-vector frame syntax.\n";
             return NULL;
         }
         else
@@ -1892,7 +1897,7 @@ CreateComplexFrame(const Universe& universe, Hash* frameData, const Selection& d
     {
         if (value->getType() != Value::HashType)
         {
-            LOG(plog::debug) << "Object has incorrect topocentric frame syntax.\n";
+            LOG_(ParseLog,plog::debug) << "Object has incorrect topocentric frame syntax.\n";
             return NULL;
         }
         else
@@ -1906,7 +1911,7 @@ CreateComplexFrame(const Universe& universe, Hash* frameData, const Selection& d
     {
         if (value->getType() != Value::HashType)
         {
-            LOG(plog::debug) << "Object has incorrect J2000 ecliptic frame syntax.\n";
+            LOG_(ParseLog,plog::debug) << "Object has incorrect J2000 ecliptic frame syntax.\n";
             return NULL;
         }
         else
@@ -1929,7 +1934,7 @@ CreateComplexFrame(const Universe& universe, Hash* frameData, const Selection& d
         }
     }
 
-    LOG(plog::debug) << "Frame definition does not have a valid frame type.\n";
+    LOG_(ParseLog,plog::debug) << "Frame definition does not have a valid frame type.\n";
 
     return NULL;
 }
@@ -1943,7 +1948,7 @@ ReferenceFrame* CreateReferenceFrame(const Universe& universe,
     if (frameValue->getType() == Value::StringType)
     {
         // TODO: handle named frames
-        LOG(plog::debug) << "Invalid syntax for frame definition.\n";
+        LOG_(ParseLog,plog::debug) << "Invalid syntax for frame definition.\n";
         return NULL;
     }
     else if (frameValue->getType() == Value::HashType)
@@ -1952,7 +1957,7 @@ ReferenceFrame* CreateReferenceFrame(const Universe& universe,
     }
     else
     {
-        LOG(plog::debug) << "Invalid syntax for frame definition.\n";
+        LOG_(ParseLog,plog::debug) << "Invalid syntax for frame definition.\n";
         return NULL;
     }
 }

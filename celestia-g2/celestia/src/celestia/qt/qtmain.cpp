@@ -43,11 +43,40 @@ static bool skipSplashScreen = false;
 
 static bool ParseCommandLine();
 
+enum // Define log instances. Default is 0 and is omitted from this enum.
+{
+    SecondLog = 1,
+	ThirdLog = 2,
+	ConfigLog = 3,
+	TextureLog = 4,
+	SolarSystemLog = 5,
+	RenderLog = 6,
+	ParseLog = 7
+};
 
 int main(int argc, char *argv[])
 {
-  plog::init(plog::debug, "Hello.txt");
-  LOGD << "Hello log!";
+	plog::init(plog::debug, "genericLog.txt");
+	LOGD << "Hello log!";
+	plog::init<SecondLog>(plog::debug, "celestialcore.txt"); // Initialize the 2nd logger instance.
+	LOG_DEBUG_(SecondLog) << "celestialcore log!";
+	plog::init<ThirdLog>(plog::debug, "celx.txt"); // Initialize the 3rd logger instance.
+	LOG_DEBUG_(ThirdLog) << "celx log!";
+	plog::init<ConfigLog>(plog::debug, "config.txt"); // Initialize the 4th logger instance.
+	LOG_DEBUG_(ConfigLog) << "config log!";
+	plog::init<TextureLog>(plog::debug, "texture.txt"); // Initialize the 5th logger instance.
+	LOG_DEBUG_(ConfigLog) << "texture log!";
+	plog::init<SolarSystemLog>(plog::debug, "/dev/null"); // Initialize the 6th logger instance.
+	LOG_DEBUG_(SolarSystemLog) << "solarsys log!";
+//	plog::init<SolarSysLog>(plog::debug, "solarsys.txt"); // Initialize the 6th logger instance.
+//	LOG_DEBUG_(SolarSysLog) << "solarsys log!";
+	plog::init<RenderLog>(plog::debug, "render.txt"); // Initialize the 7th logger instance.
+	LOG_DEBUG_(RenderLog) << "render log!";
+	plog::init<ParseLog>(plog::debug, "/dev/null"); // Initialize the 8th logger instance.
+	LOG_DEBUG_(ParseLog) << "parse log!";
+//	plog::init<ParseLog>(plog::debug, "parse.txt"); // Initialize the 8th logger instance.
+//	LOG_DEBUG_(ParseLog) << "parse log!";
+
     QApplication app(argc, argv);
 
     Q_INIT_RESOURCE(icons);

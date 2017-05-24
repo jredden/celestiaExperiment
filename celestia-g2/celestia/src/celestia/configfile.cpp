@@ -21,6 +21,11 @@
 
 using namespace std;
 
+enum // Define log instances. Default is 0 and is omitted from this enum.
+{
+ 	ConfigLog = 3
+};
+
 
 static unsigned int getUint(Hash* params,
                             const string& paramName,
@@ -36,7 +41,7 @@ static unsigned int getUint(Hash* params,
 
 CelestiaConfig* ReadCelestiaConfig(string filename, CelestiaConfig *config)
 {
-	LOG(plog::debug) << "config filename:" << filename;
+	LOG_(ConfigLog, plog::debug) << "config filename:" << filename;
     ifstream configFile(filename.c_str());
     if (!configFile.good())
     {

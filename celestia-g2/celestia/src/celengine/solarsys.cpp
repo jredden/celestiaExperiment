@@ -42,6 +42,10 @@
 using namespace Eigen;
 using namespace std;
 
+enum // Define log instances. Default is 0 and is omitted from this enum.
+{
+	SolarSystemLog = 5
+};
 
 enum Disposition
 {
@@ -95,7 +99,7 @@ enum BodyType
 
 static void errorMessagePrelude(const Tokenizer& tok)
 {
-    cerr << _("Error in .ssc file (line ") << tok.getLineNumber() << "): ";
+    // cerr << _("Error in .ssc file (line ") << tok.getLineNumber() << "): ";
     LOG(plog::error) << _("Error in .ssc file (line ") << tok.getLineNumber() << "): ";
 }
 
@@ -473,7 +477,7 @@ static bool CreateTimeline(Body* body,
     FrameTree* parentFrameTree = NULL;
     Selection parentObject = GetParentObject(system);
 	
-	LOG(plog::debug) << parentObject.getName() << "::" << parentObject.star() << "::" << parentObject.body();
+	LOG_(SolarSystemLog, plog::debug) << parentObject.getName() << "::" << parentObject.star() << "::" << parentObject.body();
     bool orbitsPlanet = false;
     if (parentObject.body())
     {
@@ -515,7 +519,7 @@ static bool CreateTimeline(Body* body,
     {
         if (value->getType() != Value::ArrayType)
         {
-            clog << "Error: Timeline must be an array\n";
+            // clog << "Error: Timeline must be an array\n";
             LOG(plog::error) << "Error: Timeline must be an array\n";
             return false;
         }
@@ -606,7 +610,7 @@ static bool CreateTimeline(Body* body,
         orbitsPlanet = false;
     else
         orbitsPlanet = true;
-	LOG(plog::debug) << "CreateOrbit:";
+	LOG_(SolarSystemLog, plog::debug) << "CreateOrbit:";
     Orbit* newOrbit = CreateOrbit(orbitFrame->getCenter(), planetData, path, !orbitsPlanet);
     if (newOrbit == NULL && orbit == NULL)
     {
