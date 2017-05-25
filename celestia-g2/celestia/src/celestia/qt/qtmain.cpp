@@ -51,7 +51,8 @@ enum // Define log instances. Default is 0 and is omitted from this enum.
 	TextureLog = 4,
 	SolarSystemLog = 5,
 	RenderLog = 6,
-	ParseLog = 7
+	ParseLog = 7,
+	ImageLog = 8
 };
 
 int main(int argc, char *argv[])
@@ -76,6 +77,8 @@ int main(int argc, char *argv[])
 	LOG_DEBUG_(ParseLog) << "parse log!";
 //	plog::init<ParseLog>(plog::debug, "parse.txt"); // Initialize the 8th logger instance.
 //	LOG_DEBUG_(ParseLog) << "parse log!";
+	plog::init<ImageLog>(plog::debug, "image.txt"); // Initialize the 8th logger instance.
+	LOG_DEBUG_(ImageLog) << "image log!";
 
     QApplication app(argc, argv);
 
