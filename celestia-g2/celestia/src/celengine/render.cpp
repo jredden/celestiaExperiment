@@ -2211,6 +2211,11 @@ void Renderer::renderItem(const RenderListEntry& rle,
                           float nearPlaneDistance,
                           float farPlaneDistance)
 {
+	Body& body = *rle.body;
+	LOG_(RenderLog, plog::debug) << "in Renderer::renderItem.rle.renderableType " << rle.renderableType << "\n";
+	
+	
+  
     switch (rle.renderableType)
     {
     case RenderListEntry::RenderableStar:
@@ -2224,6 +2229,8 @@ void Renderer::renderItem(const RenderListEntry& rle,
         break;
 
     case RenderListEntry::RenderableBody:
+		LOG_(RenderLog, plog::debug) << "in Renderer::renderItem.rle.body.getName() " << body.getName() << "\n";
+
         renderPlanet(*rle.body,
                      rle.position,
                      rle.distance,
@@ -2725,6 +2732,7 @@ void Renderer::render(const Observer& observer,
 {
     glMatrixMode(GL_PROJECTION);
     glLoadIdentity();
+	LOG_(RenderLog, plog::debug) << "in Renderer::render.sel.getName()" << sel.getName() << "\n";
 
 #ifdef USE_HDR
     renderToTexture(observer, universe, faintestMagNight, sel);
@@ -2783,6 +2791,8 @@ void Renderer::draw(const Observer& observer,
                     float faintestMagNight,
                     const Selection& sel)
 {
+	LOG_(RenderLog, plog::debug) << "in Renderer::draw.sel.getName()" << sel.getName() << "\n";
+
     // Get the observer's time
     double now = observer.getTime();
     realTime = observer.getRealTime();
@@ -2875,9 +2885,13 @@ void Renderer::draw(const Observer& observer,
     bool foundClosestBody   = false;
     bool foundBrightestStar = false;
 #endif
+	LOG_(RenderLog, plog::debug) << "in Renderer::render.highlightObject.getName()" << highlightObject.getName() << "\n";
+	LOG_(RenderLog, plog::debug) << "in Renderer::render.renderFlags" << renderFlags << "\n";
+	LOG_(RenderLog, plog::debug) << "in Renderer::render.ShowPlanets" << ShowPlanets << "\n";
 
     if (renderFlags & ShowPlanets)
     {
+
         nearStars.clear();
         universe.getNearStars(observer.getPosition(), 1.0f, nearStars);
 
@@ -2907,7 +2921,7 @@ void Renderer::draw(const Observer& observer,
                     Vector3d astrocentricObserverPos = astrocentricPosition(observer.getPosition(), *sun, now);
 
                     // Build render lists for bodies and orbits paths
-                    buildRenderLists(astrocentricObserverPos,
+                    buildRenderLists(astrocentricObserverPos,	
                                      xfrustum,
                                      observer.getOrientation().conjugate() * -Vector3d::UnitZ(),
                                      Vector3d::Zero(),
@@ -3067,7 +3081,9 @@ void Renderer::draw(const Observer& observer,
     // atmosphere.  If so, we need to adjust the sky color as well as the
     // limiting magnitude of stars (so stars aren't visible in the daytime
     // on planets with thick atmospheres.)
-    if ((renderFlags & ShowAtmospheres) != 0)
+ 	LOG_(RenderLog, plog::debug) << "in Renderer::render.renderFlags" << renderFlags << "\n";
+	LOG_(RenderLog, plog::debug) << "in Renderer::render.ShowAtmospheres" << ShowAtmospheres << "\n";
+   if ((renderFlags & ShowAtmospheres) != 0)
     {
         for (vector<RenderListEntry>::iterator iter = renderList.begin();
              iter != renderList.end(); iter++)
@@ -3189,6 +3205,8 @@ void Renderer::draw(const Observer& observer,
     }
 
     // Render deep sky objects
+	LOG_(RenderLog, plog::debug) << "in Renderer::render.renderFlags deep sky " << renderFlags << "\n";
+
     if ((renderFlags & (ShowGalaxies | 
 						ShowGlobulars |
                         ShowNebulae |
@@ -3325,6 +3343,9 @@ void Renderer::draw(const Observer& observer,
 
     // Draw the selection cursor
     bool selectionVisible = false;
+	LOG_(RenderLog, plog::debug) << "in Renderer::render.sel selection cursor " << sel.getName();
+	LOG_(RenderLog, plog::debug) << "in Renderer::render.renderFlags ShowMarkers" << renderFlags << "\n";
+
     if (!sel.empty() && (renderFlags & ShowMarkers))
     {
         Vector3d offset = sel.getPosition(now).offsetFromKm(observer.getPosition());
@@ -3543,6 +3564,8 @@ void Renderer::draw(const Observer& observer,
         sort(orbitPathList.begin(), orbitPathList.end());
 
         int nEntries = renderList.size();
+		LOG_(RenderLog, plog::debug) << "in Renderer::render.renderList.size " << renderList.size() << "\n";
+		LOG_(RenderLog, plog::debug) << "in Renderer::render.relderlist sel " << sel.getName() << "\n";
 
 #ifdef USE_HDR
         // Compute 1 eclipse between eye - closest body - brightest star
@@ -3616,7 +3639,8 @@ void Renderer::draw(const Observer& observer,
         // through all the renderable items that passed the culling test.
         for (i = nEntries - 1; i >= 0; i--)
         {
-            // Only consider renderables that will occupy more than one pixel.
+			LOG_(RenderLog, plog::debug) << "in Renderer::render.renderList[i] " << i << " sel.getName() "  << sel.getName()<< "\n";
+		     // Only consider renderables that will occupy more than one pixel.
             if (renderList[i].discSizeInPixels > 1)
             {
                 if (nIntervals == 0 || renderList[i].farZ >= depthPartitions[nIntervals - 1].nearZ)
@@ -3905,6 +3929,7 @@ void Renderer::draw(const Observer& observer,
              << ", sections culled: " << sectionsCulled
              << ", nIntervals: " << nIntervals << "\n";
 #endif
+
         orbitsRendered = 0;
         orbitsSkipped = 0;
         sectionsCulled = 0;
@@ -3955,6 +3980,8 @@ void Renderer::draw(const Observer& observer,
         glXWaitVideoSyncSGI(2, (count+1) & 1, &count);
     }
 #endif
+			LOG_(RenderLog, plog::debug) << "in Renderer::render.end. sel.getName()" << sel.getName() << "\n";
+
 }
 
 
@@ -7585,7 +7612,7 @@ void Renderer::renderPlanet(Body& body,
                             float nearPlaneDistance,
                             float farPlaneDistance)
 {
-  LOG_(RenderLog, plog::debug) << "in Renderer::renderPlanet\n";
+  LOG_(RenderLog, plog::debug) << "in Renderer::renderPlanet.body.getName()" << body.getName() << "\n";
   
     double now = observer.getTime();
     float altitude = distance - body.getRadius();

@@ -62,7 +62,8 @@ using namespace std;
 
 enum // Define log instances. Default is 0 and is omitted from this enum.
 {
-	ThirdLog = 2
+	ThirdLog = 2,
+	TextureLog = 4
 };
 
 const char* CelxLua::ClassNames[] =
@@ -3919,6 +3920,7 @@ static int celestia_loadtexture(lua_State* l)
     string base_dir = ar.source; // Lua file from which we are called
     if (base_dir[0] == '@') base_dir = base_dir.substr(1);
     base_dir = base_dir.substr(0, base_dir.rfind('/')) + '/';
+	LOG_(TextureLog, plog::debug) << "celestia_loadtexture.base_dir.s \t" << base_dir + s << "\n";
     Texture* t = LoadTextureFromFile(base_dir + s);
     if (t == NULL) return 0;
     texture_new(l, t);

@@ -65,7 +65,8 @@ using namespace std;
 
 enum // Define log instances. Default is 0 and is omitted from this enum.
 {
-    SecondLog = 1
+    SecondLog = 1,
+	TextureLog = 4
 };
 
 static const int DragThreshold = 3;
@@ -3241,11 +3242,12 @@ static void displayPlanetInfo(Overlay& overlay,
                               double distanceKm,
                               const Vector3d& viewVec)
 {
+	LOG_DEBUG_(SecondLog) << "In renderOverlay.displayPlanetInfo \n";
     overlay << _("Distance: ");
     double distance = distanceKm - body.getRadius();
     displayDistanceKm(overlay, distance);
     overlay << '\n';
-
+	LOG_DEBUG_(SecondLog) << "renderOverlay.displayPlanetInfo.body.getClassicication " << body.getClassification() << "\n";
     if (body.getClassification() == Body::Invisible)
     {
         return;
@@ -3402,7 +3404,7 @@ void CelestiaCore::renderOverlay()
     int emWidth = font->getWidth("M");
 
     overlay->begin();
-
+	LOG_DEBUG_(SecondLog) << "renderOverlay.views.size " << views.size() << "\n";
 
     if (views.size() > 1)
     {
@@ -3548,7 +3550,7 @@ void CelestiaCore::renderOverlay()
         overlay->endText();
         glPopMatrix();
     }
-
+	LOG_DEBUG_(SecondLog) << "renderOverlay.hudDetail " << hudDetail << "renderOverlay.overlayElements " << overlayElements << "\n";
     if (hudDetail > 0 && (overlayElements & ShowFrame))
     {
         // Field of view and camera mode in lower right corner
@@ -3583,7 +3585,7 @@ void CelestiaCore::renderOverlay()
             //FrameOfReference frame = sim->getFrame();
             Selection refObject = sim->getFrame()->getRefObject();
             ObserverFrame::CoordinateSystem coordSys = sim->getFrame()->getCoordinateSystem();
-
+			LOG_DEBUG_(SecondLog) << "renderOverlay.coordSys " << coordSys << "\n";
             switch (coordSys)
             {
             case ObserverFrame::Ecliptical:
@@ -3634,6 +3636,7 @@ void CelestiaCore::renderOverlay()
     Selection sel = sim->getSelection();
     if(!sel.empty()){
       //LOG(plog::debug) << _("Selection:") << sel.getType();
+	  LOG_DEBUG_(SecondLog) << "renderOverlay.sel " << sel.getName() << " renderOverlay.getType " << sel.getType() << "\n";
     }
     else{
       LOG_(SecondLog, plog::debug) << _("Selection:is empty");
@@ -3744,7 +3747,7 @@ void CelestiaCore::renderOverlay()
                         selectionNames += alias;
                     }
                 }
-		LOG_(SecondLog, plog::debug) << _("Planet:") << selectionNames;
+		LOG_(SecondLog, plog::debug) << _("renderOverlay.Planet:") << selectionNames;
                 overlay->setFont(titleFont);
                 *overlay << selectionNames;
                 overlay->setFont(font);
@@ -4442,6 +4445,7 @@ bool CelestiaCore::initRenderer()
 
     if (config->logoTextureFile != "")
     {
+		LOG_(TextureLog, plog::debug) << "CelestialCore::initRenderer \t" << config->logoTextureFile << "\n";
         logoTexture = LoadTextureFromFile(string("textures") + "/" + config->logoTextureFile);
     }
 

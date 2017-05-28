@@ -14,7 +14,14 @@
 #include "multitexture.h"
 #include "texmanager.h"
 
+#include "plog/Log.h"
+
 using namespace std;
+
+enum // Define log instances. Default is 0 and is omitted from this enum.
+{
+ 	TextureLog = 4
+};
 
 
 static TextureManager* textureManager = NULL;
@@ -116,6 +123,8 @@ string TextureInfo::resolve(const string& baseDir)
 
 Texture* TextureInfo::load(const string& name)
 {
+	 LOG_(TextureLog, plog::debug) << "TextureInfo::load.name \t" << name << "\n";
+ 
     Texture::AddressMode addressMode = Texture::EdgeClamp;
     Texture::MipMapMode mipMode = Texture::DefaultMipMaps;
 
@@ -132,13 +141,16 @@ Texture* TextureInfo::load(const string& name)
     if (bumpHeight == 0.0f)
     {
         DPRINTF(0, "Loading texture: %s\n", name.c_str());
+		 LOG_(TextureLog, plog::debug) << "TextureInfo::load.LoadingTexture \t" << name.c_str() << "\n";
+ 
         // cout << "Loading texture: " << name << '\n';
 
         return LoadTextureFromFile(name, addressMode, mipMode);
     }
     else
     {
-        DPRINTF(0, "Loading bump map: %s\n", name.c_str());
+        DPRINTF(0, "Loading bump map: %s\n", name.c_str());		 LOG_(TextureLog, plog::debug) << "TextureInfo::load.LoadingBumpMap \t" << name.c_str() << "\n";
+ 
         // cout << "Loading texture: " << name << '\n';
 
         return LoadHeightMapFromFile(name, bumpHeight, addressMode);

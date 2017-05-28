@@ -77,8 +77,10 @@ int main(int argc, char *argv[])
 	LOG_DEBUG_(ParseLog) << "parse log!";
 //	plog::init<ParseLog>(plog::debug, "parse.txt"); // Initialize the 8th logger instance.
 //	LOG_DEBUG_(ParseLog) << "parse log!";
-	plog::init<ImageLog>(plog::debug, "image.txt"); // Initialize the 8th logger instance.
+	plog::init<ImageLog>(plog::debug, "/dev/null"); // Initialize the 8th logger instance.
 	LOG_DEBUG_(ImageLog) << "image log!";
+//	plog::init<ImageLog>(plog::debug, "image.txt"); // Initialize the 8th logger instance.
+//	LOG_DEBUG_(ImageLog) << "image log!";
 
     QApplication app(argc, argv);
 
