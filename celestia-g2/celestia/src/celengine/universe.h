@@ -86,6 +86,9 @@ class Universe
     void getNearStars(const UniversalCoord& position,
                       float maxDistance,
                       std::vector<const Star*>& stars) const;
+	void getFartherStars(const UniversalCoord& position,
+                      float maxDistance,
+                      std::vector<const Star*>& stars) const;
 
     void markObject(const Selection&,
                     const MarkerRepresentation& rep,

@@ -2885,29 +2885,40 @@ void Renderer::draw(const Observer& observer,
     bool foundClosestBody   = false;
     bool foundBrightestStar = false;
 #endif
-	LOG_(RenderLog, plog::debug) << "in Renderer::render.highlightObject.getName()" << highlightObject.getName() << "\n";
-	LOG_(RenderLog, plog::debug) << "in Renderer::render.renderFlags" << renderFlags << "\n";
-	LOG_(RenderLog, plog::debug) << "in Renderer::render.ShowPlanets" << ShowPlanets << "\n";
+	LOG_(RenderLog, plog::debug) << "in Renderer::render.highlightObject.getName() " << highlightObject.getName() << "\n";
+	LOG_(RenderLog, plog::debug) << "in Renderer::render.renderFlags " << renderFlags << "\n";
+	LOG_(RenderLog, plog::debug) << "in Renderer::render.ShowPlanets " << ShowPlanets << "\n";
 
     if (renderFlags & ShowPlanets)
     {
 
         nearStars.clear();
         universe.getNearStars(observer.getPosition(), 1.0f, nearStars);
+		int starsSize = nearStars.size();
+		if(starsSize == 0){
+			universe.getFartherStars(observer.getPosition(), 1.0f, nearStars);
+		}
 
         // Set up direct light sources (i.e. just stars at the moment)
         setupLightSources(nearStars, observer.getPosition(), now, lightSourceList, renderFlags);
 
         // Traverse the frame trees of each nearby solar system and
         // build the list of objects to be rendered.
+		LOG_(RenderLog, plog::debug) << "in Renderer::render.nearStar.size " << starsSize;
         for (vector<const Star*>::const_iterator iter = nearStars.begin();
              iter != nearStars.end(); iter++)
         {
             const Star* sun = *iter;
             SolarSystem* solarSystem = universe.getSolarSystem(sun);
+			if(solarSystem == NULL){
+				LOG_(RenderLog, plog::debug) << "in Renderer::render.solarSystem is NULL" << "\n";
+			}
             if (solarSystem != NULL)
             {
                 FrameTree* solarSysTree = solarSystem->getFrameTree();
+				if(solarSysTree == NULL){
+					LOG_(RenderLog, plog::debug) << "in Renderer::render.solarSystemTree is NULL" << "\n";
+				}
                 if (solarSysTree != NULL)
                 {
                     if (solarSysTree->updateRequired())
@@ -2916,7 +2927,7 @@ void Renderer::draw(const Observer& observer,
                         solarSysTree->recomputeBoundingSphere();
                         solarSysTree->markUpdated();
                     }
-
+					LOG_(RenderLog, plog::debug) << "in Renderer::render.solarSystemTree.childCount " << solarSysTree->childCount() << "\n";
                     // Compute the position of the observer in astrocentric coordinates
                     Vector3d astrocentricObserverPos = astrocentricPosition(observer.getPosition(), *sun, now);
 
@@ -8357,6 +8368,8 @@ void Renderer::buildRenderLists(const Vector3d& astrocentricObserverPos,
     double sinViewAngle = sqrt(1.0 - square(cosViewConeAngle));   
 
     unsigned int nChildren = tree != NULL ? tree->childCount() : 0;
+	LOG_(RenderLog, plog::debug) << "Render::buildRenderLists.nChildren \t" << nChildren << "\n";
+ 
     for (unsigned int i = 0; i < nChildren; i++)
     {
         const TimelinePhase* phase = tree->getChild(i);
@@ -8366,7 +8379,8 @@ void Renderer::buildRenderLists(const Vector3d& astrocentricObserverPos,
             continue;
 
         Body* body = phase->body();
-
+		LOG_(RenderLog, plog::debug) << "Render::buildRenderLists.nChildren.name \t" << body->getName() << "\n";
+ 
         // pos_s: sun-relative position of object
         // pos_v: viewer-relative position of object
 
@@ -8395,6 +8409,7 @@ void Renderer::buildRenderLists(const Vector3d& astrocentricObserverPos,
         bool viewConeTestFailed = false;
         if (body->isSecondaryIlluminator())
         {
+			 LOG_(RenderLog, plog::debug) << "Render::buildRenderLists.secondaryIlluminator.name \t" << body->getName() << "\n";
             float influenceRadius = body->getBoundingRadius() + (body->getRadius() * PLANETSHINE_DISTANCE_LIMIT_FACTOR);
             if (dist_vn > -influenceRadius)
             {
@@ -8430,6 +8445,7 @@ void Renderer::buildRenderLists(const Vector3d& astrocentricObserverPos,
         bool insideViewCone = false;
         if (!viewConeTestFailed)
         {
+			LOG_(RenderLog, plog::debug) << "Render::buildRenderLists.viewConeTestFailed.name \t" << body->getName() << "\n";
             float radius = body->getCullingRadius();
             if (dist_vn > -radius)
             {
@@ -8460,8 +8476,12 @@ void Renderer::buildRenderLists(const Vector3d& astrocentricObserverPos,
             bool visibleAsPoint = appMag < faintestPlanetMag && body->isVisibleAsPoint();
             bool isLabeled = (body->getOrbitClassification() & labelClassMask) != 0;
             bool visible = body->isVisible();
-
-            if ((discSize > 1 || visibleAsPoint || isLabeled) && visible)
+			LOG_(RenderLog, plog::debug) << "Render::buildRenderLists.insideViewCone.name \t" << body->getName() << "\n";
+			LOG_(RenderLog, plog::debug) << "Render::buildRenderLists.insideViewCone.discSize \t" << discSize << "\n"; 
+			LOG_(RenderLog, plog::debug) << "Render::buildRenderLists.insideViewCone.visibleAsPoint \t" << visibleAsPoint << "\n"; 
+			LOG_(RenderLog, plog::debug) << "Render::buildRenderLists.insideViewCone.isLabeled \t" << isLabeled << "\n"; 
+			LOG_(RenderLog, plog::debug) << "Render::buildRenderLists.insideViewCone.visible \t" << visible << "\n";
+         if ((discSize > 1 || visibleAsPoint || isLabeled) && visible)
             {
                 RenderListEntry rle;
 
@@ -8478,12 +8498,14 @@ void Renderer::buildRenderLists(const Vector3d& astrocentricObserverPos,
                 rle.sun = -pos_s.cast<float>();
 
                 addRenderListEntries(rle, *body, isLabeled);
+				LOG_(RenderLog, plog::debug) << "Render::buildRenderLists.addRenderListEntries.name \t" << body->getName() << "\n";
             }
         }
 
         const FrameTree* subtree = body->getFrameTree();
         if (subtree != NULL)
         {
+			LOG_(RenderLog, plog::debug) << "Render::buildRenderLists.subtree not null.name \t" << body->getName() << "\n";
             double dist_v = pos_v.norm();
             bool traverseSubtree = false;
 
@@ -8553,8 +8575,9 @@ void Renderer::buildRenderLists(const Vector3d& astrocentricObserverPos,
                 }
             }
 
-            if (traverseSubtree)
+            if (traverseSubtree)	// recursive
             {
+				LOG_(RenderLog, plog::debug) << "Render::buildRenderLists.resursion.name \t" << body->getName() << "\n";
                 buildRenderLists(astrocentricObserverPos,
                                  viewFrustum,
                                  viewPlaneNormal,
@@ -8566,6 +8589,7 @@ void Renderer::buildRenderLists(const Vector3d& astrocentricObserverPos,
         } // end subtree traverse
 
     }
+	LOG_(RenderLog, plog::debug) << "Render::buildRenderLists.end-children"  << "\n";
 }
 
 
