@@ -14,6 +14,13 @@
 
 using namespace Eigen;
 
+#include "plog/Log.h"
+
+enum // Define log instances. Default is 0 and is omitted from this enum.
+{
+ 	StarOctreeLog = 9
+};
+
 // Maximum permitted orbital radius for stars, in light years. Orbital
 // radii larger than this value are not guaranteed to give correct
 // results. The problem case is extremely faint stars (such as brown
@@ -150,6 +157,8 @@ void StarOctree::processCloseObjects(StarHandler&    processor,
                                      float           boundingRadius,
                                      float           scale) const
 {
+	LOG_(StarOctreeLog, plog::debug) << "StarOctree::processCloseObjects.obsPosition " << obsPosition 
+	<< " boundingRadius " << boundingRadius <<  "\n";
     // Compute the distance to node; this is equal to the distance to
     // the cellCenterPos of the node minus the boundingRadius of the node, scale * SQRT3.
     float nodeDistance    = (obsPosition - cellCenterPos).norm() - scale * StarOctree::SQRT3;
@@ -168,6 +177,11 @@ void StarOctree::processCloseObjects(StarHandler&    processor,
     for (unsigned int i = 0; i < nObjects; ++i)
     {
         Star& obj = _firstObject[i];
+		StarDetails* details = obj.getDetails();
+		LOG_(StarOctreeLog, plog::debug) << "StarOctree::processCloseObjects.details " <<  details->getSpectralType() 
+		 << " orbitRadius " << details->getOrbitalRadius() << "\n";
+		LOG_(StarOctreeLog, plog::debug) << "StarOctree::processCloseObjects.position.squared " 
+		<< (obj.getPosition()).squaredNorm() << "\n";
 
         if ((obsPosition - obj.getPosition()).squaredNorm() < radiusSquared)
         {
@@ -181,9 +195,10 @@ void StarOctree::processCloseObjects(StarHandler&    processor,
     // Recurse into the child nodes
     if (_children != NULL)
     {
-        for (int i = 0; i < 8; ++i)
+      for (int i = 0; i < 8; ++i)
         {
-            _children[i]->processCloseObjects(processor,
+			LOG_(StarOctreeLog, plog::debug) << "StarOctree::processCloseObjects._children " << i << "\n";
+              _children[i]->processCloseObjects(processor,
                                               obsPosition,
                                               boundingRadius,
                                               scale * 0.5f);

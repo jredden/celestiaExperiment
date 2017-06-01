@@ -8,3 +8,4 @@
 :> celx.txt
 :> renderOverlay.txt
 :> image.txt
+:> staroctree.txt
