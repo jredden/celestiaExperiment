@@ -163,9 +163,11 @@ void StarOctree::processCloseObjects(StarHandler&    processor,
     // the cellCenterPos of the node minus the boundingRadius of the node, scale * SQRT3.
     float nodeDistance    = (obsPosition - cellCenterPos).norm() - scale * StarOctree::SQRT3;
 
-    if (nodeDistance > boundingRadius)
+    if (nodeDistance > boundingRadius){
+		LOG_(StarOctreeLog, plog::debug) << "StarOctree::processCloseObjects.DistanceTooLarge " << nodeDistance 
+		<< " boundingRadius" << "\n";
         return;
-
+	}
     // At this point, we've determined that the cellCenterPos of the node is
     // close enough that we must check individual objects for proximity.
 
@@ -178,16 +180,19 @@ void StarOctree::processCloseObjects(StarHandler&    processor,
     {
         Star& obj = _firstObject[i];
 		StarDetails* details = obj.getDetails();
-		LOG_(StarOctreeLog, plog::debug) << "StarOctree::processCloseObjects.details " <<  details->getSpectralType() 
-		 << " orbitRadius " << details->getOrbitalRadius() << "\n";
-		LOG_(StarOctreeLog, plog::debug) << "StarOctree::processCloseObjects.position.squared " 
-		<< (obj.getPosition()).squaredNorm() << "\n";
+		MultiResTexture multiResTextture = details->getTexture();
+		LOG_(StarOctreeLog, plog::debug) << "StarOctree::processCloseObjects.details.spectralType " <<  details->getSpectralType() 
+		 << " orbitRadius " << details->getOrbitalRadius() <<  " texture " << *multiResTextture.tex << "\n";
+		LOG_(StarOctreeLog, plog::debug) << "StarOctree::processCloseObjects.position.squaredNorm " 
+		<< (obj.getPosition()).squaredNorm() << " obsPosition " << obsPosition  
+		<<" radiusSquared " << radiusSquared << " catalogNumber " << obj.getCatalogNumber() <<  "\n";
 
         if ((obsPosition - obj.getPosition()).squaredNorm() < radiusSquared)
         {
             float distance    = (obsPosition - obj.getPosition()).norm();
             float appMag      = astro::absToAppMag(obj.getAbsoluteMagnitude(), distance);
-
+			LOG_(StarOctreeLog, plog::debug) << "StarOctree::processCloseObjects.processing.catalogNumber " 
+			<< obj.getCatalogNumber() << "\n";
             processor.process(obj, distance, appMag);
         }
     }
@@ -197,7 +202,7 @@ void StarOctree::processCloseObjects(StarHandler&    processor,
     {
       for (int i = 0; i < 8; ++i)
         {
-			LOG_(StarOctreeLog, plog::debug) << "StarOctree::processCloseObjects._children " << i << "\n";
+			// LOG_(StarOctreeLog, plog::debug) << "StarOctree::processCloseObjects._children " << i << "\n";
               _children[i]->processCloseObjects(processor,
                                               obsPosition,
                                               boundingRadius,
