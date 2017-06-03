@@ -1241,6 +1241,7 @@ Universe::getFartherStars(const UniversalCoord& position,
                        vector<const Star*>& nearStars) const
 {
     Vector3f pos = position.toLy().cast<float>();
-    NearStarFinder finder(100.0f, nearStars);
-    starCatalog->findCloseStars(finder, pos, maxDistance*10000);
+    NearStarFinder finder(10000.0f, nearStars);
+	maxDistance *= 10000;
+    starCatalog->findCloseStars(finder, pos, maxDistance);
 }
