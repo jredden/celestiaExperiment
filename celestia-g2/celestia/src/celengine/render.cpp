@@ -2897,6 +2897,7 @@ void Renderer::draw(const Observer& observer,
 		int starsSize = nearStars.size();
 		if(starsSize == 0){
 			universe.getFartherStars(observer.getPosition(), 1.0f, nearStars);
+			starsSize = nearStars.size();
 		}
 
         // Set up direct light sources (i.e. just stars at the moment)
@@ -2951,6 +2952,7 @@ void Renderer::draw(const Observer& observer,
             }
 
             addStarOrbitToRenderList(*sun, observer, now);
+			LOG_(RenderLog, plog::debug) << " addStarOrbitToRenderList.Catalog Number " << sun->getCatalogNumber();
         }
 
         if ((labelMode & (BodyLabelMask)) != 0)
@@ -3355,7 +3357,7 @@ void Renderer::draw(const Observer& observer,
     // Draw the selection cursor
     bool selectionVisible = false;
 	LOG_(RenderLog, plog::debug) << "in Renderer::render.sel selection cursor " << sel.getName();
-	LOG_(RenderLog, plog::debug) << "in Renderer::render.renderFlags ShowMarkers" << renderFlags << "\n";
+	LOG_(RenderLog, plog::debug) << "in Renderer::render.renderFlags ShowMarkers " << renderFlags << "\n";
 
     if (!sel.empty() && (renderFlags & ShowMarkers))
     {
@@ -3575,8 +3577,8 @@ void Renderer::draw(const Observer& observer,
         sort(orbitPathList.begin(), orbitPathList.end());
 
         int nEntries = renderList.size();
-		LOG_(RenderLog, plog::debug) << "in Renderer::render.renderList.size " << renderList.size() << "\n";
-		LOG_(RenderLog, plog::debug) << "in Renderer::render.relderlist sel " << sel.getName() << "\n";
+		LOG_(RenderLog, plog::debug) << "in Renderer::render.renderList.sorted.size " << renderList.size() << "\n";
+		LOG_(RenderLog, plog::debug) << "in Renderer::render.renderlist.sel " << sel.getName() << "\n";
 
 #ifdef USE_HDR
         // Compute 1 eclipse between eye - closest body - brightest star
@@ -3650,7 +3652,7 @@ void Renderer::draw(const Observer& observer,
         // through all the renderable items that passed the culling test.
         for (i = nEntries - 1; i >= 0; i--)
         {
-			LOG_(RenderLog, plog::debug) << "in Renderer::render.renderList[i] " << i << " sel.getName() "  << sel.getName()<< "\n";
+			LOG_(RenderLog, plog::debug) << "in Renderer::render.nEntries.renderList[i] " << i << " sel.getName() "  << sel.getName()<< "\n";
 		     // Only consider renderables that will occupy more than one pixel.
             if (renderList[i].discSizeInPixels > 1)
             {
@@ -3719,6 +3721,7 @@ void Renderer::draw(const Observer& observer,
 #if DEBUG_COALESCE
         clog << "nEntries: " << nEntries << ",   zNearest: " << zNearest << ",   prevNear: " << prevNear << "\n";
 #endif
+		LOG_(RenderLog, plog::debug) << "coalesce " << "nEntries: " << nEntries << ",   zNearest: " << zNearest << ",   prevNear: " << prevNear << "\n";
 
         // If the nearest distance wasn't set, nothing should appear
         // in the frontmost depth buffer interval (so we can set the near plane
@@ -3808,6 +3811,11 @@ void Renderer::draw(const Observer& observer,
                     ", far: " << -depthPartitions[interval].farZ <<
                     "\n";
 #endif
+			LOG_(RenderLog, plog::debug) << "interval: " << interval <<
+                    ", near: " << -depthPartitions[interval].nearZ <<
+                    ", far: " << -depthPartitions[interval].farZ <<
+                    "\n";
+					
             int firstInInterval = i;
 
             // Render just the opaque objects in the first pass
@@ -3941,6 +3949,11 @@ void Renderer::draw(const Observer& observer,
              << ", nIntervals: " << nIntervals << "\n";
 #endif
 
+		LOG_(RenderLog, plog::debug)  << "orbits: " << orbitsRendered
+             << ", skipped: " << orbitsSkipped
+             << ", sections culled: " << sectionsCulled
+             << ", nIntervals: " << nIntervals << "\n";
+			 
         orbitsRendered = 0;
         orbitsSkipped = 0;
         sectionsCulled = 0;

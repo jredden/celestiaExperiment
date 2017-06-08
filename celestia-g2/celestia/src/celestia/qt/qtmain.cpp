@@ -82,8 +82,10 @@ int main(int argc, char *argv[])
 	LOG_DEBUG_(ImageLog) << "image log!";
 //	plog::init<ImageLog>(plog::debug, "image.txt"); // Initialize the 9th logger instance.
 //	LOG_DEBUG_(ImageLog) << "image log!";
-	plog::init<StarOctreeLog>(plog::debug, "staroctree.txt"); // Initialize the 10th logger instance.
+	plog::init<StarOctreeLog>(plog::debug, "/dev/null"); // Initialize the 10th logger instance.
 	LOG_DEBUG_(RenderLog) << "staroctree log!";
+//	plog::init<StarOctreeLog>(plog::debug, "staroctree.txt"); // Initialize the 10th logger instance.
+//	LOG_DEBUG_(RenderLog) << "staroctree log!";
 
     QApplication app(argc, argv);
 
