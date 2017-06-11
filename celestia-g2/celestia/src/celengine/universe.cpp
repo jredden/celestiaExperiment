@@ -23,10 +23,17 @@
 #include <celutil/utf8.h>
 #include <cassert>
 
+#include "plog/Log.h"
+
 static const double ANGULAR_RES = 3.5e-6;
 
 using namespace Eigen;
 using namespace std;
+
+enum // Define log instances. Default is 0 and is omitted from this enum.
+{
+ 	UniverseLog = 10
+};
 
 
 Universe::Universe() :
@@ -107,11 +114,19 @@ SolarSystem* Universe::getSolarSystem(const Star* star) const
         return NULL;
 
     uint32 starNum = star->getCatalogNumber();
+	LOG_(UniverseLog, plog::debug) << "Universe::getSolarSystem.starNum " << starNum << "\n";
     SolarSystemCatalog::iterator iter = solarSystemCatalog->find(starNum);
-    if (iter == solarSystemCatalog->end())
-        return NULL;
-    else
+    if (iter == solarSystemCatalog->end()){
+		LOG_(UniverseLog, plog::debug) << "Universe::getSolarSystem.returns NULL for "  << starNum << "\n";
+       return NULL;
+		
+	}
+    else{
+		LOG_(UniverseLog, plog::debug) << "Universe::getSolarSystem.returns iter->second " << iter->second 
+		<< " for " << starNum <<  "\n";
         return iter->second;
+		
+	}
 }
 
 
