@@ -73,8 +73,10 @@ int main(int argc, char *argv[])
 	LOG_DEBUG_(SolarSystemLog) << "solarsys log!";
 //	plog::init<SolarSysLog>(plog::debug, "solarsys.txt"); // Initialize the 6th logger instance.
 //	LOG_DEBUG_(SolarSysLog) << "solarsys log!";
-	plog::init<RenderLog>(plog::debug, "render.txt"); // Initialize the 7th logger instance.
+	plog::init<RenderLog>(plog::debug, "/dev/null"); // Initialize the 7th logger instance.
 	LOG_DEBUG_(RenderLog) << "render log!";
+//	plog::init<RenderLog>(plog::debug, "render.txt"); // Initialize the 7th logger instance.
+//	LOG_DEBUG_(RenderLog) << "render log!";
 	plog::init<ParseLog>(plog::debug, "/dev/null"); // Initialize the 8th logger instance.
 	LOG_DEBUG_(ParseLog) << "parse log!";
 //	plog::init<ParseLog>(plog::debug, "parse.txt"); // Initialize the 8th logger instance.
@@ -87,8 +89,10 @@ int main(int argc, char *argv[])
 	LOG_DEBUG_(RenderLog) << "staroctree log!";
 //	plog::init<StarOctreeLog>(plog::debug, "staroctree.txt"); // Initialize the 10th logger instance.
 //	LOG_DEBUG_(RenderLog) << "staroctree log!";
-	plog::init<UniverseLog>(plog::debug, "universe.txt"); // Initialize the 10th logger instance.
+	plog::init<UniverseLog>(plog::debug, "/dev/null"); // Initialize the 10th logger instance.
 	LOG_DEBUG_(RenderLog) << "universe log!";
+//	plog::init<UniverseLog>(plog::debug, "universe.txt"); // Initialize the 10th logger instance.
+//	LOG_DEBUG_(RenderLog) << "universe log!";
 
     QApplication app(argc, argv);
 
