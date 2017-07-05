@@ -54,7 +54,8 @@ enum // Define log instances. Default is 0 and is omitted from this enum.
 	ParseLog = 7,
 	ImageLog = 8,
 	StarOctreeLog = 9,
-	UniverseLog = 10
+	UniverseLog = 10,
+	CelxLog = 11
 };
 
 int main(int argc, char *argv[])
@@ -93,6 +94,8 @@ int main(int argc, char *argv[])
 	LOG_DEBUG_(RenderLog) << "universe log!";
 //	plog::init<UniverseLog>(plog::debug, "universe.txt"); // Initialize the 10th logger instance.
 //	LOG_DEBUG_(RenderLog) << "universe log!";
+	plog::init<CelxLog>(plog::debug, "celx.txt"); // Initialize the 11th logger instance.
+	LOG_DEBUG_(CelxLog) << "celx log!";
 
     QApplication app(argc, argv);
 

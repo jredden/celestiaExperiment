@@ -41,6 +41,8 @@
 
 #include <celengine/eigenport.h>
 
+#include <celephem/lua.h>
+
 
 
 // Older gcc versions used <strstream> instead of <sstream>.
@@ -62,8 +64,8 @@ using namespace std;
 
 enum // Define log instances. Default is 0 and is omitted from this enum.
 {
-	ThirdLog = 2,
-	TextureLog = 4
+	TextureLog = 4,
+	CelxLog = 11
 };
 
 const char* CelxLua::ClassNames[] =
@@ -281,11 +283,13 @@ static void openLuaLibrary(lua_State* l,
                            const char* name,
                            lua_CFunction func)
 {
+	LOG_(CelxLog, plog::debug) << "name: " << name << "\n";
     lua_pushcfunction(l, func);
     lua_pushstring(l, name);
     lua_call(l, 1, 0);
 }
 #endif
+
 
 
 void CelxLua::initMaps()
@@ -312,6 +316,7 @@ static int getLuaGlobalIndex(){
 
 static void getField(lua_State* l, int index, const char* key)
 {
+	LOG_(CelxLog, plog::debug) << "getField:" << key << "\n";
     // When we move to Lua 5.1, this will be replaced by:
     // lua_getfield(l, index, key);
     lua_pushstring(l, key);
@@ -334,6 +339,7 @@ class CelScriptWrapper : public ExecutionEnvironment
         tickTime(0.0),
         errorMessage("")
     {
+		LOG_(CelxLog, plog::debug) << "CelScriptWrapper" << "\n";
         CommandParser parser(scriptfile);
         cmdSequence = parser.parse();
         if (cmdSequence != NULL)
@@ -410,12 +416,14 @@ class CelScriptWrapper : public ExecutionEnvironment
 // Push a class name onto the Lua stack
 static void PushClass(lua_State* l, int id)
 {
+	LOG_(CelxLog, plog::debug) << "PushClass: " << CelxLua::ClassNames[id] << "\n";
     lua_pushlstring(l, CelxLua::ClassNames[id], strlen(CelxLua::ClassNames[id]));
 }
 
 // Set the class (metatable) of the object on top of the stack
 void Celx_SetClass(lua_State* l, int id)
 {
+	LOG_(CelxLog, plog::debug) << "Celx_SetClass:" << id << "\n";
     PushClass(l, id);
     lua_rawget(l, LUA_REGISTRYINDEX);
     if (lua_type(l, -1) != LUA_TTABLE)
@@ -428,6 +436,7 @@ void Celx_SetClass(lua_State* l, int id)
 // entries and __index, leaving the metatable on the stack when done.
 void Celx_CreateClassMetatable(lua_State* l, int id)
 {
+	LOG_(CelxLog, plog::debug) << "Celx_CreateClassMetatable.id:" << id << "\n";
     lua_newtable(l);
     PushClass(l, id);
     lua_pushvalue(l, -2);
@@ -444,6 +453,7 @@ void Celx_CreateClassMetatable(lua_State* l, int id)
 // Register a class 'method' in the metatable (assumed to be on top of the stack)
 void Celx_RegisterMethod(lua_State* l, const char* name, lua_CFunction fn)
 {
+	LOG_(CelxLog, plog::debug) << "Celx_RegisterMethod:" << name << "\n";
     lua_pushstring(l, name);
     lua_pushvalue(l, -2);
     lua_pushcclosure(l, fn, 1);
@@ -455,6 +465,7 @@ void Celx_RegisterMethod(lua_State* l, const char* name, lua_CFunction fn)
 // specified class
 static bool Celx_istype(lua_State* l, int index, int id)
 {
+	LOG_(CelxLog, plog::debug) << "Celx_istype:" << index << ":" << id << "\n";
     // get registry[metatable]
     if (!lua_getmetatable(l, index))
         return false;
@@ -470,6 +481,8 @@ static bool Celx_istype(lua_State* l, int index, int id)
     const char* classname = lua_tostring(l, -1);
     if (classname != NULL && strcmp(classname, CelxLua::ClassNames[id]) == 0)
     {
+			LOG_(CelxLog, plog::debug) << "Celx_istype.true:" << CelxLua::ClassNames[id] << ":" << id << "\n";
+
         lua_pop(l, 1);
         return true;
     }
@@ -481,6 +494,7 @@ static bool Celx_istype(lua_State* l, int index, int id)
 // specified class and return pointer to userdata
 void* Celx_CheckUserData(lua_State* l, int index, int id)
 {
+	LOG_(CelxLog, plog::debug) << "Celx_CheckUserData:" << index << " :: " << id << " :: " << "\n";
     if (Celx_istype(l, index, id))
         return lua_touserdata(l, index);
     else
@@ -491,6 +505,7 @@ void* Celx_CheckUserData(lua_State* l, int index, int id)
 // Return the CelestiaCore object stored in the globals table
 static CelestiaCore* getAppCore(lua_State* l, FatalErrors fatalErrors = NoErrors)
 {
+	LOG_(CelxLog, plog::debug) << "getAppCore" << "\n";
     lua_pushstring(l, "celestia-appcore");
     lua_gettable(l, LUA_REGISTRYINDEX);
 
@@ -554,6 +569,7 @@ double LuaState::getTime() const
 // and terminate it if it has:
 static void checkTimeslice(lua_State* l, lua_Debug* /*ar*/)
 {
+	LOG_(CelxLog, plog::debug) << "checkTimeslice" << "\n";
     lua_pushstring(l, "celestia-luastate");
     lua_gettable(l, LUA_REGISTRYINDEX);
     if (!lua_islightuserdata(l, -1))
@@ -582,6 +598,7 @@ static void checkTimeslice(lua_State* l, lua_Debug* /*ar*/)
 // allow the script to perform cleanup
 void LuaState::cleanup()
 {
+	LOG_(CelxLog, plog::debug) << "LuaState::cleanup" << ioMode << "\n";
     if (ioMode == Asking)
     {
         // Restore renderflags:
@@ -618,6 +635,7 @@ void LuaState::cleanup()
 
 bool LuaState::createThread()
 {
+	LOG_(CelxLog, plog::debug) << "LuaState::createThread " << state << "\n";
     // Initialize the coroutine which wraps the script
     if (!(lua_isfunction(state, -1) && !lua_iscfunction(state, -1)))
     {
@@ -641,6 +659,7 @@ bool LuaState::createThread()
 
 string LuaState::getErrorMessage()
 {
+	LOG_(CelxLog, plog::debug) << "LuaState::getErrorMessage " << state << "\n";
     if (lua_gettop(state) > 0)
     {
         if (lua_isstring(state, -1))
@@ -652,6 +671,7 @@ string LuaState::getErrorMessage()
 
 bool LuaState::timesliceExpired()
 {
+	LOG_(CelxLog, plog::debug) << "LuaState::timesliceExpired" << "\n";
     if (timeout < getTime())
     {
         // timeslice expired, make every instruction (including pcall) fail:
@@ -667,9 +687,12 @@ bool LuaState::timesliceExpired()
 
 static int resumeLuaThread(lua_State *L, lua_State *co, int narg)
 {
+	LOG_(CelxLog, plog::debug) << "resumeLuaThread:" << narg << "::" << "\n";
     int status;
-
-    //if (!lua_checkstack(co, narg))
+	
+	// char * dumpState = dumpSomeLuaState(L);
+    
+	//if (!lua_checkstack(co, narg))
     //   luaL_error(L, "too many arguments to resume");
     lua_xmove(L, co, narg);
 
@@ -697,6 +720,7 @@ static int resumeLuaThread(lua_State *L, lua_State *co, int narg)
 
 bool LuaState::isAlive() const
 {
+	LOG_(CelxLog, plog::debug) << "LuaState::isAlive" << "\n";
     return alive;
 }
 
@@ -710,6 +734,7 @@ struct ReadChunkInfo
 
 static const char* readStreamChunk(lua_State*, void* udata, size_t* size)
 {
+	LOG_(CelxLog, plog::debug) << "readStreamChunk:" << size << "\n";
     assert(udata != NULL);
     if (udata == NULL)
         return NULL;
@@ -739,6 +764,7 @@ static const char* readStreamChunk(lua_State*, void* udata, size_t* size)
 // Returns true if keypress has been consumed
 bool LuaState::charEntered(const char* c_p)
 {
+	LOG_(CelxLog, plog::debug) << "LuaState::charEntered:" << *c_p << "\n";
     if (ioMode == Asking && getTime() > timeout)
     {
         int stackTop = lua_gettop(costate);
@@ -817,6 +843,7 @@ bool LuaState::charEntered(const char* c_p)
 // Returns true if a handler is registered for the key
 bool LuaState::handleKeyEvent(const char* key)
 {
+	LOG_(CelxLog, plog::debug) << "LuaState::handleKeyEvent:" << *key << "\n";
     CelestiaCore* appCore = getAppCore(costate, NoErrors);
     if (appCore == NULL)
     {
@@ -866,6 +893,7 @@ bool LuaState::handleKeyEvent(const char* key)
 // Returns true if a handler is registered for the button event
 bool LuaState::handleMouseButtonEvent(float x, float y, int button, bool down)
 {
+	LOG_(CelxLog, plog::debug) << "LuaState::handleMouseButtonEvent:" << x << ":" << y << "\n";
     CelestiaCore* appCore = getAppCore(costate, NoErrors);
     if (appCore == NULL)
     {
@@ -921,6 +949,7 @@ bool LuaState::handleMouseButtonEvent(float x, float y, int button, bool down)
 // Returns true if a handler is registered for the tick event
 bool LuaState::handleTickEvent(double dt)
 {
+	LOG_(CelxLog, plog::debug) << "LuaState::handleTickEvent:" << dt << "\n";
     CelestiaCore* appCore = getAppCore(costate, NoErrors);
     if (appCore == NULL)
     {
@@ -991,6 +1020,7 @@ int LuaState::loadScript(istream& in, const string& streamname)
 
 int LuaState::loadScript(const string& s)
 {
+	LOG_(CelxLog, plog::debug) << "LuaState::loadScript:" << s << "\n";
     istringstream in(s);
     return loadScript(in, "string");
 }
@@ -999,6 +1029,7 @@ int LuaState::loadScript(const string& s)
 // Resume a thread; if the thread completes, the status is set to !alive
 int LuaState::resume()
 {
+	LOG_(CelxLog, plog::debug) << "LuaState::resume:" << state << "\n";
     assert(costate != NULL);
     if (costate == NULL)
         return false;
@@ -1066,6 +1097,7 @@ int LuaState::resume()
 // useful error-message
 void Celx_DoError(lua_State* l, const char* errorMsg)
 {
+	LOG_(CelxLog, plog::debug) << "Celx_DoError:" << *errorMsg << "\n";
     lua_Debug debug;
     if (lua_getstack(l, 1, &debug))
     {
@@ -1084,6 +1116,7 @@ void Celx_DoError(lua_State* l, const char* errorMsg)
 
 bool LuaState::tick(double dt)
 {
+	LOG_(CelxLog, plog::debug) << "LuaState::tick:" << dt << "\n";
     // Due to the way CelestiaCore::tick is called (at least for KDE),
     // this method may be entered a second time when we show the error-alerter
     // Workaround: check if we are alive, return true(!) when we aren't anymore
@@ -1173,6 +1206,7 @@ bool LuaState::tick(double dt)
 
 void LuaState::requestIO()
 {
+	LOG_(CelxLog, plog::debug) << "LuaState::requestIO:" << "\n";
     // the script requested IO, set the mode
     // so we display the warning during tick
     // and can request keyboard. We can't do this now
@@ -1210,6 +1244,7 @@ void LuaState::requestIO()
 void Celx_CheckArgs(lua_State* l,
                     int minArgs, int maxArgs, const char* errorMessage)
 {
+	LOG_(CelxLog, plog::debug) << "Celx_CheckArgs:" << minArgs << ":" << maxArgs << "\n";
     int argc = lua_gettop(l);
     if (argc < minArgs || argc > maxArgs)
     {
@@ -3911,7 +3946,7 @@ static int celestia_getparamstring(lua_State* l)
 
 static int celestia_loadtexture(lua_State* l)
 {
-  LOG_(ThirdLog, plog::debug) << "celestia_loadtexture lua_State:" << l;
+  LOG_(TextureLog, plog::debug) << "celestia_loadtexture lua_State:" << l;
     Celx_CheckArgs(l, 2, 2, "Need one argument for celestia:loadtexture()");
     string s = Celx_SafeGetString(l, 2, AllErrors, "Argument to celestia:loadtexture() must be a string");
     lua_Debug ar;
