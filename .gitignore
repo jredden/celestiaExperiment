@@ -1,4 +1,5 @@
 *.o
 /exe/
 celestia
+celestia-g2/celestia/celestia
 
