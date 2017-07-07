@@ -2504,6 +2504,7 @@ static int celestia_getselection(lua_State* l)
 
 static int celestia_find(lua_State* l)
 {
+	LOG_(CelxLog, plog::debug) << "celestia_find:" << "\n";
     Celx_CheckArgs(l, 2, 2, "One argument expected for function celestia:find()");
     if (!lua_isstring(l, 2))
     {
@@ -2521,6 +2522,8 @@ static int celestia_find(lua_State* l)
 
 static int celestia_select(lua_State* l)
 {
+	LOG_(CelxLog, plog::debug) << "celestia_select:" << "\n";
+
     Celx_CheckArgs(l, 2, 2, "One argument expected for celestia:select()");
     CelestiaCore* appCore = this_celestia(l);
 
@@ -2539,6 +2542,8 @@ static int celestia_select(lua_State* l)
 
 static int celestia_mark(lua_State* l)
 {
+	LOG_(CelxLog, plog::debug) << "celestia_mark:" << "\n";
+
     Celx_CheckArgs(l, 2, 2, "One argument expected to function celestia:mark");
 
     CelestiaCore* appCore = this_celestia(l);
@@ -2563,6 +2568,8 @@ static int celestia_mark(lua_State* l)
 
 static int celestia_unmark(lua_State* l)
 {
+	LOG_(CelxLog, plog::debug) << "celestia_unmark:" << "\n";
+
     Celx_CheckArgs(l, 2, 2, "One argument expected to function celestia:unmark");
 
     CelestiaCore* appCore = this_celestia(l);
@@ -2583,6 +2590,8 @@ static int celestia_unmark(lua_State* l)
 
 static int celestia_gettime(lua_State* l)
 {
+	LOG_(CelxLog, plog::debug) << "celestia_gettime:" << "\n";
+
     Celx_CheckArgs(l, 1, 1, "No argument expected to function celestia:gettime");
 
     CelestiaCore* appCore = this_celestia(l);
@@ -2594,6 +2603,8 @@ static int celestia_gettime(lua_State* l)
 
 static int celestia_gettimescale(lua_State* l)
 {
+	LOG_(CelxLog, plog::debug) << "celestia_gettimescale:" << "\n";
+
     Celx_CheckArgs(l, 1, 1, "No argument expected to function celestia:gettimescale");
 
     CelestiaCore* appCore = this_celestia(l);
@@ -2604,6 +2615,8 @@ static int celestia_gettimescale(lua_State* l)
 
 static int celestia_settime(lua_State* l)
 {
+	LOG_(CelxLog, plog::debug) << "celestia_settime:" << "\n";
+
     Celx_CheckArgs(l, 2, 2, "One argument expected to function celestia:settime");
 
     CelestiaCore* appCore = this_celestia(l);
@@ -2615,6 +2628,8 @@ static int celestia_settime(lua_State* l)
 
 static int celestia_ispaused(lua_State* l)
 {
+	LOG_(CelxLog, plog::debug) << "celestia_ispaused:" << "\n";
+
     Celx_CheckArgs(l, 1, 1, "No argument expected to function celestia:ispaused");
 
     CelestiaCore* appCore = this_celestia(l);
@@ -2625,6 +2640,8 @@ static int celestia_ispaused(lua_State* l)
 
 static int celestia_synchronizetime(lua_State* l)
 {
+	LOG_(CelxLog, plog::debug) << "celestia_synchronizetime:" << "\n";
+
     Celx_CheckArgs(l, 2, 2, "One argument expected to function celestia:synchronizetime");
 
     CelestiaCore* appCore = this_celestia(l);
@@ -2636,6 +2653,8 @@ static int celestia_synchronizetime(lua_State* l)
 
 static int celestia_istimesynchronized(lua_State* l)
 {
+	LOG_(CelxLog, plog::debug) << "celestia_istimesynchronized:" << "\n";
+
     Celx_CheckArgs(l, 1, 1, "No argument expected to function celestia:istimesynchronized");
 
     CelestiaCore* appCore = this_celestia(l);
@@ -2647,6 +2666,8 @@ static int celestia_istimesynchronized(lua_State* l)
 
 static int celestia_settimescale(lua_State* l)
 {
+	LOG_(CelxLog, plog::debug) << "celestia_settimescale:" << "\n";
+
     Celx_CheckArgs(l, 2, 2, "One argument expected to function celestia:settimescale");
 
     CelestiaCore* appCore = this_celestia(l);
@@ -2658,6 +2679,8 @@ static int celestia_settimescale(lua_State* l)
 
 static int celestia_tojulianday(lua_State* l)
 {
+	LOG_(CelxLog, plog::debug) << "celestia_tojulianday:" << "\n";
+
     Celx_CheckArgs(l, 2, 7, "Wrong number of arguments to function celestia:tojulianday");
 
     // for error checking only:
@@ -2684,6 +2707,7 @@ static int celestia_tojulianday(lua_State* l)
 
 static int celestia_fromjulianday(lua_State* l)
 {
+	LOG_(CelxLog, plog::debug) << "celestia_fromjulianday:" << "\n";
     Celx_CheckArgs(l, 2, 2, "Wrong number of arguments to function celestia:fromjulianday");
 
     // for error checking only:
@@ -2709,6 +2733,8 @@ static int celestia_fromjulianday(lua_State* l)
 // celestia_tdbtoutc.
 static int celestia_utctotdb(lua_State* l)
 {
+	LOG_(CelxLog, plog::debug) << "celestia_utctotdb:" << "\n";
+
     Celx_CheckArgs(l, 2, 7, "Wrong number of arguments to function celestia:utctotdb");
 
     // for error checking only:
@@ -2737,6 +2763,8 @@ static int celestia_utctotdb(lua_State* l)
 // Convert a TDB Julian day to a UTC Julian date (table format)
 static int celestia_tdbtoutc(lua_State* l)
 {
+	LOG_(CelxLog, plog::debug) << "celestia_tdbtoutc:" << "\n";
+
     Celx_CheckArgs(l, 2, 2, "Wrong number of arguments to function celestia:tdbtoutc");
 
     // for error checking only:
@@ -2759,6 +2787,8 @@ static int celestia_tdbtoutc(lua_State* l)
 
 static int celestia_getsystemtime(lua_State* l)
 {
+	LOG_(CelxLog, plog::debug) << "celestia_getsystemtime:" << "\n";
+
     Celx_CheckArgs(l, 1, 1, "No argument expected to function celestia:getsystemtime");
     
     astro::Date d = astro::Date::systemDate();
@@ -2770,6 +2800,8 @@ static int celestia_getsystemtime(lua_State* l)
 
 static int celestia_unmarkall(lua_State* l)
 {
+	LOG_(CelxLog, plog::debug) << "celestia_unmarkall:" << "\n";
+
     Celx_CheckArgs(l, 1, 1, "No arguments expected to function celestia:unmarkall");
 
     CelestiaCore* appCore = this_celestia(l);
@@ -2794,6 +2826,7 @@ static int celestia_getstarcount(lua_State* l)
 // Stars iterator function; two upvalues expected
 static int celestia_stars_iter(lua_State* l)
 {
+	LOG_(CelxLog, plog::debug) << "celestia_stars_iter:" << "\n";
     CelestiaCore* appCore = to_celestia(l, lua_upvalueindex(1));
     if (appCore == NULL)
     {
@@ -2828,6 +2861,8 @@ static int celestia_stars_iter(lua_State* l)
 
 static int celestia_stars(lua_State* l)
 {
+	LOG_(CelxLog, plog::debug) << "celestia_stars:" << "\n";
+	
     // Push a closure with two upvalues: the celestia object and a
     // counter.
     lua_pushvalue(l, 1);    // Celestia object
@@ -2840,6 +2875,7 @@ static int celestia_stars(lua_State* l)
 
 static int celestia_getdsocount(lua_State* l)
 {
+	LOG_(CelxLog, plog::debug) << "celestia_getdsocount:" << "\n";
     Celx_CheckArgs(l, 1, 1, "No arguments expected to function celestia:getdsocount");
 
     CelestiaCore* appCore = this_celestia(l);
@@ -2853,6 +2889,7 @@ static int celestia_getdsocount(lua_State* l)
 // DSOs iterator function; two upvalues expected
 static int celestia_dsos_iter(lua_State* l)
 {
+	LOG_(CelxLog, plog::debug) << "celestia_dsos_iter:" << "\n";
     CelestiaCore* appCore = to_celestia(l, lua_upvalueindex(1));
     if (appCore == NULL)
     {
@@ -2887,6 +2924,8 @@ static int celestia_dsos_iter(lua_State* l)
 
 static int celestia_dsos(lua_State* l)
 {
+	LOG_(CelxLog, plog::debug) << "celestia_dsos:" << "\n";
+
     // Push a closure with two upvalues: the celestia object and a
     // counter.
     lua_pushvalue(l, 1);    // Celestia object
@@ -2898,6 +2937,8 @@ static int celestia_dsos(lua_State* l)
 
 static int celestia_setambient(lua_State* l)
 {
+	LOG_(CelxLog, plog::debug) << "celestia_setambient:" << "\n";
+	
     Celx_CheckArgs(l, 2, 2, "One argument expected in celestia:setambient");
     CelestiaCore* appCore = this_celestia(l);
 
@@ -2917,6 +2958,8 @@ static int celestia_setambient(lua_State* l)
 
 static int celestia_getambient(lua_State* l)
 {
+	LOG_(CelxLog, plog::debug) << "celestia_getambient:" << "\n";
+	
     Celx_CheckArgs(l, 1, 1, "No argument expected in celestia:setambient");
     CelestiaCore* appCore = this_celestia(l);
 
@@ -2934,6 +2977,8 @@ static int celestia_getambient(lua_State* l)
 
 static int celestia_setminorbitsize(lua_State* l)
 {
+	LOG_(CelxLog, plog::debug) << "celestia_setminorbitsize:" << "\n";
+
     Celx_CheckArgs(l, 2, 2, "One argument expected in celestia:setminorbitsize");
     CelestiaCore* appCore = this_celestia(l);
 
@@ -2953,6 +2998,8 @@ static int celestia_setminorbitsize(lua_State* l)
 
 static int celestia_getminorbitsize(lua_State* l)
 {
+	LOG_(CelxLog, plog::debug) << "celestia_getminorbitsize:" << "\n";
+	
     Celx_CheckArgs(l, 1, 1, "No argument expected in celestia:getminorbitsize");
     CelestiaCore* appCore = this_celestia(l);
 
@@ -2970,6 +3017,8 @@ static int celestia_getminorbitsize(lua_State* l)
 
 static int celestia_setstardistancelimit(lua_State* l)
 {
+	LOG_(CelxLog, plog::debug) << "celestia_setstardistancelimit:" << "\n";
+
     Celx_CheckArgs(l, 2, 2, "One argument expected in celestia:setstardistancelimit");
     CelestiaCore* appCore = this_celestia(l);
 
@@ -2988,6 +3037,8 @@ static int celestia_setstardistancelimit(lua_State* l)
 
 static int celestia_getstardistancelimit(lua_State* l)
 {
+	LOG_(CelxLog, plog::debug) << "celestia_getstardistancelimit:" << "\n";
+
     Celx_CheckArgs(l, 1, 1, "No argument expected in celestia:getstardistancelimit");
     CelestiaCore* appCore = this_celestia(l);
 
@@ -3005,6 +3056,8 @@ static int celestia_getstardistancelimit(lua_State* l)
 
 static int celestia_getstarstyle(lua_State* l)
 {
+	LOG_(CelxLog, plog::debug) << "celestia_getstarstyle:" << "\n";
+
     Celx_CheckArgs(l, 1, 1, "No argument expected in celestia:getstarstyle");
     CelestiaCore* appCore = this_celestia(l);
 
@@ -3033,6 +3086,8 @@ static int celestia_getstarstyle(lua_State* l)
 
 static int celestia_setstarstyle(lua_State* l)
 {
+	LOG_(CelxLog, plog::debug) << "celestia_setstarstyle:" << "\n";
+	
     Celx_CheckArgs(l, 2, 2, "One argument expected in celestia:setstarstyle");
     CelestiaCore* appCore = this_celestia(l);
 
@@ -3068,6 +3123,8 @@ static int celestia_setstarstyle(lua_State* l)
 
 static int celestia_gettextureresolution(lua_State* l)
 {
+	LOG_(TextureLog, plog::debug) << "celestia_gettextureresolution:" << "\n";
+	
     Celx_CheckArgs(l, 1, 1, "No argument expected in celestia:gettextureresolution");
     CelestiaCore* appCore = this_celestia(l);
 
@@ -3082,6 +3139,8 @@ static int celestia_gettextureresolution(lua_State* l)
 
 static int celestia_settextureresolution(lua_State* l)
 {
+	LOG_(TextureLog, plog::debug) << "celestia_settextureresolution:" << "\n";
+
     Celx_CheckArgs(l, 2, 2, "One argument expected in celestia:settextureresolution");
     CelestiaCore* appCore = this_celestia(l);
 
@@ -3100,6 +3159,8 @@ static int celestia_settextureresolution(lua_State* l)
 
 static int celestia_getstar(lua_State* l)
 {
+	LOG_(CelxLog, plog::debug) << "celestia_getstar:" << "\n";
+	
     Celx_CheckArgs(l, 2, 2, "One argument expected to function celestia:getstar");
 
     CelestiaCore* appCore = this_celestia(l);
@@ -3116,6 +3177,9 @@ static int celestia_getstar(lua_State* l)
 
 static int celestia_getdso(lua_State* l)
 {
+		LOG_(CelxLog, plog::debug) << "celestia_getdso:" << "\n";
+
+
     Celx_CheckArgs(l, 2, 2, "One argument expected to function celestia:getdso");
 
     CelestiaCore* appCore = this_celestia(l);
@@ -3133,6 +3197,8 @@ static int celestia_getdso(lua_State* l)
 
 static int celestia_newvector(lua_State* l)
 {
+	LOG_(CelxLog, plog::debug) << "celestia_newvector:" << "\n";
+	
     Celx_CheckArgs(l, 4, 4, "Expected 3 arguments for celestia:newvector");
     // for error checking only:
     this_celestia(l);
@@ -3147,6 +3213,8 @@ static int celestia_newvector(lua_State* l)
 
 static int celestia_newposition(lua_State* l)
 {
+	LOG_(CelxLog, plog::debug) << "celestia_newposition:" << "\n";
+
     Celx_CheckArgs(l, 4, 4, "Expected 3 arguments for celestia:newposition");
     // for error checking only:
     this_celestia(l);
@@ -3175,6 +3243,8 @@ static int celestia_newposition(lua_State* l)
 
 static int celestia_newrotation(lua_State* l)
 {
+	LOG_(CelxLog, plog::debug) << "celestia_newrotation:" << "\n";
+
     Celx_CheckArgs(l, 3, 5, "Need 2 or 4 arguments for celestia:newrotation");
     // for error checking only:
     this_celestia(l);
@@ -3206,6 +3276,8 @@ static int celestia_newrotation(lua_State* l)
 
 static int celestia_getscripttime(lua_State* l)
 {
+	LOG_(CelxLog, plog::debug) << "celestia_getscripttime:" << "\n";
+
     Celx_CheckArgs(l, 1, 1, "No arguments expected for celestia:getscripttime");
     // for error checking only:
     this_celestia(l);
@@ -3217,6 +3289,8 @@ static int celestia_getscripttime(lua_State* l)
 
 static int celestia_newframe(lua_State* l)
 {
+	LOG_(CelxLog, plog::debug) << "celestia_newframe:" << "\n";
+	
     Celx_CheckArgs(l, 2, 4, "One to three arguments expected for function celestia:newframe");
     int argc = lua_gettop(l);
 
@@ -3264,6 +3338,8 @@ static int celestia_newframe(lua_State* l)
 
 static int celestia_requestkeyboard(lua_State* l)
 {
+	LOG_(CelxLog, plog::debug) << "celestia_requestkeyboard:" << "\n";
+	
     Celx_CheckArgs(l, 2, 2, "Need one arguments for celestia:requestkeyboard");
     CelestiaCore* appCore = this_celestia(l);
 
@@ -3298,6 +3374,8 @@ static int celestia_requestkeyboard(lua_State* l)
 
 static int celestia_registereventhandler(lua_State* l)
 {
+	LOG_(CelxLog, plog::debug) << "celestia_registereventhandler:" << "\n";
+
     Celx_CheckArgs(l, 3, 3, "Two arguments required for celestia:registereventhandler");
     //CelestiaCore* appCore = this_celestia(l);
 
@@ -3330,6 +3408,8 @@ static int celestia_registereventhandler(lua_State* l)
 
 static int celestia_geteventhandler(lua_State* l)
 {
+		LOG_(CelxLog, plog::debug) << "celestia_geteventhandler:" << "\n";
+
     Celx_CheckArgs(l, 2, 2, "One argument expected for celestia:registereventhandler");
     //CelestiaCore* appCore = this_celestia(l);
 
