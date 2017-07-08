@@ -3435,6 +3435,7 @@ static int celestia_geteventhandler(lua_State* l)
 
 static int celestia_takescreenshot(lua_State* l)
 {
+	LOG_(CelxLog, plog::debug) << "celestia_takescreenshot:" << "\n";
     Celx_CheckArgs(l, 1, 3, "Need 0 to 2 arguments for celestia:takescreenshot");
     CelestiaCore* appCore = this_celestia(l);
     LuaState* luastate = getLuaStateObject(l);
@@ -3507,6 +3508,7 @@ static int celestia_takescreenshot(lua_State* l)
 
 static int celestia_createcelscript(lua_State* l)
 {
+	LOG_(CelxLog, plog::debug) << "celestia_createcelscript:" << "\n";
     Celx_CheckArgs(l, 2, 2, "Need one argument for celestia:createcelscript()");
     string scripttext = Celx_SafeGetString(l, 2, AllErrors, "Argument to celestia:createcelscript() must be a string");
     return celscript_from_string(l, scripttext);
@@ -3514,6 +3516,8 @@ static int celestia_createcelscript(lua_State* l)
 
 static int celestia_requestsystemaccess(lua_State* l)
 {
+	LOG_(CelxLog, plog::debug) << "celestia_requestsystemaccess:" << "\n";
+
     // ignore possible argument for future extensions
     Celx_CheckArgs(l, 1, 2, "No argument expected for celestia:requestsystemaccess()");
     this_celestia(l);
@@ -3524,6 +3528,8 @@ static int celestia_requestsystemaccess(lua_State* l)
 
 static int celestia_getscriptpath(lua_State* l)
 {
+	LOG_(CelxLog, plog::debug) << "celestia_getscriptpath:" << "\n";
+
     // ignore possible argument for future extensions
     Celx_CheckArgs(l, 1, 1, "No argument expected for celestia:requestsystemaccess()");
     this_celestia(l);
@@ -3534,6 +3540,7 @@ static int celestia_getscriptpath(lua_State* l)
 
 static int celestia_runscript(lua_State* l)
 {
+	LOG_(CelxLog, plog::debug) << ":" << "\n";
     Celx_CheckArgs(l, 2, 2, "One argument expected for celestia:runscript");
     string scriptfile = Celx_SafeGetString(l, 2, AllErrors, "Argument to celestia:runscript must be a string");
 
@@ -3561,6 +3568,8 @@ static int celestia_runscript(lua_State* l)
 
 static int celestia_tostring(lua_State* l)
 {
+	LOG_(CelxLog, plog::debug) << "celestia_tostring:" << "\n";
+
     lua_pushstring(l, "[Celestia]");
 
     return 1;
@@ -3568,6 +3577,8 @@ static int celestia_tostring(lua_State* l)
 
 static int celestia_windowbordersvisible(lua_State* l)
 {
+	LOG_(CelxLog, plog::debug) << "celestia_windowbordersvisible:" << "\n";
+
     Celx_CheckArgs(l, 1, 1, "No argument expected for celestia:windowbordersvisible");
     CelestiaCore* appCore = this_celestia(l);
 
@@ -3578,6 +3589,8 @@ static int celestia_windowbordersvisible(lua_State* l)
 
 static int celestia_setwindowbordersvisible(lua_State* l)
 {
+	LOG_(CelxLog, plog::debug) << "celestia_setwindowbordersvisible:" << "\n";
+
     Celx_CheckArgs(l, 2, 2, "One argument expected for celestia:windowbordersvisible");
     CelestiaCore* appCore = this_celestia(l);
 
@@ -3589,6 +3602,8 @@ static int celestia_setwindowbordersvisible(lua_State* l)
 
 static int celestia_seturl(lua_State* l)
 {
+	LOG_(CelxLog, plog::debug) << "celestia_seturl:" << "\n";
+
     Celx_CheckArgs(l, 2, 3, "One or two arguments expected for celestia:seturl");
     CelestiaCore* appCore = this_celestia(l);
 
@@ -3606,6 +3621,8 @@ static int celestia_seturl(lua_State* l)
 
 static int celestia_geturl(lua_State* l)
 {
+	LOG_(CelxLog, plog::debug) << "celestia_geturl:" << "\n";
+
     Celx_CheckArgs(l, 1, 2, "None or one argument expected for celestia:geturl");
     CelestiaCore* appCore = this_celestia(l);
 
@@ -3627,6 +3644,8 @@ static int celestia_geturl(lua_State* l)
 
 static void CreateCelestiaMetaTable(lua_State* l)
 {
+	LOG_(CelxLog, plog::debug) << "CreateCelestiaMetaTable:" << "\n";
+
     Celx_CreateClassMetatable(l, Celx_Celestia);
 
     Celx_RegisterMethod(l, "__tostring", celestia_tostring);
@@ -3725,6 +3744,8 @@ static void loadLuaLibs(lua_State* state);
 // ==================== Initialization ====================
 bool LuaState::init(CelestiaCore* appCore)
 {
+	LOG_(CelxLog, plog::debug) << "LuaState::init:" << "\n";
+
     CelxLua::initMaps();
 
     // Import the base, table, string, and math libraries
@@ -3802,6 +3823,8 @@ bool LuaState::init(CelestiaCore* appCore)
 
 void LuaState::setLuaPath(const string& s)
 {
+	LOG_(CelxLog, plog::debug) << "LuaState::setLuaPath:" << s << "\n";
+
   /* #if LUA_VER >= 0x050100
     // lua_getfield(state, getLuaGlobalIndex(), "package");
     lua_pushstring(state, s.c_str());
@@ -3820,6 +3843,8 @@ void LuaState::setLuaPath(const string& s)
 
 static int font_new(lua_State* l, TextureFont* f)
 {
+	LOG_(CelxLog, plog::debug) << "font_new:" << "\n";
+
     TextureFont** ud = static_cast<TextureFont**>(lua_newuserdata(l, sizeof(TextureFont*)));
     *ud = f;
 
@@ -3830,6 +3855,8 @@ static int font_new(lua_State* l, TextureFont* f)
 
 static TextureFont* to_font(lua_State* l, int index)
 {
+	LOG_(CelxLog, plog::debug) << "to_font:" << index << "\n";
+
     TextureFont** f = static_cast<TextureFont**>(lua_touserdata(l, index));
 
     // Check if pointer is valid
@@ -3842,6 +3869,8 @@ static TextureFont* to_font(lua_State* l, int index)
 
 static TextureFont* this_font(lua_State* l)
 {
+	LOG_(CelxLog, plog::debug) << "this_font:" << "\n";
+
     TextureFont* f = to_font(l, 1);
     if (f == NULL)
     {
@@ -3854,6 +3883,8 @@ static TextureFont* this_font(lua_State* l)
 
 static int font_bind(lua_State* l)
 {
+		LOG_(CelxLog, plog::debug) << "font_bind:" << "\n";
+
     Celx_CheckArgs(l, 1, 1, "No arguments expected for font:bind()");
 
     TextureFont* font = this_font(l);
@@ -3863,6 +3894,8 @@ static int font_bind(lua_State* l)
 
 static int font_render(lua_State* l)
 {
+		LOG_(CelxLog, plog::debug) << "font_render:" << "\n";
+
     Celx_CheckArgs(l, 2, 2, "One argument required for font:render");
 
     const char* s = Celx_SafeGetString(l, 2, AllErrors, "First argument to font:render must be a string");
@@ -3874,6 +3907,8 @@ static int font_render(lua_State* l)
 
 static int font_getwidth(lua_State* l)
 {
+		LOG_(CelxLog, plog::debug) << "font_getwidth:" << "\n";
+
     Celx_CheckArgs(l, 2, 2, "One argument expected for font:getwidth");
     const char* s = Celx_SafeGetString(l, 2, AllErrors, "Argument to font:getwidth must be a string");
     TextureFont* font = this_font(l);
@@ -3883,6 +3918,8 @@ static int font_getwidth(lua_State* l)
 
 static int font_getheight(lua_State* l)
 {
+	LOG_(CelxLog, plog::debug) << "font_getheight:" << "\n";
+
     Celx_CheckArgs(l, 1, 1, "No arguments expected for font:getheight()");
 
     TextureFont* font = this_font(l);
@@ -3892,6 +3929,8 @@ static int font_getheight(lua_State* l)
 
 static int font_tostring(lua_State* l)
 {
+	LOG_(CelxLog, plog::debug) << "font_tostring:" << "\n";
+
     // TODO: print out the actual information about the font
     lua_pushstring(l, "[Font]");
 
@@ -3900,6 +3939,8 @@ static int font_tostring(lua_State* l)
 
 static void CreateFontMetaTable(lua_State* l)
 {
+	LOG_(CelxLog, plog::debug) << "CreateFontMetaTable:" << "\n";
+
     Celx_CreateClassMetatable(l, Celx_Font);
 
     Celx_RegisterMethod(l, "__tostring", font_tostring);
@@ -3926,6 +3967,8 @@ static int image_new(lua_State* l, Image* i)
 
 static Image* to_image(lua_State* l, int index)
 {
+	LOG_(CelxLog, plog::debug) << "to_image:" << "\n";
+
     Image** image = static_cast<Image**>(lua_touserdata(l, index));
 
     // Check if pointer is valid
@@ -3938,6 +3981,8 @@ static Image* to_image(lua_State* l, int index)
 
 static Image* this_image(lua_State* l)
 {
+	LOG_(CelxLog, plog::debug) << "this_image:" << "\n";
+
     Image* image = to_image(l,1);
     if (image == NULL)
     {
@@ -3953,6 +3998,8 @@ static int image_getheight(lua_State* l)
 
     Image* image = this_image(l);
     lua_pushnumber(l, image->getHeight());
+	LOG_(CelxLog, plog::debug) << "image_getheight:" << image->getHeight() << "\n";
+
     return 1;
 }
 
@@ -3962,11 +4009,15 @@ static int image_getwidth(lua_State* l)
 
     Image* image = this_image(l);
     lua_pushnumber(l, image->getWidth());
+	LOG_(CelxLog, plog::debug) << "image_getwidth:" << image->getWidth() << "\n";
+
     return 1;
 }
 
 static int image_tostring(lua_State* l)
 {
+	LOG_(CelxLog, plog::debug) << "image_tostring:" << "\n";
+
     // TODO: print out the actual information about the image
     lua_pushstring(l, "[Image]");
 
@@ -3975,6 +4026,8 @@ static int image_tostring(lua_State* l)
 
 static void CreateImageMetaTable(lua_State* l)
 {
+	LOG_(CelxLog, plog::debug) << "CreateImageMetaTable:" << "\n";
+
     Celx_CreateClassMetatable(l, Celx_Image);
 
     Celx_RegisterMethod(l, "__tostring", image_tostring);
@@ -3988,6 +4041,8 @@ static void CreateImageMetaTable(lua_State* l)
 
 static int texture_new(lua_State* l, Texture* t)
 {
+	LOG_(TextureLog, plog::debug) << "texture_new:" << sizeof(Texture*) << "\n";
+
     Texture** ud = static_cast<Texture**>(lua_newuserdata(l, sizeof(Texture*)));
     *ud = t;
 
@@ -3998,6 +4053,8 @@ static int texture_new(lua_State* l, Texture* t)
 
 static Texture* to_texture(lua_State* l, int index)
 {
+	LOG_(TextureLog, plog::debug) << "to_texture:" << index << "\n";
+	
     Texture** texture = static_cast<Texture**>(lua_touserdata(l, index));
 
     // Check if pointer is valid
@@ -4010,6 +4067,8 @@ static Texture* to_texture(lua_State* l, int index)
 
 static Texture* this_texture(lua_State* l)
 {
+	LOG_(TextureLog, plog::debug) << "this_texture:" <<  "\n";
+	
     Texture* texture = to_texture(l,1);
     if (texture == NULL)
     {
@@ -4021,6 +4080,8 @@ static Texture* this_texture(lua_State* l)
 
 static int texture_bind(lua_State* l)
 {
+	LOG_(TextureLog, plog::debug) << "texture_bind:" <<  "\n";
+
     Celx_CheckArgs(l, 1, 1, "No arguments expected for texture:bind()");
 
     Texture* texture = this_texture(l);
@@ -4030,10 +4091,13 @@ static int texture_bind(lua_State* l)
 
 static int texture_getheight(lua_State* l)
 {
+	
     Celx_CheckArgs(l, 1, 1, "No arguments expected for texture:getheight()");
 
     Texture* texture = this_texture(l);
     lua_pushnumber(l, texture->getHeight());
+	LOG_(TextureLog, plog::debug) << "texture_getheight:" << texture->getHeight() << "\n";
+
     return 1;
 }
 
@@ -4043,11 +4107,16 @@ static int texture_getwidth(lua_State* l)
 
     Texture* texture = this_texture(l);
     lua_pushnumber(l, texture->getWidth());
+	
+	LOG_(TextureLog, plog::debug) << "texture_getwidth:" << texture->getWidth() << "\n";
+
     return 1;
 }
 
 static int texture_tostring(lua_State* l)
 {
+	LOG_(TextureLog, plog::debug) << "texture_tostring:" <<  "\n";
+	
     // TODO: print out the actual information about the texture
     lua_pushstring(l, "[Texture]");
 
@@ -4056,6 +4125,8 @@ static int texture_tostring(lua_State* l)
 
 static void CreateTextureMetaTable(lua_State* l)
 {
+	LOG_(CelxLog, plog::debug) << "CreateTextureMetaTable:" << "\n";
+
     Celx_CreateClassMetatable(l, Celx_Texture);
 
     Celx_RegisterMethod(l, "__tostring", texture_tostring);
@@ -4070,6 +4141,8 @@ static void CreateTextureMetaTable(lua_State* l)
 
 static int celestia_log(lua_State* l)
 {
+	LOG_(CelxLog, plog::debug) << "celestia_log:" << "\n";
+
     Celx_CheckArgs(l, 2, 2, "One argument expected to function celestia:log");
 
     const char* s = Celx_SafeGetString(l, 2, AllErrors, "First argument to celestia:log must be a string");
@@ -4079,6 +4152,8 @@ static int celestia_log(lua_State* l)
 
 static int celestia_getparamstring(lua_State* l)
 {
+	LOG_(CelxLog, plog::debug) << "celestia_getparamstring:" << "\n";
+
     Celx_CheckArgs(l, 2, 2, "One argument expected to celestia:getparamstring()");
     CelestiaCore* appCore = this_celestia(l);
     const char* s = Celx_SafeGetString(l, 2, AllErrors, "Argument to celestia:getparamstring must be a string");
@@ -4091,7 +4166,7 @@ static int celestia_getparamstring(lua_State* l)
 
 static int celestia_loadtexture(lua_State* l)
 {
-  LOG_(TextureLog, plog::debug) << "celestia_loadtexture lua_State:" << l;
+  LOG_(TextureLog, plog::debug) << "celestia_loadtexture lua_State:" << l << "\n";
     Celx_CheckArgs(l, 2, 2, "Need one argument for celestia:loadtexture()");
     string s = Celx_SafeGetString(l, 2, AllErrors, "Argument to celestia:loadtexture() must be a string");
     lua_Debug ar;
@@ -4109,6 +4184,8 @@ static int celestia_loadtexture(lua_State* l)
 
 static int celestia_loadfont(lua_State* l)
 {
+	LOG_(CelxLog, plog::debug) << "celestia_loadfont:" << l << "\n";
+
     Celx_CheckArgs(l, 2, 2, "Need one argument for celestia:loadtexture()");
     string s = Celx_SafeGetString(l, 2, AllErrors, "Argument to celestia:loadfont() must be a string");
     TextureFont* font = LoadTextureFont(s);
@@ -4125,6 +4202,7 @@ TextureFont* getFont(CelestiaCore* appCore)
 
 static int celestia_getfont(lua_State* l)
 {
+	LOG_(CelxLog, plog::debug) << "celestia_getfont:" << l << "\n";
     Celx_CheckArgs(l, 1, 1, "No arguments expected to function celestia:getTitleFont");
 
     CelestiaCore* appCore = getAppCore(l, AllErrors);
@@ -4141,6 +4219,8 @@ TextureFont* getTitleFont(CelestiaCore* appCore)
 
 static int celestia_gettitlefont(lua_State* l)
 {
+	LOG_(CelxLog, plog::debug) << "celestia_gettitlefont:" << l << "\n";
+
     Celx_CheckArgs(l, 1, 1, "No arguments expected to function celestia:getTitleFont");
 
     CelestiaCore* appCore = getAppCore(l, AllErrors);
@@ -4152,6 +4232,8 @@ static int celestia_gettitlefont(lua_State* l)
 
 static int celestia_settimeslice(lua_State* l)
 {
+	LOG_(CelxLog, plog::debug) << "celestia_settimeslice:" << l << "\n";
+
     Celx_CheckArgs(l, 2, 2, "One argument required for celestia:settimeslice");
     //CelestiaCore* appCore = this_celestia(l);
 
@@ -4171,6 +4253,8 @@ static int celestia_settimeslice(lua_State* l)
 
 static int celestia_setluahook(lua_State* l)
 {
+	LOG_(CelxLog, plog::debug) << "celestia_setluahook:" << l << "\n";
+
     Celx_CheckArgs(l, 2, 2, "One argument required for celestia:setluahook");
     CelestiaCore* appCore = this_celestia(l);
 
@@ -4195,6 +4279,8 @@ static int celestia_setluahook(lua_State* l)
 
 static void ExtendCelestiaMetaTable(lua_State* l)
 {
+	LOG_(CelxLog, plog::debug) << "ExtendCelestiaMetaTable:" << l << "\n";
+
     PushClass(l, Celx_Celestia);
     lua_rawget(l, LUA_REGISTRYINDEX);
     if (lua_type(l, -1) != LUA_TTABLE)
@@ -4265,6 +4351,8 @@ cout << "loading lua lib\n"; cout.flush();
 
 static void loadLuaLibs(lua_State* state)
 {
+	LOG_(CelxLog, plog::debug) << "loadLuaLibs:" << state << "\n";
+
 #if LUA_VER >= 0x050100
     openLuaLibrary(state, LUA_DBLIBNAME, luaopen_debug);
 #else
@@ -4301,6 +4389,8 @@ static void loadLuaLibs(lua_State* state)
 
 void LuaState::allowSystemAccess()
 {
+	LOG_(CelxLog, plog::debug) << "LuaState::allowSystemAccess:" << "\n";
+
 #if LUA_VER >= 0x050100
     openLuaLibrary(state, LUA_LOADLIBNAME, luaopen_package);
     openLuaLibrary(state, LUA_IOLIBNAME, luaopen_io);
@@ -4316,6 +4406,8 @@ void LuaState::allowSystemAccess()
 // function.
 void LuaState::allowLuaPackageAccess()
 {
+	LOG_(CelxLog, plog::debug) << "LuaState::allowLuaPackageAccess:" << "\n";
+
 #if LUA_VER >= 0x050100
     openLuaLibrary(state, LUA_LOADLIBNAME, luaopen_package);
 
@@ -4332,12 +4424,16 @@ void LuaState::allowLuaPackageAccess()
 
 void LuaState::setLuaHookEventHandlerEnabled(bool enable)
 {
+	LOG_(CelxLog, plog::debug) << "LuaState::setLuaHookEventHandlerEnabled:" << enable << "\n";
+
     eventHandlerEnabled = enable;
 }
 
 
 bool LuaState::callLuaHook(void* obj, const char* method)
 {
+	LOG_(CelxLog, plog::debug) << "LuaState::callLuaHook:" << obj << "::" << method << "\n";
+
     if (!eventHandlerEnabled)
         return false;
 
@@ -4361,6 +4457,7 @@ bool LuaState::callLuaHook(void* obj, const char* method)
         if (lua_pcall(costate, 1, 1, 0) != 0)
         {
             cerr << "Error while executing Lua Hook: " << lua_tostring(costate, -1) << "\n";
+			LOG_(CelxLog, plog::error) << "Error while executing Lua Hook: " << lua_tostring(costate, -1) << "\n";
         }
         else
         {
@@ -4379,6 +4476,8 @@ bool LuaState::callLuaHook(void* obj, const char* method)
 
 bool LuaState::callLuaHook(void* obj, const char* method, const char* keyName)
 {
+	LOG_(CelxLog, plog::debug) << "LuaState::callLuaHook:" << obj << "::" << method << ":" << keyName << "\n";
+
     if (!eventHandlerEnabled)
         return false;
 
@@ -4404,6 +4503,8 @@ bool LuaState::callLuaHook(void* obj, const char* method, const char* keyName)
         if (lua_pcall(costate, 2, 1, 0) != 0)
         {
             cerr << "Error while executing Lua Hook: " << lua_tostring(costate, -1) << "\n";
+			LOG_(CelxLog, plog::error) << "Error while executing Lua Hook: " << lua_tostring(costate, -1) << "\n";
+  
         }
         else
         {
@@ -4422,6 +4523,9 @@ bool LuaState::callLuaHook(void* obj, const char* method, const char* keyName)
 
 bool LuaState::callLuaHook(void* obj, const char* method, float x, float y)
 {
+	LOG_(CelxLog, plog::debug) << "LuaState::callLuaHook:" << obj << "::" << method << ":" << x << ":" << y << "\n";
+
+ 
     if (!eventHandlerEnabled)
         return false;
 
@@ -4448,6 +4552,7 @@ bool LuaState::callLuaHook(void* obj, const char* method, float x, float y)
         if (lua_pcall(costate, 3, 1, 0) != 0)
         {
             cerr << "Error while executing Lua Hook: " << lua_tostring(costate, -1) << "\n";
+			LOG_(CelxLog, plog::error) << "Error while executing Lua Hook: " << lua_tostring(costate, -1) << "\n";
         }
         else
         {
@@ -4466,6 +4571,9 @@ bool LuaState::callLuaHook(void* obj, const char* method, float x, float y)
 
 bool LuaState::callLuaHook(void* obj, const char* method, float x, float y, int b)
 {
+	LOG_(CelxLog, plog::debug) << "LuaState::callLuaHook:" << obj << "::" << method << ":" 
+	<< x << ":" << y << ":" << b << "\n";
+
     if (!eventHandlerEnabled)
         return false;
 
@@ -4493,6 +4601,7 @@ bool LuaState::callLuaHook(void* obj, const char* method, float x, float y, int 
         if (lua_pcall(costate, 4, 1, 0) != 0)
         {
             cerr << "Error while executing Lua Hook: " << lua_tostring(costate, -1) << "\n";
+			LOG_(CelxLog, plog::error) << "Error while executing Lua Hook: " << lua_tostring(costate, -1) << "\n";
         }
         else
         {
@@ -4511,6 +4620,7 @@ bool LuaState::callLuaHook(void* obj, const char* method, float x, float y, int 
 
 bool LuaState::callLuaHook(void* obj, const char* method, double dt)
 {
+	LOG_(CelxLog, plog::debug) << "LuaState::callLuaHook:" << obj << "::" << method << ":" << dt << "\n";
     if (!eventHandlerEnabled)
         return false;
 
@@ -4535,6 +4645,7 @@ bool LuaState::callLuaHook(void* obj, const char* method, double dt)
         if (lua_pcall(costate, 2, 1, 0) != 0)
         {
             cerr << "Error while executing Lua Hook: " << lua_tostring(costate, -1) << "\n";
+			LOG_(CelxLog, plog::error) << "Error while executing Lua Hook: " << lua_tostring(costate, -1) << "\n";
         }
         else
         {
@@ -4556,22 +4667,29 @@ bool LuaState::callLuaHook(void* obj, const char* method, double dt)
 CelxLua::CelxLua(lua_State* l) :
 m_lua(l)
 {
+	LOG_(CelxLog, plog::debug) << "CelxLua::CelxLua:ctor" << "\n";
+
 }
 
 
 CelxLua::~CelxLua()
 {
+	LOG_(CelxLog, plog::debug) << "CelxLua::CelxLua:dtor" << "\n";
 }
 
 
 bool CelxLua::isType(int index, int type) const
 {
+	LOG_(CelxLog, plog::debug) << ":" << index << ":" << type << "\n";
+
     return Celx_istype(m_lua, index, type);
 }
 
 
 void CelxLua::setClass(int id)
 {
+	LOG_(CelxLog, plog::debug) << "CelxLua::setClass:" << id << "\n";
+
     Celx_SetClass(m_lua, id);
 }
 
@@ -4579,42 +4697,55 @@ void CelxLua::setClass(int id)
 // Push a class name onto the Lua stack
 void CelxLua::pushClassName(int id)
 {
+	LOG_(CelxLog, plog::debug) << "CelxLua::pushClassName:" << id << "\n";
     lua_pushlstring(m_lua, ClassNames[id], strlen(ClassNames[id]));
 }
 
 
 void* CelxLua::checkUserData(int index, int id)
 {
+	LOG_(CelxLog, plog::debug) << ":" << index << ":" << id << "\n";
+
     return Celx_CheckUserData(m_lua, index, id);
 }
 
 
 void CelxLua::doError(const char* errorMessage)
 {
+	LOG_(CelxLog, plog::debug) << "CelxLua::doError:" << errorMessage << "\n";
+
     Celx_DoError(m_lua, errorMessage);
 }
 
 
 void CelxLua::checkArgs(int minArgs, int maxArgs, const char* errorMessage)
 {
+	LOG_(CelxLog, plog::debug) << ":" << minArgs << ":" << maxArgs << ":" << errorMessage << "\n";
+
     Celx_CheckArgs(m_lua, minArgs, maxArgs, errorMessage);
 }
 
 
 void CelxLua::createClassMetatable(int id)
 {
+	LOG_(CelxLog, plog::debug) << "CelxLua::createClassMetatable:" << id << "\n";
+
     Celx_CreateClassMetatable(m_lua, id);
 }
 
 
 void CelxLua::registerMethod(const char* name, lua_CFunction fn)
 {
+	LOG_(CelxLog, plog::debug) << "CelxLua::registerMethod:" << name << ":" << fn << "\n";
+
     Celx_RegisterMethod(m_lua, name, fn);
 }
 
 
 void CelxLua::registerValue(const char* name, float n)
 {
+	LOG_(CelxLog, plog::debug) << "CelxLua::registerValue:" << name << ":" << n << "\n";
+
 	lua_pushstring(m_lua, name);
 	lua_pushnumber(m_lua, n);
 	lua_settable(m_lua, -3);
@@ -4624,6 +4755,8 @@ void CelxLua::registerValue(const char* name, float n)
 // Add a field to the table on top of the stack
 void CelxLua::setTable(const char* field, lua_Number value)
 {
+	LOG_(CelxLog, plog::debug) << ":" << field << "CelxLua::setTable:" << value << "\n";
+
     lua_pushstring(m_lua, field);
     lua_pushnumber(m_lua, value);
     lua_settable(m_lua, -3);
@@ -4631,6 +4764,8 @@ void CelxLua::setTable(const char* field, lua_Number value)
 
 void CelxLua::setTable(const char* field, const char* value)
 {
+	LOG_(CelxLog, plog::debug) << ":" << field << "CelxLua::setTable:" << value << "\n";
+
     lua_pushstring(m_lua, field);
     lua_pushstring(m_lua, value);
     lua_settable(m_lua, -3);
@@ -4642,6 +4777,8 @@ lua_Number CelxLua::safeGetNumber(int index,
                                   const char* errorMessage,
                                   lua_Number defaultValue)
 {
+	LOG_(CelxLog, plog::debug) << "CelxLua::safeGetNumber:" << defaultValue << "\n";
+
     return Celx_SafeGetNumber(m_lua, index, fatalErrors, errorMessage, defaultValue);
 }
 
@@ -4650,6 +4787,8 @@ const char* CelxLua::safeGetString(int index,
                                    FatalErrors fatalErrors,
                                    const char* errorMessage)
 {
+	LOG_(CelxLog, plog::debug) << "CelxLua::safeGetString:" << index << "\n";
+
     return Celx_SafeGetString(m_lua, index, fatalErrors, errorMessage);
 }
 
@@ -4659,35 +4798,47 @@ bool CelxLua::safeGetBoolean(int index,
                              const char* errorMessage,
                              bool defaultValue)
 {
+	LOG_(CelxLog, plog::debug) << "CelxLua::safeGetBoolean:" << defaultValue << "\n";
+	
     return Celx_SafeGetBoolean(m_lua, index, fatalErrors, errorMessage, defaultValue);
 }
 
 
 void CelxLua::newVector(const Vec3d& v)
 {
+	LOG_(CelxLog, plog::debug) << "CelxLua::newVector:" <<  "\n";
+
     vector_new(m_lua, v);
 }
 
 
 void CelxLua::newVector(const Vector3d& v)
 {
+	LOG_(CelxLog, plog::debug) << "CelxLua::newVector:" <<  "\n";
+	
     vector_new(m_lua, fromEigen(v));
 }
 
 
 void CelxLua::newPosition(const UniversalCoord& uc)
 {
+	LOG_(CelxLog, plog::debug) << "CelxLua::newPosition:" <<  "\n";
+
     position_new(m_lua, uc);
 }
 
 
 void CelxLua::newRotation(const Quatd& q)
 {
+	LOG_(CelxLog, plog::debug) << "CelxLua::newRotation:" << "\n";
+
     rotation_new(m_lua, q);
 }
 
 void CelxLua::newObject(const Selection& sel)
 {
+	LOG_(CelxLog, plog::debug) << "CelxLua::newObject:" << "\n";
+
     object_new(m_lua, sel);
 }
 
