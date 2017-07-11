@@ -4844,41 +4844,57 @@ void CelxLua::newObject(const Selection& sel)
 
 void CelxLua::newFrame(const ObserverFrame& f)
 {
+	LOG_(CelxLog, plog::debug) << "CelxLua::newFrame:" <<  "\n";
+
     frame_new(m_lua, f);
 }
 
 void CelxLua::newPhase(const TimelinePhase& phase)
 {
+	LOG_(CelxLog, plog::debug) << "CelxLua::newPhase:" <<  "\n";
+
     phase_new(m_lua, phase);
 }
 
 Vec3d* CelxLua::toVector(int n)
 {
+	LOG_(CelxLog, plog::debug) << "CelxLua::toVector:" << n << "\n";
+
     return to_vector(m_lua, n);
 }
 
 Quatd* CelxLua::toRotation(int n)
 {
+	LOG_(CelxLog, plog::debug) << "CelxLua::toRotation:" << n << "\n";
+
     return to_rotation(m_lua, n);
 }
 
 UniversalCoord* CelxLua::toPosition(int n)
 {
+	LOG_(CelxLog, plog::debug) << "CelxLua::toPosition:" << n << "\n";
+
     return to_position(m_lua, n);
 }
 
 Selection* CelxLua::toObject(int n)
 {
+	LOG_(CelxLog, plog::debug) << "CelxLua::toObject:" << n << "\n";
+
     return to_object(m_lua, n);
 }
 
 ObserverFrame* CelxLua::toFrame(int n)
 {
+	LOG_(CelxLog, plog::debug) << "CelxLua::toFrame:" << n << "\n";
+
     return to_frame(m_lua, n);
 }
 
 void CelxLua::push(const CelxValue& v1)
 {
+	LOG_(CelxLog, plog::debug) << "push:"  << "\n";
+
     v1.push(m_lua);
 }
 
@@ -4892,7 +4908,9 @@ void CelxLua::push(const CelxValue& v1, const CelxValue& v2)
 
 CelestiaCore* CelxLua::appCore(FatalErrors fatalErrors)
 {
-    push("celestia-appcore");
+	LOG_(CelxLog, plog::debug) << "CelxLua::appCore:" << fatalErrors << "\n";
+
+   push("celestia-appcore");
     lua_gettable(m_lua, LUA_REGISTRYINDEX);
     
     if (!lua_islightuserdata(m_lua, -1))
@@ -4918,7 +4936,10 @@ CelestiaCore* CelxLua::appCore(FatalErrors fatalErrors)
 // Get a pointer to the LuaState-object from the registry:
 LuaState* CelxLua::getLuaStateObject()
 {
-    int stackSize = lua_gettop(m_lua);
+	
+	LOG_(CelxLog, plog::debug) << "CelxLua::getLuaStateObject:" <<  "\n";
+   
+   int stackSize = lua_gettop(m_lua);
     lua_pushstring(m_lua, "celestia-luastate");
     lua_gettable(m_lua, LUA_REGISTRYINDEX);
     
@@ -4937,6 +4958,8 @@ LuaState* CelxLua::getLuaStateObject()
 
 int CelxLua::getLuaGlobalIndex()
 {
+	LOG_(CelxLog, plog::debug) << "CelxLua::getLuaGlobalIndex:" << "\n";
+
   int LUA_GLOBALSINDEX = -10002;
   return LUA_GLOBALSINDEX;
 }
